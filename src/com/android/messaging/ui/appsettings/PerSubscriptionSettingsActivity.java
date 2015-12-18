@@ -136,6 +136,16 @@ public class PerSubscriptionSettingsActivity extends BugleActionBarActivity {
                         getString(R.string.delivery_reports_pref_key));
                 advancedCategory.removePreference(deliveryReportsPref);
             }
+            if (!MmsConfig.get(mSubId).getMMSDeliveryReportsEnabled()) {
+                final Preference deliveryReportsMmsPref = findPreference(
+                        getString(R.string.delivery_reports_mms_pref_key));
+                mmsCategory.removePreference(deliveryReportsMmsPref);
+            }
+            if (!MmsConfig.get(mSubId).getMMSReadReportsEnabled()) {
+                final Preference readReportsMmsPref = findPreference(
+                        getString(R.string.read_reports_mms_pref_key));
+                mmsCategory.removePreference(readReportsMmsPref);
+            }
             final Preference wirelessAlertPref = findPreference(getString(
                     R.string.wireless_alerts_key));
             if (!isCellBroadcastAppLinkEnabled()) {
@@ -181,6 +191,12 @@ public class PerSubscriptionSettingsActivity extends BugleActionBarActivity {
                 final Preference autoRetrieveMmsPreference =
                         findPreference(getString(R.string.auto_retrieve_mms_pref_key));
                 autoRetrieveMmsPreference.setEnabled(false);
+                final Preference deliveryReportsMmsPreference =
+                        findPreference(getString(R.string.delivery_reports_mms_pref_key));
+                deliveryReportsMmsPreference.setEnabled(false);
+                final Preference readReportsMmsPreference =
+                        findPreference(getString(R.string.read_reports_mms_pref_key));
+                readReportsMmsPreference.setEnabled(false);
                 final Preference deliveryReportsPreference =
                         findPreference(getString(R.string.delivery_reports_pref_key));
                 deliveryReportsPreference.setEnabled(false);
