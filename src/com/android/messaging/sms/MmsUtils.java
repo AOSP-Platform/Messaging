@@ -2350,10 +2350,12 @@ public class MmsUtils {
     public static Uri insertSendingMmsMessage(final Context context, final List<String> recipients,
             final MessageData content, final int subId, final String subPhoneNumber,
             final long timestamp) {
+            final boolean requireDeliveryReport = isMMSDeliveryReportRequired(subId);
+            final boolean requireReadReport = isMMSReadReportRequired(subId);
         final SendReq sendReq = createMmsSendReq(
                 context, subId, recipients.toArray(new String[recipients.size()]), content,
-                DEFAULT_DELIVERY_REPORT_MODE,
-                DEFAULT_READ_REPORT_MODE,
+                requireDeliveryReport,
+                requireReadReport,
                 DEFAULT_EXPIRY_TIME_IN_SECONDS,
                 DEFAULT_PRIORITY,
                 timestamp);
@@ -2508,6 +2510,30 @@ public class MmsUtils {
         final String deliveryReportKey = res.getString(R.string.delivery_reports_pref_key);
         final boolean defaultValue = res.getBoolean(R.bool.delivery_reports_pref_default);
         return prefs.getBoolean(deliveryReportKey, defaultValue);
+    }
+
+    public static boolean isMMSDeliveryReportRequired(final int subId) {
+        if (!MmsConfig.get(subId).getMMSDeliveryReportsEnabled()) {
+            return DEFAULT_DELIVERY_REPORT_MODE;
+        }
+        final Context context = Factory.get().getApplicationContext();
+        final Resources res = context.getResources();
+        final BuglePrefs prefs = BuglePrefs.getSubscriptionPrefs(subId);
+        final String deliveryReportKey = res.getString(R.string.delivery_reports_mms_pref_key);
+        final boolean defaultValue = res.getBoolean(R.bool.delivery_reports_mms_pref_default);
+        return prefs.getBoolean(deliveryReportKey, defaultValue);
+    }
+
+    public static boolean isMMSReadReportRequired(final int subId) {
+        if (!MmsConfig.get(subId).getMMSReadReportsEnabled()) {
+            return DEFAULT_READ_REPORT_MODE;
+        }
+        final Context context = Factory.get().getApplicationContext();
+        final Resources res = context.getResources();
+        final BuglePrefs prefs = BuglePrefs.getSubscriptionPrefs(subId);
+        final String readReportKey = res.getString(R.string.read_reports_mms_pref_key);
+        final boolean defaultValue = res.getBoolean(R.bool.read_reports_mms_pref_default);
+        return prefs.getBoolean(readReportKey, defaultValue);
     }
 
     public static int sendSmsMessage(final String recipient, final String messageText,
