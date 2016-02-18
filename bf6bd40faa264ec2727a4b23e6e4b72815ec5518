@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3da2f411_ae329746",
+        "filename": "proguard.flags",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1015381
+      },
+      "writtenOn": "2016-02-18T10:08:23Z",
+      "side": 1,
+      "message": "For the record, b/27217036 forbids the usage of @ in this case. But, it is equivalent.",
+      "revId": "bf6bd40faa264ec2727a4b23e6e4b72815ec5518",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
