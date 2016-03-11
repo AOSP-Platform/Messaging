@@ -75,6 +75,8 @@ else
     LOCAL_PROGUARD_FLAG_FILES += proguard-release.flags
 endif
 
+LOCAL_JACK_ENABLED := disabled
+
 LOCAL_PACKAGE_NAME := messaging
 
 LOCAL_CERTIFICATE := platform
