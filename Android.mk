@@ -64,7 +64,8 @@ else
     LOCAL_REQUIRED_MODULES:= libframesequence libgiftranscode
 endif
 
-LOCAL_PROGUARD_FLAGS := -ignorewarnings -include build/core/proguard_basic_keeps.flags
+LOCAL_PROGUARD_FLAGS := -ignorewarnings build/core/proguard_basic_keeps.flags
+LOCAL_PROGUARD_FLAG_FILES := build/core/proguard_basic_keeps.flags
 
 LOCAL_PROGUARD_ENABLED := nosystem
 
