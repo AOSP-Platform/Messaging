@@ -65,6 +65,7 @@ else
 endif
 
 LOCAL_PROGUARD_FLAGS := -ignorewarnings -include build/core/proguard_basic_keeps.flags
+LOCAL_ADDITIONAL_DEPENDENCIES := build/core/proguard_basic_keeps.flags
 
 LOCAL_PROGUARD_ENABLED := nosystem
 
