@@ -22,6 +22,30 @@
       "revId": "87f8bff15ef64f8ee54d573858cc27229dece19d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2bc632da_c5ad3ac3",
+        "filename": "Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003981
+      },
+      "writtenOn": "2016-04-13T17:11:38Z",
+      "side": 1,
+      "message": "I don\u0027t know if \"LOCAL_PROGUARD_ENABLED :\u003d nosystem\" is still needed in this app.\nWith nosystem, the core build system doesn\u0027t include any config file by default. The default config file is proguard.flags, which in turn includes proguard_basic_keeps.flags.\n\nWe can use \nLOCAL_PROGUARD_FLAG_FILES :\u003d ../../build/core/proguard_basic_keeps.flags\nLOCAL_ADDITIONAL_DEPENDENCIES isn\u0027t good for this case.",
+      "parentUuid": "ab20622e_99ec3be0",
+      "range": {
+        "startLine": 67,
+        "startChar": 49,
+        "endLine": 67,
+        "endChar": 86
+      },
+      "revId": "87f8bff15ef64f8ee54d573858cc27229dece19d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
