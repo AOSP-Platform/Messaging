@@ -28,9 +28,11 @@ import com.android.messaging.util.UiUtils;
  * ensuring app requirements are met during onResume()
  */
 public class BaseBugleActivity extends Activity {
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (UiUtils.redirectToPermissionCheckIfNeeded(this)) {
             return;
         }

@@ -27,6 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.android.messaging.R;
+import com.android.messaging.trampoline.TrampolineManager;
 import com.android.messaging.util.BugleActivityUtil;
 import com.android.messaging.util.ImeUtil;
 import com.android.messaging.util.LogUtil;
@@ -61,6 +62,11 @@ public class BugleActionBarActivity extends AppCompatActivity implements ImeUtil
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (TrampolineManager.trampoline(this)) {
+            finish();
+            return;
+        }
+
         if (UiUtils.redirectToPermissionCheckIfNeeded(this)) {
             return;
         }
@@ -93,6 +99,11 @@ public class BugleActionBarActivity extends AppCompatActivity implements ImeUtil
         if (LogUtil.isLoggable(LogUtil.BUGLE_TAG, LogUtil.VERBOSE)) {
             LogUtil.v(LogUtil.BUGLE_TAG, this.getLocalClassName() + ".onResume");
         }
+
+        if (TrampolineManager.trampoline(this)) {
+            finish();
+        }
+
         BugleActivityUtil.onActivityResume(this, BugleActionBarActivity.this);
     }
 

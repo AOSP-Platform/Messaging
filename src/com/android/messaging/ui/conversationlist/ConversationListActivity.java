@@ -24,6 +24,7 @@ import android.view.MenuItem;
 
 import com.android.messaging.R;
 import com.android.messaging.ui.UIIntents;
+import com.android.messaging.trampoline.TrampolineManager;
 import com.android.messaging.util.DebugUtils;
 import com.android.messaging.util.Trace;
 

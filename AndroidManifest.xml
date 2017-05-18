@@ -325,6 +325,16 @@
                   android:grantUriPermissions="true"
                   android:exported="false" />
 
+        <receiver android:name=".trampoline.PackageAddedOrRemovedReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <data android:scheme="package" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_FULLY__REMOVED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
 
         <!-- Action Services -->
         <service android:name=".datamodel.action.ActionServiceImpl"/>
