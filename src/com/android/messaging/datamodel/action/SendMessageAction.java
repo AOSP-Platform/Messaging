@@ -203,8 +203,20 @@ public class SendMessageAction extends Action implements Parcelable {
             final String smsServiceCenter = actionParameters.getString(KEY_SMS_SERVICE_CENTER);
             final boolean deliveryReportRequired = MmsUtils.isDeliveryReportRequired(subId);
 
-            status = MmsUtils.sendSmsMessage(recipient, messageText, messageUri, subId,
-                    smsServiceCenter, deliveryReportRequired);
+            final String callbackNumber = MmsUtils.getCallbackNumber(subId);
+            final int priority = MmsUtils.getSmsPriorityValue(subId);
+
+            status =
+                    MmsUtils.sendSmsMessage(
+                            recipient,
+                            messageText,
+                            messageUri,
+                            subId,
+                            smsServiceCenter,
+                            deliveryReportRequired,
+                            callbackNumber,
+                            priority);
+
         } else {
             final Context context = Factory.get().getApplicationContext();
             final ArrayList<String> recipients =

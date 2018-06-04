@@ -180,15 +180,35 @@ public class SmsSender {
     }
 
     // This should be called from a RequestWriter queue thread
-    public static SendResult sendMessage(final Context context,  final int subId, String dest,
-            String message, final String serviceCenter, final boolean requireDeliveryReport,
-            final Uri messageUri) throws SmsException {
+    public static SendResult sendMessage(
+            final Context context,
+            final int subId,
+            String dest,
+            String message,
+            final String serviceCenter,
+            final boolean requireDeliveryReport,
+            final Uri messageUri,
+            String callbackNumber,
+            int priority)
+            throws SmsException {
         if (LogUtil.isLoggable(TAG, LogUtil.VERBOSE)) {
-            LogUtil.v(TAG, "SmsSender: sending message. " +
-                    "dest=" + dest + " message=" + message +
-                    " serviceCenter=" + serviceCenter +
-                    " requireDeliveryReport=" + requireDeliveryReport +
-                    " requestId=" + messageUri);
+            LogUtil.v(
+                    TAG,
+                    "SmsSender: sending message. "
+                            + "dest="
+                            + dest
+                            + " message="
+                            + message
+                            + " serviceCenter="
+                            + serviceCenter
+                            + " requireDeliveryReport="
+                            + requireDeliveryReport
+                            + " requestId="
+                            + messageUri
+                            + " callbackNumber="
+                            + callbackNumber
+                            + " priority="
+                            + priority);
         }
         if (TextUtils.isEmpty(message)) {
             throw new SmsException("SmsSender: empty text message");
@@ -219,9 +239,19 @@ public class SmsSender {
         // Prepare the send result, which collects the send status for each part
         final SendResult pendingResult = new SendResult(messages.size());
         sPendingMessageMap.put(messageUri, pendingResult);
+        // remove unwanted characters from call back string
+        callbackNumber = PhoneNumberUtils.stripSeparators(callbackNumber);
         // Actually send the sms
         sendInternal(
-                context, subId, dest, messages, serviceCenter, requireDeliveryReport, messageUri);
+                context,
+                subId,
+                dest,
+                messages,
+                serviceCenter,
+                requireDeliveryReport,
+                messageUri,
+                callbackNumber,
+                priority);
         // Wait for pending intent to come back
         synchronized (pendingResult) {
             final long smsSendTimeoutInMillis = BugleGservices.get().getLong(
@@ -251,9 +281,17 @@ public class SmsSender {
     }
 
     // Actually sending the message using SmsManager
-    private static void sendInternal(final Context context, final int subId, String dest,
-            final ArrayList<String> messages, final String serviceCenter,
-            final boolean requireDeliveryReport, final Uri messageUri) throws SmsException {
+    private static void sendInternal(
+            final Context context,
+            final int subId,
+            String dest,
+            final ArrayList<String> messages,
+            final String serviceCenter,
+            final boolean requireDeliveryReport,
+            final Uri messageUri,
+            final String callbackNumber,
+            final int priority)
+            throws SmsException {
         Assert.notNull(context);
         final SmsManager smsManager = PhoneUtils.get(subId).getSmsManager();
         final int messageCount = messages.size();
@@ -289,15 +327,24 @@ public class SmsSender {
             if (sSendMultipartSmsAsSeparateMessages) {
                 // If multipart sms is not supported, send them as separate messages
                 for (int i = 0; i < messageCount; i++) {
-                    smsManager.sendTextMessage(dest,
+                    smsManager.sendTextMessage(
+                            dest,
                             serviceCenter,
                             messages.get(i),
                             sentIntents.get(i),
-                            deliveryIntents.get(i));
+                            deliveryIntents.get(i),
+                            priority,
+                            callbackNumber);
                 }
             } else {
                 smsManager.sendMultipartTextMessage(
-                        dest, serviceCenter, messages, sentIntents, deliveryIntents);
+                        dest,
+                        serviceCenter,
+                        messages,
+                        sentIntents,
+                        deliveryIntents,
+                        priority,
+                        callbackNumber);
             }
         } catch (final Exception e) {
             throw new SmsException("SmsSender: caught exception in sending " + e);

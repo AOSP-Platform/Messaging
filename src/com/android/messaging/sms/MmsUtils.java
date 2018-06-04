@@ -108,6 +108,38 @@ public class MmsUtils {
     public static final boolean DEFAULT_READ_REPORT_MODE = false;
     public static final long DEFAULT_EXPIRY_TIME_IN_SECONDS = 7 * 24 * 60 * 60;
     public static final int DEFAULT_PRIORITY = PduHeaders.PRIORITY_NORMAL;
+    public static final String STRING_PRIORITY_EMERGENCY = "Emergency";
+    public static final String STRING_PRIORITY_URGENT = "Urgent";
+    public static final String STRING_PRIORITY_INTERACTIVE = "Interactive";
+    public static final String STRING_PRIORITY_NORMAL = "Normal";
+    public static final String STRING_PRIVACY_NOT_RESTRICTED = "Not restricted";
+    public static final String STRING_PRIVACY_RESTRICTED = "Restricted";
+    public static final String STRING_PRIVACY_CONFIDENTIAL = "Confidential";
+    public static final String STRING_PRIVACY_SECRET = "Secret";
+    public static final String STRING_LANGUAGE_INDICATOR_UNKNOWN = "Unknown or unspecified";
+    public static final String STRING_LANGUAGE_INDICATOR_ENGLISH = "English";
+    public static final String STRING_LANGUAGE_INDICATOR_FRENCH = "French";
+    public static final String STRING_LANGUAGE_INDICATOR_SPANISH = "Spanish";
+    public static final String STRING_LANGUAGE_INDICATOR_JAPANESE = "Japanese";
+    public static final String STRING_LANGUAGE_INDICATOR_KOREAN = "Korean";
+    public static final String STRING_LANGUAGE_INDICATOR_CHINESE = "Chinese";
+    public static final String STRING_LANGUAGE_INDICATOR_HEBREW = "Hebrew";
+    public static final int SMS_PRIORITY_NORMAL = 0;
+    public static final int SMS_PRIORITY_INTERACTIVE = 1;
+    public static final int SMS_PRIORITY_URGENT = 2;
+    public static final int SMS_PRIORITY_EMERGENCY = 3;
+    public static final int SMS_PRIVACY_NOT_RESTRICTED = 0;
+    public static final int SMS_PRIVACY_RESTRICTED = 1;
+    public static final int SMS_PRIVACY_CONFIDENTIAL = 2;
+    public static final int SMS_PRIVACY_SECRET = 3;
+    public static final int SMS_LANGUAGE_UNKNOWN = 0;
+    public static final int SMS_LANGUAGE_ENGLISH = 1;
+    public static final int SMS_LANGUAGE_FRENCH = 2;
+    public static final int SMS_LANGUAGE_SPANISH = 3;
+    public static final int SMS_LANGUAGE_JAPANESE = 4;
+    public static final int SMS_LANGUAGE_KOREAN = 5;
+    public static final int SMS_LANGUAGE_CHINESE = 6;
+    public static final int SMS_LANGUAGE_HEBREW = 7;
 
     public static final int MAX_SMS_RETRY = 3;
 
@@ -1048,9 +1080,10 @@ public class MmsUtils {
 
     // Parse the message body from message PDUs
     private static String buildMessageBodyFromPdus(final SmsMessage[] msgs) {
+        String msgBody;
         if (msgs.length == 1) {
             // There is only one part, so grab the body directly.
-            return replaceFormFeeds(msgs[0].getDisplayMessageBody());
+            msgBody = replaceFormFeeds(msgs[0].getDisplayMessageBody());
         } else {
             // Build up the body from the parts.
             final StringBuilder body = new StringBuilder();
@@ -1062,8 +1095,17 @@ public class MmsUtils {
                     // Nothing to do
                 }
             }
-            return replaceFormFeeds(body.toString());
+            msgBody = replaceFormFeeds(body.toString());
         }
+        /* Append Callback Number if available, We will extract call back number from first part
+         * TODO:  check if it is necessary to extract call back from first part. We can use last
+         * part also for this purpose. There is no clear specification, need to find better way
+         */
+        String callbackNumber = msgs[0].getCallbackNumber();
+        if (!TextUtils.isEmpty(callbackNumber)) {
+            msgBody = msgBody + "\nCB#" + callbackNumber;
+        }
+        return msgBody;
     }
 
     // Parse the message date
@@ -2510,9 +2552,15 @@ public class MmsUtils {
         return prefs.getBoolean(deliveryReportKey, defaultValue);
     }
 
-    public static int sendSmsMessage(final String recipient, final String messageText,
-            final Uri requestUri, final int subId,
-            final String smsServiceCenter, final boolean requireDeliveryReport) {
+    public static int sendSmsMessage(
+            final String recipient,
+            final String messageText,
+            final Uri requestUri,
+            final int subId,
+            final String smsServiceCenter,
+            final boolean requireDeliveryReport,
+            final String callbackNumber,
+            final int priority) {
         if (!isSmsDataAvailable(subId)) {
             LogUtil.w(TAG, "MmsUtils: can't send SMS without radio");
             return MMS_REQUEST_MANUAL_RETRY;
@@ -2521,14 +2569,17 @@ public class MmsUtils {
         int status = MMS_REQUEST_MANUAL_RETRY;
         try {
             // Send a single message
-            final SendResult result = SmsSender.sendMessage(
-                    context,
-                    subId,
-                    recipient,
-                    messageText,
-                    smsServiceCenter,
-                    requireDeliveryReport,
-                    requestUri);
+            final SendResult result =
+                    SmsSender.sendMessage(
+                            context,
+                            subId,
+                            recipient,
+                            messageText,
+                            smsServiceCenter,
+                            requireDeliveryReport,
+                            requestUri,
+                            callbackNumber,
+                            priority);
             if (!result.hasPending()) {
                 // not timed out, check failures
                 final int failureLevel = result.getHighestFailureLevel();
@@ -2578,6 +2629,105 @@ public class MmsUtils {
     public static int deleteMessage(final Uri messageUri) {
         final ContentResolver resolver = Factory.get().getApplicationContext().getContentResolver();
         return resolver.delete(messageUri, null /* selection */, null /* selectionArgs */);
+    }
+
+    public static String getCallbackNumber(final int subId) {
+        final Context context = Factory.get().getApplicationContext();
+        final Resources res = context.getResources();
+        final BuglePrefs prefs = BuglePrefs.getSubscriptionPrefs(subId);
+        final String callbackEnabledKey = res.getString(R.string.enable_call_back_key);
+        boolean callbackEnabled =
+                prefs.getBoolean(
+                        callbackEnabledKey, res.getBoolean(R.bool.enable_call_back_key_default));
+        if (!callbackEnabled) {
+            return null;
+        }
+        final String callbackNumKey = res.getString(R.string.call_back_num_key);
+        String callbackNum = prefs.getString(callbackNumKey, null);
+        LogUtil.i(TAG, "MmsUtils: callbackNum: " + callbackNum);
+        return callbackNum;
+    }
+
+    public static int getSmsPriorityValue(final int subId) {
+        if (!isPhoneTypeCdma(subId)) {
+            // priority not set
+            return -1;
+        }
+        final Context context = Factory.get().getApplicationContext();
+        final Resources res = context.getResources();
+        final BuglePrefs prefs = BuglePrefs.getSubscriptionPrefs(subId);
+        final String smsPriorityKey = res.getString(R.string.sms_priority_pref_key);
+        final String defaultValue = res.getString(R.string.priority_normal);
+        String priority = prefs.getString(smsPriorityKey, defaultValue);
+        switch (priority) {
+            case STRING_PRIORITY_EMERGENCY:
+                return SMS_PRIORITY_EMERGENCY;
+            case STRING_PRIORITY_URGENT:
+                return SMS_PRIORITY_URGENT;
+            case STRING_PRIORITY_INTERACTIVE:
+                return SMS_PRIORITY_INTERACTIVE;
+            case STRING_PRIORITY_NORMAL:
+                return SMS_PRIORITY_NORMAL;
+            default:
+                return SMS_PRIORITY_NORMAL;
+        }
+    }
+
+    public static String getSmsPriorityDescription(int priority) {
+        switch (priority) {
+            case SMS_PRIORITY_EMERGENCY:
+                return STRING_PRIORITY_EMERGENCY;
+            case SMS_PRIORITY_URGENT:
+                return STRING_PRIORITY_URGENT;
+            case SMS_PRIORITY_INTERACTIVE:
+                return STRING_PRIORITY_INTERACTIVE;
+            case SMS_PRIORITY_NORMAL:
+                return STRING_PRIORITY_NORMAL;
+            default:
+                return STRING_PRIORITY_NORMAL;
+        }
+    }
+
+    public static String getSmsPrivacyDescription(int privacy) {
+        switch (privacy) {
+            case SMS_PRIVACY_SECRET:
+                return STRING_PRIVACY_SECRET;
+            case SMS_PRIVACY_CONFIDENTIAL:
+                return STRING_PRIVACY_CONFIDENTIAL;
+            case SMS_PRIVACY_RESTRICTED:
+                return STRING_PRIVACY_RESTRICTED;
+            case SMS_PRIVACY_NOT_RESTRICTED:
+                return STRING_PRIVACY_NOT_RESTRICTED;
+            default:
+                return STRING_PRIVACY_NOT_RESTRICTED;
+        }
+    }
+
+    public static String getSmsLanguageDescription(int language) {
+        switch (language) {
+            case SMS_LANGUAGE_UNKNOWN:
+                return STRING_LANGUAGE_INDICATOR_UNKNOWN;
+            case SMS_LANGUAGE_ENGLISH:
+                return STRING_LANGUAGE_INDICATOR_ENGLISH;
+            case SMS_LANGUAGE_FRENCH:
+                return STRING_LANGUAGE_INDICATOR_FRENCH;
+            case SMS_LANGUAGE_SPANISH:
+                return STRING_LANGUAGE_INDICATOR_SPANISH;
+            case SMS_LANGUAGE_JAPANESE:
+                return STRING_LANGUAGE_INDICATOR_JAPANESE;
+            case SMS_LANGUAGE_KOREAN:
+                return STRING_LANGUAGE_INDICATOR_KOREAN;
+            case SMS_LANGUAGE_CHINESE:
+                return STRING_LANGUAGE_INDICATOR_CHINESE;
+            case SMS_LANGUAGE_HEBREW:
+                return STRING_LANGUAGE_INDICATOR_HEBREW;
+            default:
+                return STRING_LANGUAGE_INDICATOR_UNKNOWN;
+        }
+    }
+
+    public static boolean isPhoneTypeCdma(int subId) {
+        return PhoneUtils.get(subId).isCdmaPhone();
     }
 
     public static byte[] createDebugNotificationInd(final String fileName) {

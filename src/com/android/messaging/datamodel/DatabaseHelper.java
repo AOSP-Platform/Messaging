@@ -239,12 +239,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
          */
         public static final String RETRY_START_TIMESTAMP = "retry_start_timestamp";
 
+        /*
+         * Sms privacy indicator. This is used to indicate privacy level of the sms message.
+         * This information will be appended to message details dialog.
+         */
+        public static final String SMS_PRIVACY = "sms_privacy";
+
+        /*
+         * SMS language indicator. This is used to indicate language of the sms message.
+         * This information will be appeneded to message details dialog.
+         */
+        public static final String SMS_LANG_IND = "sms_language_ind";
+
         // Columns which map to the SMS provider
 
         /* Message ID from the platform provider */
         public static final String SMS_MESSAGE_URI = "sms_message_uri";
 
-        /* The message priority for MMS message */
+        /* The message priority for CDMA SMS and MMS message */
         public static final String SMS_PRIORITY = "sms_priority";
 
         /* The message size for MMS message */
@@ -268,32 +280,72 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Messages table SQL
     private static final String CREATE_MESSAGES_TABLE_SQL =
-            "CREATE TABLE " + MESSAGES_TABLE + " ("
-                    + MessageColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + MessageColumns.CONVERSATION_ID + " INT, "
-                    + MessageColumns.SENDER_PARTICIPANT_ID + " INT, "
-                    + MessageColumns.SENT_TIMESTAMP + " INT DEFAULT(0), "
-                    + MessageColumns.RECEIVED_TIMESTAMP + " INT DEFAULT(0), "
-                    + MessageColumns.PROTOCOL + " INT DEFAULT(0), "
-                    + MessageColumns.STATUS + " INT DEFAULT(0), "
-                    + MessageColumns.SEEN + " INT DEFAULT(0), "
-                    + MessageColumns.READ + " INT DEFAULT(0), "
-                    + MessageColumns.SMS_MESSAGE_URI + " TEXT, "
-                    + MessageColumns.SMS_PRIORITY + " INT DEFAULT(0), "
-                    + MessageColumns.SMS_MESSAGE_SIZE + " INT DEFAULT(0), "
-                    + MessageColumns.MMS_SUBJECT + " TEXT, "
-                    + MessageColumns.MMS_TRANSACTION_ID + " TEXT, "
-                    + MessageColumns.MMS_CONTENT_LOCATION + " TEXT, "
-                    + MessageColumns.MMS_EXPIRY + " INT DEFAULT(0), "
-                    + MessageColumns.RAW_TELEPHONY_STATUS + " INT DEFAULT(0), "
-                    + MessageColumns.SELF_PARTICIPANT_ID + " INT, "
-                    + MessageColumns.RETRY_START_TIMESTAMP + " INT DEFAULT(0), "
-                    + "FOREIGN KEY (" + MessageColumns.CONVERSATION_ID + ") REFERENCES "
-                    + CONVERSATIONS_TABLE + "(" + ConversationColumns._ID + ") ON DELETE CASCADE "
-                    + "FOREIGN KEY (" + MessageColumns.SENDER_PARTICIPANT_ID + ") REFERENCES "
-                    + PARTICIPANTS_TABLE + "(" + ParticipantColumns._ID + ") ON DELETE SET NULL "
-                    + "FOREIGN KEY (" + MessageColumns.SELF_PARTICIPANT_ID + ") REFERENCES "
-                    + PARTICIPANTS_TABLE + "(" + ParticipantColumns._ID + ") ON DELETE SET NULL "
+            "CREATE TABLE "
+                    + MESSAGES_TABLE
+                    + " ("
+                    + MessageColumns._ID
+                    + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + MessageColumns.CONVERSATION_ID
+                    + " INT, "
+                    + MessageColumns.SENDER_PARTICIPANT_ID
+                    + " INT, "
+                    + MessageColumns.SENT_TIMESTAMP
+                    + " INT DEFAULT(0), "
+                    + MessageColumns.RECEIVED_TIMESTAMP
+                    + " INT DEFAULT(0), "
+                    + MessageColumns.PROTOCOL
+                    + " INT DEFAULT(0), "
+                    + MessageColumns.STATUS
+                    + " INT DEFAULT(0), "
+                    + MessageColumns.SEEN
+                    + " INT DEFAULT(0), "
+                    + MessageColumns.READ
+                    + " INT DEFAULT(0), "
+                    + MessageColumns.SMS_MESSAGE_URI
+                    + " TEXT, "
+                    + MessageColumns.SMS_PRIORITY
+                    + " INT DEFAULT(0), "
+                    + MessageColumns.SMS_MESSAGE_SIZE
+                    + " INT DEFAULT(0), "
+                    + MessageColumns.MMS_SUBJECT
+                    + " TEXT, "
+                    + MessageColumns.MMS_TRANSACTION_ID
+                    + " TEXT, "
+                    + MessageColumns.MMS_CONTENT_LOCATION
+                    + " TEXT, "
+                    + MessageColumns.MMS_EXPIRY
+                    + " INT DEFAULT(0), "
+                    + MessageColumns.RAW_TELEPHONY_STATUS
+                    + " INT DEFAULT(0), "
+                    + MessageColumns.SELF_PARTICIPANT_ID
+                    + " INT, "
+                    + MessageColumns.RETRY_START_TIMESTAMP
+                    + " INT DEFAULT(0), "
+                    + MessageColumns.SMS_PRIVACY
+                    + " INT DEFAULT(0), "
+                    + MessageColumns.SMS_LANG_IND
+                    + " INT DEFAULT(0), "
+                    + "FOREIGN KEY ("
+                    + MessageColumns.CONVERSATION_ID
+                    + ") REFERENCES "
+                    + CONVERSATIONS_TABLE
+                    + "("
+                    + ConversationColumns._ID
+                    + ") ON DELETE CASCADE "
+                    + "FOREIGN KEY ("
+                    + MessageColumns.SENDER_PARTICIPANT_ID
+                    + ") REFERENCES "
+                    + PARTICIPANTS_TABLE
+                    + "("
+                    + ParticipantColumns._ID
+                    + ") ON DELETE SET NULL "
+                    + "FOREIGN KEY ("
+                    + MessageColumns.SELF_PARTICIPANT_ID
+                    + ") REFERENCES "
+                    + PARTICIPANTS_TABLE
+                    + "("
+                    + ParticipantColumns._ID
+                    + ") ON DELETE SET NULL "
                     + ");";
 
     // Primary sort index for messages table : by conversation id, status, received timestamp.

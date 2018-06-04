@@ -270,6 +270,14 @@
     <string name="delete_message_confirmation_dialog_text">This action cannot be undone.</string>
     <string name="delete_message_confirmation_button">Delete</string>
 
+    <!-- Call back number headline in advance settings menu -->
+    <string name="enable_call_back">Enable Call Back Number</string>
+    <string name="enable_call_back_summary">Set Call Back Number for messages</string>
+    <string name="special_char_call_back">Please remove special characters from call back number</string>
+    <string name="min_length_call_back">Please insert minimum 7 digits for call back number</string>
+    <!-- Sms priority in advance settings menu -->
+    <string name="sms_priority_pref_title">Sms Priority</string>
+
     <!-- Alert dialog title to accept or decline deleting conversation(s). -->
     <plurals name="delete_conversations_confirmation_dialog_title">
         <item quantity="one">Delete this conversation?</item>
@@ -505,6 +513,10 @@
     <!-- Label in "Message details" dialog -->
     <string name="received_label">Received:\u0020</string>
     <!-- Label in "Message details" dialog -->
+    <string name="language_label">Language:\u0020</string>
+    <!-- Label in "Message details" dialog -->
+    <string name="privacy_label">Privacy:\u0020</string>
+    <!-- Label in "Message details" dialog -->
     <string name="subject_label">Subject:\u0020</string>
     <!-- Label in "Message details" dialog -->
     <string name="message_size_label">Size:\u0020</string>
@@ -512,6 +524,12 @@
     <string name="priority_label">Priority:\u0020</string>
     <!-- Label in "Message details" dialog -->
     <string name="sim_label">SIM:\u0020</string>
+    <!-- "Priority" value in "Message details" dialog -->
+    <string name="priority_emergency">Emergency</string>
+    <!-- "Priority" value in "Message details" dialog -->
+    <string name="priority_urgent">Urgent</string>
+    <!-- "Priority" value in "Message details" dialog -->
+    <string name="priority_interactive">Interactive</string>
     <!-- "Priority" value in "Message details" dialog -->
     <string name="priority_high">High</string>
     <!-- "Priority" value in "Message details" dialog -->

@@ -62,5 +62,19 @@
             android:key="@string/sms_apns_key"
             android:title="@string/sms_apns_title" />
 
+        <SwitchPreference
+            android:key="@string/enable_call_back_key"
+            android:title="@string/enable_call_back"
+            android:summary="@string/enable_call_back_summary"
+            android:defaultValue="@bool/enable_call_back_key_default" />
+
+        <com.android.messaging.ui.appsettings.CallBackPreference
+            android:key="@string/call_back_num_key"
+            android:dependency="@string/enable_call_back_key" />
+
+        <Preference
+            android:title="@string/sms_priority_pref_title"
+            android:key="@string/sms_priority_pref_key"/>
+
     </PreferenceCategory>
 </PreferenceScreen>

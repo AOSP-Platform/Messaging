@@ -45,6 +45,10 @@
     <string name="mms_phone_number_pref_key" translatable="false">buglesub_mms_phone_number</string>
     <string name="wireless_alerts_key" translatable="false">buglesub_wireless_alerts_key</string>
     <string name="apn_list_pref_key" translatable="false">buglesub_apn_list</string>
+    <string name="sms_priority_pref_key" translatable="false">buglesub_sms_priority</string>
+    <string name="enable_call_back_key" translatable="false">buglesub_enable_call_back_key</string>
+    <bool name="enable_call_back_key_default" translatable="false">false</bool>
+    <string name="call_back_num_key" translatable="false">buglesub_call_back_num_key</string>
 
     <!-- Debug preferences -->
     <string name="debug_pref_key" translatable="false">debug_category</string>

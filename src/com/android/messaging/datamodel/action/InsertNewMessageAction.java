@@ -278,7 +278,8 @@ public class InsertNewMessageAction extends Action implements Parcelable {
         final ParticipantData self = BugleDatabaseOperations.getOrCreateSelf(db, subId);
 
         if (TextUtils.isEmpty(subjectText)) {
-            return MessageData.createDraftSmsMessage(conversationId, self.getId(), messageText);
+            return MessageData.createDraftSmsMessage(
+                    conversationId, self.getId(), messageText, MmsUtils.getSmsPriorityValue(subId));
         } else {
             return MessageData.createDraftMmsMessage(conversationId, self.getId(), messageText,
                     subjectText);
@@ -388,8 +389,12 @@ public class InsertNewMessageAction extends Action implements Parcelable {
         if (messageUri != null && !TextUtils.isEmpty(messageUri.toString())) {
             db.beginTransaction();
             try {
-                message = MessageData.createDraftSmsMessage(conversationId,
-                        content.getSelfId(), messageText);
+                message =
+                        MessageData.createDraftSmsMessage(
+                                conversationId,
+                                content.getSelfId(),
+                                messageText,
+                                MmsUtils.getSmsPriorityValue(subId));
                 message.updateSendingMessage(conversationId, messageUri, timestamp);
 
                 BugleDatabaseOperations.insertNewMessageInTransaction(db, message);

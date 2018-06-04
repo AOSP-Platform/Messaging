@@ -221,7 +221,14 @@ public final class SmsReceiver extends BroadcastReceiver {
                 DebugUtils.debugClassZeroSmsEnabled()) {
             Factory.get().getUIIntents().launchClassZeroActivity(context, messageValues);
         } else {
-            final ReceiveSmsMessageAction action = new ReceiveSmsMessageAction(messageValues);
+            int priority = messages[0].getSmsPriority();
+            int privacy = messages[0].getSmsPrivacy();
+            int langInd = messages[0].getSmsLanguage();
+            LogUtil.d(TAG, "SmsReceiver.deliverSmsMessages SmsPriority: " + priority);
+            LogUtil.d(TAG, "SmsReceiver.deliverSmsMessages Sms Privacy Indicator: " + privacy);
+            LogUtil.d(TAG, "SmsReceiver.deliverSmsMessages Sms Language Indicator : " + langInd);
+            final ReceiveSmsMessageAction action =
+                    new ReceiveSmsMessageAction(messageValues, priority, privacy, langInd);
             action.start();
         }
     }

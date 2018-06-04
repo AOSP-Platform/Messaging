@@ -79,9 +79,14 @@ public class PerSubscriptionSettingsActivity extends BugleActionBarActivity {
     public static class PerSubscriptionSettingsFragment extends PreferenceFragment
             implements OnSharedPreferenceChangeListener {
         private PhoneNumberPreference mPhoneNumberPreference;
+        private CallBackPreference mCallBackNumberPreference;
+        private Preference mCallBackSwitchPreference;
         private Preference mGroupMmsPreference;
+        private Preference mSmsPriorityPreference;
         private String mGroupMmsPrefKey;
+        private String mSmsPriorityPrefKey;
         private String mPhoneNumberKey;
+        private String mCallbackNumberKey;
         private int mSubId;
 
         public PerSubscriptionSettingsFragment() {
@@ -104,6 +109,11 @@ public class PerSubscriptionSettingsActivity extends BugleActionBarActivity {
 
             mPhoneNumberKey = getString(R.string.mms_phone_number_pref_key);
             mPhoneNumberPreference = (PhoneNumberPreference) findPreference(mPhoneNumberKey);
+            mCallbackNumberKey = getString(R.string.call_back_num_key);
+            mCallBackNumberPreference = (CallBackPreference) findPreference(mCallbackNumberKey);
+            mCallBackSwitchPreference = findPreference(getString(R.string.enable_call_back_key));
+            mSmsPriorityPrefKey = getString(R.string.sms_priority_pref_key);
+            mSmsPriorityPreference = findPreference(mSmsPriorityPrefKey);
             final PreferenceCategory advancedCategory = (PreferenceCategory)
                     findPreference(getString(R.string.advanced_category_pref_key));
             final PreferenceCategory mmsCategory = (PreferenceCategory)
@@ -111,6 +121,20 @@ public class PerSubscriptionSettingsActivity extends BugleActionBarActivity {
 
             mPhoneNumberPreference.setDefaultPhoneNumber(
                     PhoneUtils.get(mSubId).getCanonicalForSelf(false/*allowOverride*/), mSubId);
+            mCallBackNumberPreference.setDefaultCallBackNumber(mSubId);
+            mSmsPriorityPreference.setOnPreferenceClickListener(
+                    new OnPreferenceClickListener() {
+                        @Override
+                        public boolean onPreferenceClick(Preference pref) {
+                            SmsPriorityDialog.showDialog(getActivity(), mSubId);
+                            return true;
+                        }
+                    });
+            if (!MmsUtils.isPhoneTypeCdma(mSubId)) {
+                advancedCategory.removePreference(mCallBackSwitchPreference);
+                advancedCategory.removePreference(mCallBackNumberPreference);
+                advancedCategory.removePreference(mSmsPriorityPreference);
+            }
 
             mGroupMmsPrefKey = getString(R.string.group_mms_pref_key);
             mGroupMmsPreference = findPreference(mGroupMmsPrefKey);
@@ -201,6 +225,28 @@ public class PerSubscriptionSettingsActivity extends BugleActionBarActivity {
             return false;
         }
 
+        private void setCallbackNumber(String cbNumber) {
+            if (TextUtils.isEmpty(cbNumber)) {
+                // Set default call back number
+                cbNumber = PhoneUtils.get(mSubId).getCanonicalForSelf(false /*allowOverride*/);
+            }
+
+            // Save the changed call back number in preferences specific to the sub id
+            final BuglePrefs subPrefs = BuglePrefs.getSubscriptionPrefs(mSubId);
+            String savedValue = subPrefs.getString(mCallbackNumberKey, null);
+            if (TextUtils.isEmpty(savedValue) || !cbNumber.equals(savedValue)) {
+                subPrefs.putString(mCallbackNumberKey, cbNumber);
+            }
+        }
+
+        private void updateSmsPriorityPrefSummary() {
+            final String priorityEnabled =
+                    getPreferenceScreen()
+                            .getSharedPreferences()
+                            .getString(mSmsPriorityPrefKey, getString(R.string.priority_normal));
+            mSmsPriorityPreference.setSummary(priorityEnabled);
+        }
+
         private void updateGroupMmsPrefSummary() {
             final boolean groupMmsEnabled = getPreferenceScreen().getSharedPreferences().getBoolean(
                     mGroupMmsPrefKey, getResources().getBoolean(R.bool.group_mms_pref_default));
@@ -233,6 +279,10 @@ public class PerSubscriptionSettingsActivity extends BugleActionBarActivity {
                 // Update the self participants so the new phone number will be reflected
                 // everywhere in the UI.
                 ParticipantRefresh.refreshSelfParticipants();
+            } else if (key.equals(mCallbackNumberKey)) {
+                setCallbackNumber(mCallBackNumberPreference.getText());
+            } else if (key.equals(mSmsPriorityPrefKey)) {
+                updateSmsPriorityPrefSummary();
             }
         }
 

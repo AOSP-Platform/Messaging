@@ -680,6 +680,15 @@ public abstract class PhoneUtils {
     }
 
     /**
+     * Check phone type
+     *
+     * @return true if phone type is cdma, false otherwise
+     */
+    public boolean isCdmaPhone() {
+        return mTelephonyManager.getPhoneType() == TelephonyManager.PHONE_TYPE_CDMA;
+    }
+
+    /**
      * Get the ISO country code from system locale setting
      *
      * @return the ISO country code from system locale

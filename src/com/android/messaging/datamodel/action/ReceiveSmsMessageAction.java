@@ -34,6 +34,7 @@ import com.android.messaging.datamodel.SyncManager;
 import com.android.messaging.datamodel.data.MessageData;
 import com.android.messaging.datamodel.data.ParticipantData;
 import com.android.messaging.sms.MmsSmsUtils;
+import com.android.messaging.sms.MmsUtils;
 import com.android.messaging.util.LogUtil;
 import com.android.messaging.util.OsUtil;
 
@@ -44,12 +45,30 @@ public class ReceiveSmsMessageAction extends Action implements Parcelable {
     private static final String TAG = LogUtil.BUGLE_DATAMODEL_TAG;
 
     private static final String KEY_MESSAGE_VALUES = "message_values";
+    private static final String KEY_MESSAGE_PRIORITY = "priority";
+    private static final String KEY_MESSAGE_PRIVACY = "privacy";
+    private static final String KEY_MESSAGE_LANGUAGE = "language";
 
     /**
      * Create a message received from a particular number in a particular conversation
      */
     public ReceiveSmsMessageAction(final ContentValues messageValues) {
         actionParameters.putParcelable(KEY_MESSAGE_VALUES, messageValues);
+    }
+
+    /**
+     * Create a message received from a particular number in a particular conversation with message
+     * options.
+     */
+    public ReceiveSmsMessageAction(
+            final ContentValues messageValues,
+            final int priority,
+            final int privacy,
+            final int language) {
+        actionParameters.putParcelable(KEY_MESSAGE_VALUES, messageValues);
+        actionParameters.putInt(KEY_MESSAGE_PRIORITY, priority);
+        actionParameters.putInt(KEY_MESSAGE_PRIVACY, privacy);
+        actionParameters.putInt(KEY_MESSAGE_LANGUAGE, language);
     }
 
     @Override
@@ -138,9 +157,29 @@ public class ReceiveSmsMessageAction extends Action implements Parcelable {
                         BugleDatabaseOperations.getOrCreateParticipantInTransaction(db, rawSender);
                 final String selfId =
                         BugleDatabaseOperations.getOrCreateParticipantInTransaction(db, self);
+                final int priority =
+                        actionParameters.getInt(KEY_MESSAGE_PRIORITY, -1 /* Priority not set*/);
+                final int privacy =
+                        actionParameters.getInt(KEY_MESSAGE_PRIVACY, -1 /* Privacy not set*/);
+                final int langInd =
+                        actionParameters.getInt(
+                                KEY_MESSAGE_LANGUAGE, -1 /* Lanuage indicator not set*/);
 
-                message = MessageData.createReceivedSmsMessage(messageUri, conversationId,
-                        participantId, selfId, text, subject, sent, received, seen, read);
+                message =
+                        MessageData.createReceivedSmsMessage(
+                                messageUri,
+                                conversationId,
+                                participantId,
+                                selfId,
+                                text,
+                                subject,
+                                sent,
+                                received,
+                                seen,
+                                read,
+                                priority,
+                                privacy,
+                                langInd);
 
                 BugleDatabaseOperations.insertNewMessageInTransaction(db, message);
 

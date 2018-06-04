@@ -60,6 +60,8 @@ public class MessageData implements Parcelable {
         MessageColumns.MMS_EXPIRY,
         MessageColumns.RAW_TELEPHONY_STATUS,
         MessageColumns.RETRY_START_TIMESTAMP,
+        MessageColumns.SMS_PRIVACY,
+        MessageColumns.SMS_LANG_IND,
     };
 
     private static final int INDEX_ID = 0;
@@ -81,13 +83,17 @@ public class MessageData implements Parcelable {
     private static final int INDEX_MMS_EXPIRY = 16;
     private static final int INDEX_RAW_TELEPHONY_STATUS = 17;
     private static final int INDEX_RETRY_START_TIMESTAMP = 18;
+    private static final int INDEX_SMS_PRIVACY = 19;
+    private static final int INDEX_SMS_LANG_IND = 20;
 
     // SQL statement to insert a "complete" message row (columns based on the projection above).
     private static final String INSERT_MESSAGE_SQL =
-            "INSERT INTO " + DatabaseHelper.MESSAGES_TABLE + " ( "
-                    + TextUtils.join(", ", Arrays.copyOfRange(sProjection, 1,
-                            INDEX_RETRY_START_TIMESTAMP + 1))
-                    + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            "INSERT INTO "
+                    + DatabaseHelper.MESSAGES_TABLE
+                    + " ( "
+                    + TextUtils.join(
+                            ", ", Arrays.copyOfRange(sProjection, 1, INDEX_SMS_LANG_IND + 1))
+                    + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private String mMessageId;
     private String mConversationId;
@@ -99,7 +105,7 @@ public class MessageData implements Parcelable {
     private boolean mRead;
     private int mProtocol;
     private Uri mSmsMessageUri;
-    private int mSmsPriority;
+    private int mSmsPriority = -1; // Priority not set
     private long mSmsMessageSize;
     private String mMmsSubject;
     private String mMmsTransactionId;
@@ -109,6 +115,8 @@ public class MessageData implements Parcelable {
     private int mStatus;
     private final ArrayList<MessagePartData> mParts;
     private long mRetryStartTimestamp;
+    private int mSmsPrivacy = -1; // Privacy not set
+    private int mSmsLanguageInd = -1; // Language indicator not set
 
     // PROTOCOL Values
     public static final int PROTOCOL_UNKNOWN = -1;              // Unknown type
@@ -241,6 +249,16 @@ public class MessageData implements Parcelable {
      */
     public static MessageData createDraftSmsMessage(final String conversationId,
             final String selfId, final String messageText) {
+        // TODO: priority should be set for all send/draft scenarios not for normal sending only
+        return createDraftSmsMessage(
+                conversationId, selfId, messageText, -1 /* priority not set */);
+    }
+
+    public static MessageData createDraftSmsMessage(
+            final String conversationId,
+            final String selfId,
+            final String messageText,
+            final int priority) {
         final MessageData message = new MessageData();
         message.mStatus = BUGLE_STATUS_OUTGOING_DRAFT;
         message.mProtocol = PROTOCOL_SMS;
@@ -249,6 +267,7 @@ public class MessageData implements Parcelable {
         message.mSelfId = selfId;
         message.mParts.add(MessagePartData.createTextMessagePart(messageText));
         message.mReceivedTimestamp = System.currentTimeMillis();
+        message.mSmsPriority = priority;
         return message;
     }
 
@@ -271,13 +290,21 @@ public class MessageData implements Parcelable {
         return message;
     }
 
-    /**
-     * Create a message received from a particular number in a particular conversation
-     */
-    public static MessageData createReceivedSmsMessage(final Uri uri, final String conversationId,
-            final String participantId, final String selfId, final String messageText,
-            final String subject, final long sent, final long recieved,
-            final boolean seen, final boolean read) {
+    /** Create a message received from a particular number in a particular conversation */
+    public static MessageData createReceivedSmsMessage(
+            final Uri uri,
+            final String conversationId,
+            final String participantId,
+            final String selfId,
+            final String messageText,
+            final String subject,
+            final long sent,
+            final long recieved,
+            final boolean seen,
+            final boolean read,
+            final int priority,
+            final int privacy,
+            final int language) {
         final MessageData message = new MessageData();
         message.mSmsMessageUri = uri;
         message.mConversationId = conversationId;
@@ -291,6 +318,9 @@ public class MessageData implements Parcelable {
         message.mParts.add(MessagePartData.createTextMessagePart(messageText));
         message.mSeen = seen;
         message.mRead = read;
+        message.mSmsPriority = priority;
+        message.mSmsPrivacy = privacy;
+        message.mSmsLanguageInd = language;
         return message;
     }
 
@@ -398,6 +428,8 @@ public class MessageData implements Parcelable {
         mMmsTransactionId = cursor.getString(INDEX_MMS_TRANSACTION_ID);
         mMmsContentLocation = cursor.getString(INDEX_MMS_CONTENT_LOCATION);
         mRetryStartTimestamp = cursor.getLong(INDEX_RETRY_START_TIMESTAMP);
+        mSmsPrivacy = cursor.getInt(INDEX_SMS_PRIVACY);
+        mSmsLanguageInd = cursor.getInt(INDEX_SMS_LANG_IND);
     }
 
     /**
@@ -433,6 +465,8 @@ public class MessageData implements Parcelable {
         values.put(MessageColumns.MMS_CONTENT_LOCATION, mMmsContentLocation);
         values.put(MessageColumns.RAW_TELEPHONY_STATUS, mRawStatus);
         values.put(MessageColumns.RETRY_START_TIMESTAMP, mRetryStartTimestamp);
+        values.put(MessageColumns.SMS_PRIVACY, mSmsPrivacy);
+        values.put(MessageColumns.SMS_LANG_IND, mSmsLanguageInd);
     }
 
     /**
@@ -469,6 +503,8 @@ public class MessageData implements Parcelable {
         }
         insert.bindLong(INDEX_RAW_TELEPHONY_STATUS, mRawStatus);
         insert.bindLong(INDEX_RETRY_START_TIMESTAMP, mRetryStartTimestamp);
+        insert.bindLong(INDEX_SMS_PRIVACY, mSmsPrivacy);
+        insert.bindLong(INDEX_SMS_LANG_IND, mSmsLanguageInd);
         return insert;
     }
 
@@ -670,6 +706,14 @@ public class MessageData implements Parcelable {
 
     public long getRetryStartTimestamp() {
         return mRetryStartTimestamp;
+    }
+
+    public int getSmsPrivacy() {
+        return mSmsPrivacy;
+    }
+
+    public int getSmsLanguageInd() {
+        return mSmsLanguageInd;
     }
 
     public final String getMessageText() {

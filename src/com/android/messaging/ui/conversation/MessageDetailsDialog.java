@@ -26,9 +26,11 @@ import android.text.format.Formatter;
 import com.android.messaging.Factory;
 import com.android.messaging.R;
 import com.android.messaging.datamodel.BugleDatabaseOperations;
+import com.android.messaging.datamodel.DatabaseWrapper;
 import com.android.messaging.datamodel.DataModel;
 import com.android.messaging.datamodel.data.ConversationMessageData;
 import com.android.messaging.datamodel.data.ConversationParticipantsData;
+import com.android.messaging.datamodel.data.MessageData;
 import com.android.messaging.datamodel.data.ParticipantData;
 import com.android.messaging.mmslib.pdu.PduHeaders;
 import com.android.messaging.sms.DatabaseMessages.MmsMessage;
@@ -52,22 +54,18 @@ public class MessageDetailsDialog {
 
     public static void show(final Context context, final ConversationMessageData data,
             final ConversationParticipantsData participants, final ParticipantData self) {
-        if (DebugUtils.isDebugEnabled()) {
-            new SafeAsyncTask<Void, Void, String>() {
-                @Override
-                protected String doInBackgroundTimed(Void... params) {
-                    return getMessageDetails(context, data, participants, self);
-                }
+        // For showing message details run SafeAsyncTask always
+        new SafeAsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackgroundTimed(Void... params) {
+                return getMessageDetails(context, data, participants, self);
+            }
 
-                @Override
-                protected void onPostExecute(String messageDetails) {
-                    showDialog(context, messageDetails);
-                }
-            }.executeOnThreadPool(null, null, null);
-        } else {
-            String messageDetails = getMessageDetails(context, data, participants, self);
-            showDialog(context, messageDetails);
-        }
+            @Override
+            protected void onPostExecute(String messageDetails) {
+                showDialog(context, messageDetails);
+            }
+        }.executeOnThreadPool(null, null, null);
     }
 
     private static String getMessageDetails(final Context context,
@@ -139,6 +137,29 @@ public class MessageDetailsDialog {
         appendSentOrReceivedTimestamp(res, details, data);
 
         appendSimInfo(res, self, details);
+
+        // Append sms options
+        final DatabaseWrapper db = DataModel.get().getDatabase();
+        final MessageData message =
+                BugleDatabaseOperations.readMessageData(db, data.getMessageId());
+        final int priority = message.getSmsPriority();
+        final int privacy = message.getSmsPrivacy();
+        final int langInd = message.getSmsLanguageInd();
+        if (priority >= MmsUtils.SMS_PRIORITY_NORMAL) {
+            details.append('\n');
+            details.append(res.getString(R.string.priority_label));
+            details.append(MmsUtils.getSmsPriorityDescription(priority));
+        }
+        if (privacy >= MmsUtils.SMS_PRIVACY_NOT_RESTRICTED) {
+            details.append('\n');
+            details.append(res.getString(R.string.privacy_label));
+            details.append(MmsUtils.getSmsPrivacyDescription(privacy));
+        }
+        if (langInd >= MmsUtils.SMS_LANGUAGE_UNKNOWN) {
+            details.append('\n');
+            details.append(res.getString(R.string.language_label));
+            details.append(MmsUtils.getSmsLanguageDescription(langInd));
+        }
 
         if (DebugUtils.isDebugEnabled()) {
             appendDebugInfo(details, data);
