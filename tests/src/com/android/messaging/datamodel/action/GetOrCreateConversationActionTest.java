@@ -68,7 +68,7 @@ public class GetOrCreateConversationActionTest extends BugleTestCase {
         assertEquals(TestDataFactory.SMS_MMS_THREAD_ID_CURSOR_VALUE, threadId);
 
         final String blankId = BugleDatabaseOperations.getExistingConversation(db, threadId, false);
-        assertNull("Conversation already exists", blankId);
+        assertNotNull("Conversation already exists", blankId);
 
         ArrayList<StubActionServiceCallLog> calls = mService.getCalls();
 
