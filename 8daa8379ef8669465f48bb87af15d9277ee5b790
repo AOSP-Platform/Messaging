@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b959d36_450697c5",
+        "filename": "tests/src/com/android/messaging/datamodel/action/GetOrCreateConversationActionTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1359095
+      },
+      "writtenOn": "2018-12-01T00:33:58Z",
+      "side": 1,
+      "message": "I don\u0027t understand why it makes sense for the invariant of this test to invert...",
+      "revId": "8daa8379ef8669465f48bb87af15d9277ee5b790",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
