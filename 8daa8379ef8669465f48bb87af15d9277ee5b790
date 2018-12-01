@@ -16,6 +16,24 @@
       "revId": "8daa8379ef8669465f48bb87af15d9277ee5b790",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1e8c67d_29aa9a13",
+        "filename": "tests/src/com/android/messaging/datamodel/action/GetOrCreateConversationActionTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1338311
+      },
+      "writtenOn": "2018-12-01T03:57:01Z",
+      "side": 1,
+      "message": "TestDataFactory.createTestData creates .NUM_TEST_CONVERSATIONS and the blank conversation is the next conversation.\n\nAt line# 93 we assert the new conversation that is created is TestDataFactory.NUM_TEST_CONVERSATIONS+1.\n\nChanged the assert to check for the correct value.",
+      "parentUuid": "7b959d36_450697c5",
+      "revId": "8daa8379ef8669465f48bb87af15d9277ee5b790",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
