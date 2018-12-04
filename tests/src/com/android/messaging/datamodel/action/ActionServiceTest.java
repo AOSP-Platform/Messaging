@@ -30,6 +30,7 @@ import com.android.messaging.FakeContext;
 import com.android.messaging.FakeContext.FakeContextHost;
 import com.android.messaging.FakeFactory;
 import com.android.messaging.datamodel.BugleServiceTestCase;
+import com.android.messaging.datamodel.DataModel;
 import com.android.messaging.datamodel.FakeDataModel;
 import com.android.messaging.datamodel.action.ActionMonitor.ActionCompletedListener;
 import com.android.messaging.datamodel.action.ActionMonitor.ActionStateChangedListener;
@@ -88,13 +89,24 @@ public class ActionServiceTest extends BugleServiceTestCase<ActionServiceImpl>
     public void testChatServiceCreatesIntentAndExecutesAction() {
         final ResultTracker tracker = new ResultTracker();
 
+        final ActionService service = DataModel.get().getActionService();
         final TestChatActionMonitor monitor = new TestChatActionMonitor(null, tracker, this, this);
         final TestChatAction action = new TestChatAction(monitor.getActionKey(), parameter);
 
         action.dontRelyOnMe = dontRelyOnMe;
         assertFalse("Expect service initially stopped", mServiceStarted);
 
-        action.start(monitor);
+        Log.d(TAG, "ChatActionTest mServiceStarted false");
+        synchronized(mWorker) {
+            try {
+                action.start(monitor);
+                // Wait for callback across threads
+                mWorker.wait(2000);
+            } catch (final InterruptedException e) {
+                assertTrue("Interrupted waiting for execution", false);
+            }
+        }
+        Log.d(TAG, "ChatActionTest mServiceStarted true");
 
         assertTrue("Expect service started", mServiceStarted);
 
@@ -163,12 +175,13 @@ public class ActionServiceTest extends BugleServiceTestCase<ActionServiceImpl>
 
         mWorker = new StubBackgroundWorker();
         mContext = new FakeContext(getContext(), this);
-        FakeFactory.registerWithFakeContext(getContext(),mContext)
+        FakeFactory.registerWithFakeContext(getContext(), mContext)
                 .withDataModel(new FakeDataModel(mContext)
                 .withBackgroundWorkerForActionService(mWorker)
                 .withActionService(new ActionService())
                 .withConnectivityUtil(new StubConnectivityUtil(mContext)));
 
+        mLoader = new StubLoader();
         mStates = new ArrayList<Integer>();
         setContext(Factory.get().getApplicationContext());
     }
@@ -182,6 +195,15 @@ public class ActionServiceTest extends BugleServiceTestCase<ActionServiceImpl>
 
     @Override
     public void startServiceForStub(final Intent intent) {
+        Log.d(TAG, "ChatActionTest startServiceForStub");
+        // Do nothing until later
+        assertFalse(mServiceStarted);
+        mServiceStarted = true;
+    }
+
+    @Override
+    public void startForegroundServiceForStub(final Intent intent) {
+        Log.d(TAG, "ChatActionTest startForegroundServiceForStub");
         // Do nothing until later
         assertFalse(mServiceStarted);
         mServiceStarted = true;
@@ -189,6 +211,7 @@ public class ActionServiceTest extends BugleServiceTestCase<ActionServiceImpl>
 
     @Override
     public void onStartCommandForStub(final Intent intent, final int flags, final int startId) {
+        Log.d(TAG, "ChatActionTest onStartCommandForStub");
         assertTrue(mServiceStarted);
     }
 
