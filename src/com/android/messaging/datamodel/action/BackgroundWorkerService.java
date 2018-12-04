@@ -17,9 +17,16 @@
 package com.android.messaging.datamodel.action;
 
 import android.app.IntentService;
+import android.app.IntentService;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 
 import com.android.messaging.Factory;
 import com.android.messaging.datamodel.DataModel;
@@ -97,11 +104,31 @@ public class BackgroundWorkerService extends IntentService {
             LogUtil.v(TAG, "acquiring wakelock for opcode " + opcode);
         }
 
-        if (context.startService(intent) == null) {
-            LogUtil.e(TAG,
-                    "BackgroundWorkerService.startServiceWithAction: failed to start service for "
-                    + opcode);
-            sWakeLock.release(intent, opcode);
+        ContextCompat.startForegroundService(context, intent);
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String CHANNEL_ID = "my_channel_02";
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
+                    "Channel human readable title 2",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).createNotificationChannel(channel);
+            Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setContentTitle("")
+                    .setContentText("").build();
+            int NOTIFICATION_ID = (int) (System.currentTimeMillis()%10000);
+            startForeground(NOTIFICATION_ID, notification);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            stopForeground(true);
         }
     }
 
