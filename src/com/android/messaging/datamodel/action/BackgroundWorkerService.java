@@ -20,6 +20,7 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 
 import com.android.messaging.Factory;
 import com.android.messaging.datamodel.DataModel;
@@ -97,12 +98,7 @@ public class BackgroundWorkerService extends IntentService {
             LogUtil.v(TAG, "acquiring wakelock for opcode " + opcode);
         }
 
-        if (context.startService(intent) == null) {
-            LogUtil.e(TAG,
-                    "BackgroundWorkerService.startServiceWithAction: failed to start service for "
-                    + opcode);
-            sWakeLock.release(intent, opcode);
-        }
+        ContextCompat.startForegroundService(context, intent);
     }
 
     @Override
