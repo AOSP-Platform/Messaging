@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "682d040a_2195839a",
+        "filename": "src/com/android/messaging/datamodel/action/ActionServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2019-02-13T18:41:01Z",
+      "side": 1,
+      "message": "JobIntentService takes care of wakelock automatically",
+      "revId": "a922be87106b7b88d3616e5ad1c1d123e86efd9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7585b35_f0fff059",
+        "filename": "src/com/android/messaging/datamodel/action/BackgroundWorkerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2019-02-13T18:41:01Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 53,
+        "startChar": 26,
+        "endLine": 53,
+        "endChar": 35
+      },
+      "revId": "a922be87106b7b88d3616e5ad1c1d123e86efd9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
