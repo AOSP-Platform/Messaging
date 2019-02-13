@@ -28,6 +28,7 @@ LOCAL_STATIC_ANDROID_LIBRARIES := \
     android-support-core-utils \
     android-support-core-ui \
     android-support-fragment \
+    android-support-v4 \
     android-support-v7-appcompat \
     android-support-v7-palette \
     android-support-v7-recyclerview \
