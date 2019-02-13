@@ -20,6 +20,7 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.JobIntentService;
 
 import com.android.messaging.Factory;
 import com.android.messaging.datamodel.DataModel;
@@ -37,18 +38,24 @@ import java.util.List;
  * Used to actually "send" messages which may take some time and should not block ActionService
  * or UI
  */
-public class BackgroundWorkerService extends IntentService {
+public class BackgroundWorkerService extends JobIntentService {
     private static final String TAG = LogUtil.BUGLE_DATAMODEL_TAG;
     private static final boolean VERBOSE = false;
 
     private static final String WAKELOCK_ID = "bugle_background_worker_wakelock";
+
+    /**
+     * Unique job ID for this service.
+     */
+    public static final int JOB_ID = 1001;
+
     @VisibleForTesting
     static WakeLockHelper sWakeLock = new WakeLockHelper(WAKELOCK_ID);
 
     private final ActionService mHost;
 
     public BackgroundWorkerService() {
-        super("BackgroundWorker");
+        super();
         mHost = DataModel.get().getActionService();
     }
 
@@ -97,16 +104,15 @@ public class BackgroundWorkerService extends IntentService {
             LogUtil.v(TAG, "acquiring wakelock for opcode " + opcode);
         }
 
-        if (context.startService(intent) == null) {
-            LogUtil.e(TAG,
-                    "BackgroundWorkerService.startServiceWithAction: failed to start service for "
-                    + opcode);
-            sWakeLock.release(intent, opcode);
-        }
+        enqueueWork(context, intent);
+    }
+
+    public static void enqueueWork(Context context, Intent work) {
+        enqueueWork(context, BackgroundWorkerService.class, JOB_ID, work);
     }
 
     @Override
-    protected void onHandleIntent(final Intent intent) {
+    protected void onHandleWork(final Intent intent) {
         if (intent == null) {
             // Shouldn't happen but sometimes does following another crash.
             LogUtil.w(TAG, "BackgroundWorkerService.onHandleIntent: Called with null intent");
@@ -125,6 +131,7 @@ public class BackgroundWorkerService extends IntentService {
                 }
 
                 default:
+                    LogUtil.w(TAG, "Unrecognized opcode in BackgroundWorkerService " + opcode);
                     throw new RuntimeException("Unrecognized opcode in BackgroundWorkerService");
             }
         } finally {

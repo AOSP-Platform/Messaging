@@ -24,9 +24,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.support.v4.app.JobIntentService;
 
 import com.android.messaging.Factory;
 import com.android.messaging.datamodel.DataModel;
+import com.android.messaging.util.ConnectivityUtil;
 import com.android.messaging.util.LogUtil;
 import com.android.messaging.util.LoggingTimer;
 import com.android.messaging.util.WakeLockHelper;
@@ -35,12 +37,17 @@ import com.google.common.annotations.VisibleForTesting;
 /**
  * ActionService used to perform background processing for data model
  */
-public class ActionServiceImpl extends IntentService {
+public class ActionServiceImpl extends JobIntentService {
     private static final String TAG = LogUtil.BUGLE_DATAMODEL_TAG;
     private static final boolean VERBOSE = false;
 
+    /**
+     * Unique job ID for this service.
+     */
+    public static final int JOB_ID = 1000;
+
     public ActionServiceImpl() {
-        super("ActionService");
+        super();
     }
 
     /**
@@ -128,6 +135,7 @@ public class ActionServiceImpl extends IntentService {
     protected static final String BUNDLE_ACTION = "bundle_action";
 
     private BackgroundWorker mBackgroundWorker;
+    private ConnectivityUtil mConnectivityUtil;
 
     /**
      * Allocate an intent with a specific opcode.
@@ -206,13 +214,14 @@ public class ActionServiceImpl extends IntentService {
     public void onCreate() {
         super.onCreate();
         mBackgroundWorker = DataModel.get().getBackgroundWorkerForActionService();
-        DataModel.get().getConnectivityUtil().registerForSignalStrength();
+        mConnectivityUtil = DataModel.get().getConnectivityUtil();
+        mConnectivityUtil.registerForSignalStrength();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        DataModel.get().getConnectivityUtil().unregisterForSignalStrength();
+        mConnectivityUtil.unregisterForSignalStrength();
     }
 
     private static final String WAKELOCK_ID = "bugle_datamodel_service_wakelock";
@@ -231,24 +240,18 @@ public class ActionServiceImpl extends IntentService {
         }
         sWakeLock.acquire(context, intent, opcode);
         intent.setClass(context, ActionServiceImpl.class);
+        enqueueWork(context, intent);
+    }
 
-        // TODO: Note that intent will be quietly discarded if it exceeds available rpc
-        // memory (in total around 1MB). See this article for background
-        // http://developer.android.com/reference/android/os/TransactionTooLargeException.html
-        // Perhaps we should keep large structures in the action monitor?
-        if (context.startService(intent) == null) {
-            LogUtil.e(TAG,
-                    "ActionService.startServiceWithIntent: failed to start service for intent "
-                    + intent);
-            sWakeLock.release(intent, opcode);
-        }
+    public static void enqueueWork(Context context, Intent work) {
+        enqueueWork(context, ActionServiceImpl.class, JOB_ID, work);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected void onHandleIntent(final Intent intent) {
+    protected void onHandleWork(final Intent intent) {
         if (intent == null) {
             // Shouldn't happen but sometimes does following another crash.
             LogUtil.w(TAG, "ActionService.onHandleIntent: Called with null intent");

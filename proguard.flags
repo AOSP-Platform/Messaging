@@ -28,6 +28,10 @@
   @com.android.messaging.annotation.VisibleForAnimation *;
 }
 
+-keepclassmembers class * {
+  @com.android.messaging.ui.contact.ContactPickerFragment *;
+}
+
 -keep public class * extends android.app.Activity
 -keep public class * extends android.app.Application
 -keep public class * extends android.app.Service
