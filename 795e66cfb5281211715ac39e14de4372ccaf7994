@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1f00405_5a0e451d",
+        "filename": "src/com/android/messaging/datamodel/action/ActionServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2019-02-14T14:12:59Z",
+      "side": 1,
+      "message": "Unused",
+      "revId": "795e66cfb5281211715ac39e14de4372ccaf7994",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15035a94_f25043af",
+        "filename": "src/com/android/messaging/datamodel/action/BackgroundWorkerService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2019-02-14T14:12:59Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 33
+      },
+      "revId": "795e66cfb5281211715ac39e14de4372ccaf7994",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
