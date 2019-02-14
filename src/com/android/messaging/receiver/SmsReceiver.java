@@ -17,6 +17,7 @@
 package com.android.messaging.receiver;
 
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -48,6 +49,7 @@ import com.android.messaging.util.BugleGservices;
 import com.android.messaging.util.BugleGservicesKeys;
 import com.android.messaging.util.DebugUtils;
 import com.android.messaging.util.LogUtil;
+import com.android.messaging.util.NotificationsUtil;
 import com.android.messaging.util.OsUtil;
 import com.android.messaging.util.PendingIntentConstants;
 import com.android.messaging.util.PhoneUtils;
@@ -252,11 +254,6 @@ public final class SmsReceiver extends BroadcastReceiver {
         protected Style build(Builder builder) {
             return null;
         }
-
-        @Override
-        public boolean getNotificationVibrate() {
-            return true;
-        }
     }
 
     public static void postNewMessageSecondaryUserNotification() {
@@ -265,7 +262,8 @@ public final class SmsReceiver extends BroadcastReceiver {
         final PendingIntent pendingIntent = UIIntents.get()
                 .getPendingIntentForSecondaryUserNewMessageNotification(context);
 
-        final NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        final NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(context, NotificationsUtil.DEFAULT_CHANNEL_ID);
         builder.setContentTitle(resources.getString(R.string.secondary_user_new_message_title))
                 .setTicker(resources.getString(R.string.secondary_user_new_message_ticker))
                 .setSmallIcon(R.drawable.ic_sms_light)
@@ -282,12 +280,14 @@ public final class SmsReceiver extends BroadcastReceiver {
         final NotificationManagerCompat notificationManager =
                 NotificationManagerCompat.from(Factory.get().getApplicationContext());
 
-        int defaults = Notification.DEFAULT_LIGHTS;
-        if (BugleNotifications.shouldVibrate(new SecondaryUserNotificationState())) {
-            defaults |= Notification.DEFAULT_VIBRATE;
-        }
+        int defaults = Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE;
         notification.defaults = defaults;
 
+        NotificationsUtil.createNotificationChannel(context,
+                NotificationsUtil.DEFAULT_CHANNEL_ID,
+                R.string.notification_channel_messages_title,
+                NotificationManager.IMPORTANCE_HIGH,
+                null);
         notificationManager.notify(getNotificationTag(),
                 PendingIntentConstants.SMS_SECONDARY_USER_NOTIFICATION_ID, notification);
     }
