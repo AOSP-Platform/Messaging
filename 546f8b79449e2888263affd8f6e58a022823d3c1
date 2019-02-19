@@ -22,6 +22,30 @@
       "revId": "546f8b79449e2888263affd8f6e58a022823d3c1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7364ba0b_9353ffa4",
+        "filename": "proguard.flags",
+        "patchSetId": 15
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1338311
+      },
+      "writtenOn": "2019-02-19T20:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dc516f1_d71444bf",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 1
+      },
+      "revId": "546f8b79449e2888263affd8f6e58a022823d3c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
