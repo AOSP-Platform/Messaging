@@ -37,6 +37,7 @@ LOCAL_JAVA_LIBRARIES := \
     android.test.runner.stubs \
     android.test.base.stubs \
 
+LOCAL_COMPATIBILITY_SUITE := device-tests
 
 include $(BUILD_PACKAGE)
 
