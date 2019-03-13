@@ -57,6 +57,12 @@ endif
 
 LOCAL_PROGUARD_ENABLED := obfuscation optimization
 
+# TODO: b/35788202
+ifndef LOCAL_JACK_ENABLED
+  LOCAL_PROGUARD_ENABLED := disabled
+  LOCAL_DX_FLAGS := --multi-dex
+endif
+
 LOCAL_PROGUARD_FLAG_FILES := proguard.flags
 ifeq (eng,$(TARGET_BUILD_VARIANT))
     LOCAL_PROGUARD_FLAG_FILES += proguard-test.flags
@@ -71,6 +77,8 @@ LOCAL_CERTIFICATE := platform
 LOCAL_SDK_VERSION := current
 
 LOCAL_COMPATIBILITY_SUITE := device-tests
+
+LOCAL_MODULE_PATH := $(TARGET_OUT_APPS)
 
 include $(BUILD_PACKAGE)
 
