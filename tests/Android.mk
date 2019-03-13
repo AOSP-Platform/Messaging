@@ -27,6 +27,8 @@ LOCAL_INSTRUMENTATION_FOR := messaging
 # Matching ../Android.mk
 LOCAL_SDK_VERSION := current
 
+LOCAL_COMPATIBILITY_SUITE := device-tests
+
 LOCAL_CERTIFICATE := platform
 
 LOCAL_STATIC_JAVA_LIBRARIES := \
