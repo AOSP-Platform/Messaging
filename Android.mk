@@ -72,6 +72,8 @@ LOCAL_SDK_VERSION := current
 
 LOCAL_COMPATIBILITY_SUITE := device-tests
 
+LOCAL_MODULE_PATH := $(TARGET_OUT_APPS)
+
 include $(BUILD_PACKAGE)
 
 include $(call all-makefiles-under, $(LOCAL_PATH))
