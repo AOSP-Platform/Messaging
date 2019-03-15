@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1823381d_ebdde015",
+        "filename": "Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1308044
+      },
+      "writtenOn": "2019-03-15T22:54:08Z",
+      "side": 0,
+      "message": "Try to Keep this line and add one more :)\nLOCAL_MODULE_PATH :\u003d $(TARGET_OUT_APPS)",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 41
+      },
+      "revId": "bada9f9b46ecd526e478d343eeb80f97962fb0eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
