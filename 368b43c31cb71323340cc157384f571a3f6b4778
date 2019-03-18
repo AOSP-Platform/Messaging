@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ab925d8a_645cfd50",
+        "filename": "tests/Android.mk",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1338311
+      },
+      "writtenOn": "2019-03-18T17:19:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c8bf670_f2e233e4",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 39
+      },
+      "revId": "368b43c31cb71323340cc157384f571a3f6b4778",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eae24f26_32b7dd4e",
         "filename": "tests/AndroidTest.xml",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "368b43c31cb71323340cc157384f571a3f6b4778",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6489745_ce82cbf4",
+        "filename": "tests/AndroidTest.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1338311
+      },
+      "writtenOn": "2019-03-18T17:19:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eae24f26_32b7dd4e",
+      "range": {
+        "startLine": 2,
+        "startChar": 19,
+        "endLine": 2,
+        "endChar": 23
+      },
+      "revId": "368b43c31cb71323340cc157384f571a3f6b4778",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
