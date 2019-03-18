@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c8bf670_f2e233e4",
+        "filename": "tests/Android.mk",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1308044
+      },
+      "writtenOn": "2019-03-18T02:55:57Z",
+      "side": 1,
+      "message": "I think you don\u0027t need this line for test apk? Due to we don\u0027t want this application to be build in Rom.",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 39
+      },
+      "revId": "368b43c31cb71323340cc157384f571a3f6b4778",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eae24f26_32b7dd4e",
+        "filename": "tests/AndroidTest.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1308044
+      },
+      "writtenOn": "2019-03-18T02:55:57Z",
+      "side": 1,
+      "message": "nit: Sorry, the xml I provide is 2017, maybe change it to 2019.",
+      "range": {
+        "startLine": 2,
+        "startChar": 19,
+        "endLine": 2,
+        "endChar": 23
+      },
+      "revId": "368b43c31cb71323340cc157384f571a3f6b4778",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
