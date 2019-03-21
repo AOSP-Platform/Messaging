@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "595f85c9_464554c5",
+        "filename": "Android.mk",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1308044
+      },
+      "writtenOn": "2019-03-21T03:33:58Z",
+      "side": 1,
+      "message": "I think JACK server for generating dex file is already deprecated now.\nThe if statement here is more likely no need from my point of view.\nBut I am not sure if just disbale proguard for messaging is allowed, I mean it works but not sure if it\u0027s break any android\u0027s policy. :(",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 25
+      },
+      "revId": "9f1596c13b96795b39f68c7cb4a12e0f178c5692",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20613bfe_d846794c",
+        "filename": "proguard-release.flags",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1308044
+      },
+      "writtenOn": "2019-03-21T03:33:58Z",
+      "side": 1,
+      "message": "If both test and release has the same rule.\nPut it in proguard.flags should be more reasonable.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 53
+      },
+      "revId": "9f1596c13b96795b39f68c7cb4a12e0f178c5692",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
