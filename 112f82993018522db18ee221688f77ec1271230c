@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dafbe4b_f36a357c",
+        "filename": "Android.mk",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1083173
+      },
+      "writtenOn": "2019-04-02T16:59:41Z",
+      "side": 1,
+      "message": "Why do you need this?",
+      "revId": "112f82993018522db18ee221688f77ec1271230c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79db25d6_2f795b23",
+        "filename": "tests/Android.mk",
+        "patchSetId": 12
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1083173
+      },
+      "writtenOn": "2019-04-02T16:59:41Z",
+      "side": 1,
+      "message": "Use general-tests",
+      "revId": "112f82993018522db18ee221688f77ec1271230c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
