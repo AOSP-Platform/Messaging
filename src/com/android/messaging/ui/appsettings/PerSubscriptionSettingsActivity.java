@@ -31,6 +31,7 @@ import android.preference.PreferenceScreen;
 import androidx.core.app.NavUtils;
 import android.text.TextUtils;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.android.messaging.Factory;
 import com.android.messaging.R;
@@ -47,6 +48,7 @@ import com.android.messaging.util.LogUtil;
 import com.android.messaging.util.PhoneUtils;
 
 public class PerSubscriptionSettingsActivity extends BugleActionBarActivity {
+    private static final String NO_SMSC_STRING = "No SMSC";
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,9 +81,11 @@ public class PerSubscriptionSettingsActivity extends BugleActionBarActivity {
     public static class PerSubscriptionSettingsFragment extends PreferenceFragment
             implements OnSharedPreferenceChangeListener {
         private PhoneNumberPreference mPhoneNumberPreference;
+        private SmscPreference mSmscPreference;
         private Preference mGroupMmsPreference;
         private String mGroupMmsPrefKey;
         private String mPhoneNumberKey;
+        private String mSmscKey;
         private int mSubId;
 
         public PerSubscriptionSettingsFragment() {
@@ -131,6 +135,21 @@ public class PerSubscriptionSettingsActivity extends BugleActionBarActivity {
                 updateGroupMmsPrefSummary();
             }
 
+            mSmscKey =  getString(R.string.sim_smsc_pref_key);
+            mSmscPreference = (SmscPreference) findPreference(mSmscKey);
+            if(!PhoneUtils.getDefault().hasSim()){
+                advancedCategory.removePreference(mSmscPreference);
+            } else {
+                final String mSmsc = PhoneUtils.get(mSubId).getSmscAddressBySubId(mSubId);
+                if(!NO_SMSC_STRING.equals(mSmsc)){
+                    mSmscPreference.setDefaultSmsc(mSmsc, mSubId);
+                    mSmscPreference.setSummary(mSmsc);
+                } else{
+                    mSmscPreference.setDefaultSmsc("", mSubId);
+                    mSmscPreference.setSummary(NO_SMSC_STRING);
+                }
+            }
+
             if (!MmsConfig.get(mSubId).getSMSDeliveryReportsEnabled()) {
                 final Preference deliveryReportsPref = findPreference(
                         getString(R.string.delivery_reports_pref_key));
@@ -178,6 +197,7 @@ public class PerSubscriptionSettingsActivity extends BugleActionBarActivity {
             // above first so that the user sees the correct information on the screen
             if (!PhoneUtils.getDefault().isDefaultSmsApp()) {
                 mGroupMmsPreference.setEnabled(false);
+                mSmscPreference.setEnabled(false);
                 final Preference autoRetrieveMmsPreference =
                         findPreference(getString(R.string.auto_retrieve_mms_pref_key));
                 autoRetrieveMmsPreference.setEnabled(false);
@@ -233,6 +253,20 @@ public class PerSubscriptionSettingsActivity extends BugleActionBarActivity {
                 // Update the self participants so the new phone number will be reflected
                 // everywhere in the UI.
                 ParticipantRefresh.refreshSelfParticipants();
+            } else if (key.equals(mSmscKey)) {
+                if(!PhoneUtils.get(mSubId).setSmscAddressBySubId(mSmscPreference.getText().toString(), mSubId)){
+                    Toast.makeText(getActivity().getApplicationContext(), "Update SMSC Failed", Toast.LENGTH_SHORT).show();
+                } else{
+                    Toast.makeText(getActivity().getApplicationContext(), "Update SMSC Sucess", Toast.LENGTH_SHORT).show();
+                    final String smsc = PhoneUtils.get(mSubId).getSmscAddressBySubId(mSubId);
+                    if(!NO_SMSC_STRING.equals(smsc)){
+                        mSmscPreference.setDefaultSmsc(smsc, mSubId);
+                        mSmscPreference.setSummary(smsc);
+                    } else{
+                        mSmscPreference.setDefaultSmsc("", mSubId);
+                        mSmscPreference.setSummary(NO_SMSC_STRING);
+                    }
+                }
             }
         }
 
