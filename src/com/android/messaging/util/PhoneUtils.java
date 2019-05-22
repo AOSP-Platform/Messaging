@@ -680,6 +680,24 @@ public abstract class PhoneUtils {
     }
 
     /**
+     * Get default SMSC address for a given subid
+     *
+     * @return default SMSC address for a given subid
+     */
+    public String getSmscAddressBySubId(int subId) {
+        return mTelephonyManager.getSmscAddressBySubId(subId);
+    }
+
+    /**
+     * Set default SMSC address for a given subid
+     *
+     * @return true if Smsc is set and correct.
+     */
+    public boolean setSmscAddressBySubId(String smsc, int subId) {
+        return mTelephonyManager.setSmscAddressBySubId(smsc, subId);
+    }
+
+    /**
      * Get the ISO country code from system locale setting
      *
      * @return the ISO country code from system locale
