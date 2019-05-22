@@ -270,6 +270,10 @@
     <string name="delete_message_confirmation_dialog_text">This action cannot be undone.</string>
     <string name="delete_message_confirmation_button">Delete</string>
 
+    <!-- Title for the preference for SMSC -->
+    <string name="sim_smsc_pref_title">SMSC</string>
+    <string name="sim_smsc_pref_summary">No SMSC</string>
+
     <!-- Alert dialog title to accept or decline deleting conversation(s). -->
     <plurals name="delete_conversations_confirmation_dialog_title">
         <item quantity="one">Delete this conversation?</item>
