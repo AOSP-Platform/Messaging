@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41eea391_449b96a8",
+        "filename": "tests/src/com/android/messaging/datamodel/action/GetOrCreateConversationActionTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1338311
+      },
+      "writtenOn": "2019-06-25T16:57:23Z",
+      "side": 1,
+      "message": "parseInt((String) result)); -\u003e parseInt((String)result));",
+      "range": {
+        "startLine": 89,
+        "startChar": 71,
+        "endLine": 89,
+        "endChar": 77
+      },
+      "revId": "a019a9da5ca9ef169242f0f33698231eb5144bea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
