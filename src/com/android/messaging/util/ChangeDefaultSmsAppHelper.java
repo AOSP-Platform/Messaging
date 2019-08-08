@@ -53,16 +53,11 @@ public class ChangeDefaultSmsAppHelper {
             final Activity activity, final Fragment fragment) {
         final PhoneUtils phoneUtils = PhoneUtils.getDefault();
         final boolean isSmsCapable = phoneUtils.isSmsCapable();
-        final boolean hasPreferredSmsSim = phoneUtils.getHasPreferredSmsSim();
         final boolean isDefaultSmsApp = phoneUtils.isDefaultSmsApp();
 
         // Supports SMS?
         if (!isSmsCapable) {
             UiUtils.showToast(R.string.sms_disabled);
-
-        // Has a preferred sim?
-        } else if (!hasPreferredSmsSim) {
-            UiUtils.showToast(R.string.no_preferred_sim_selected);
 
         // Is the default sms app?
         } else if (!isDefaultSmsApp) {
@@ -73,7 +68,6 @@ public class ChangeDefaultSmsAppHelper {
 
         LogUtil.w(LogUtil.BUGLE_TAG, "Unsatisfied action condition: "
                 + "isSmsCapable=" + isSmsCapable + ", "
-                + "hasPreferredSmsSim=" + hasPreferredSmsSim + ", "
                 + "isDefaultSmsApp=" + isDefaultSmsApp);
     }
 
