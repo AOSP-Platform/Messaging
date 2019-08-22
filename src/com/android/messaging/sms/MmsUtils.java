@@ -35,6 +35,7 @@ import android.provider.Settings;
 import android.provider.Telephony;
 import android.provider.Telephony.Mms;
 import android.provider.Telephony.Sms;
+import android.provider.Telephony.TextBasedSmsColumns;
 import android.provider.Telephony.Threads;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
@@ -67,6 +68,7 @@ import com.android.messaging.mmslib.pdu.RetrieveConf;
 import com.android.messaging.mmslib.pdu.SendConf;
 import com.android.messaging.mmslib.pdu.SendReq;
 import com.android.messaging.sms.SmsSender.SendResult;
+import com.android.messaging.ui.appsettings.SimMessageListActivity;
 import com.android.messaging.util.Assert;
 import com.android.messaging.util.BugleGservices;
 import com.android.messaging.util.BugleGservicesKeys;
@@ -2578,6 +2580,33 @@ public class MmsUtils {
     public static int deleteMessage(final Uri messageUri) {
         final ContentResolver resolver = Factory.get().getApplicationContext().getContentResolver();
         return resolver.delete(messageUri, null /* selection */, null /* selectionArgs */);
+    }
+
+    public static boolean copyMessageToSim(final Context context, ContentValues values) {
+
+        Uri uri = SimMessageListActivity.ICC_SUCCESS_URI;
+        int subId = values.getAsInteger(TextBasedSmsColumns.SUBSCRIPTION_ID);
+
+        // Divide the input message by SMS length limit
+        final SmsManager smsManager = PhoneUtils.get(subId).getSmsManager();
+        final ArrayList<String> messages = smsManager.divideMessage(values.getAsString(Sms.BODY));
+        if (messages == null || messages.size() < 1) {
+            LogUtil.e(TAG, "copyMessageToSIM: fails to divide message");
+            return false;
+        }
+
+        for (int i = 0; i < messages.size(); i++) {
+            String text = (String) messages.get(i);
+            values.put(Sms.BODY, text);
+            uri = SqliteWrapper.insert(context, context.getContentResolver(),
+                    SimMessageListActivity.ICC_URI, values);
+            // TODO: should we return when one the part failed or continue with remaining parts?
+            if (!uri.equals(SimMessageListActivity.ICC_SUCCESS_URI)) return false;
+        }
+        if (uri.equals(SimMessageListActivity.ICC_SUCCESS_URI)) {
+            return true;
+        }
+        return false;
     }
 
     public static byte[] createDebugNotificationInd(final String fileName) {

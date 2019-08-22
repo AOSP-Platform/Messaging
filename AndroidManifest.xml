@@ -199,6 +199,22 @@
             </intent-filter>
         </activity>
 
+        <!-- Display sim messages -->
+        <activity
+            android:name=".ui.appsettings.SimMessageListActivity"
+            android:label="@string/sim_messages_activity_title"
+            android:theme="@style/BugleTheme.SettingsActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="user"
+            android:parentActivityName="com.android.messaging.ui.appsettings.PerSubscriptionSettingsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.android.messaging.ui.conversationlist.SettingsActivity" />
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+
         <!-- Handles sharing intent -->
         <activity
             android:name=".ui.conversationlist.ShareIntentActivity"

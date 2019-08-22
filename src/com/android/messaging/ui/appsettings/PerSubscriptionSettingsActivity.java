@@ -131,6 +131,23 @@ public class PerSubscriptionSettingsActivity extends BugleActionBarActivity {
                 updateGroupMmsPrefSummary();
             }
 
+            final PreferenceScreen copyToSIM = (PreferenceScreen) findPreference(
+                    getString(R.string.sim_messages_key));
+            copyToSIM.setOnPreferenceClickListener(
+                    new Preference.OnPreferenceClickListener() {
+                        @Override
+                        public boolean onPreferenceClick(final Preference preference) {
+                            try {
+                                UIIntents.get()
+                                        .launchSIMMessagesListActivity(getActivity(), mSubId);
+                            } catch (final ActivityNotFoundException e) {
+                                LogUtil.e(LogUtil.BUGLE_TAG,
+                                        "Failed to launch sms alerts activity", e);
+                            }
+                            return true;
+                        }
+                    });
+
             if (!MmsConfig.get(mSubId).getSMSDeliveryReportsEnabled()) {
                 final Preference deliveryReportsPref = findPreference(
                         getString(R.string.delivery_reports_pref_key));

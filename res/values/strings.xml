@@ -265,10 +265,36 @@
     <string name="action_send">Send</string>
     <!-- Action menu title for deleting failed message selected in conversation -->
     <string name="action_delete_message">Delete</string>
+    <!-- Action menu title for copy message to SIM -->
+    <string name="action_copy_to_sim">Copy message to SIM</string>
 
     <string name="delete_message_confirmation_dialog_title">Delete this message?</string>
     <string name="delete_message_confirmation_dialog_text">This action cannot be undone.</string>
     <string name="delete_message_confirmation_button">Delete</string>
+
+    <!-- Manage SIM Messages -->
+    <!-- Menu title to delete selected message from the SIM card. -->
+    <string name="sim_delete">Delete</string>
+    <!-- Message that appears on the screen when the SIM card is empty-->
+    <string name="sim_empty">No messages on SIM card.</string>
+    <!-- Message that appears when messages are being retrieved -->
+    <string name="refreshing">Refreshing\u2026</string>
+    <!-- Delete the selected message on SIM dialog message -->
+    <string name="confirm_delete_sim_message">This message on the SIM card will be deleted.</string>
+    <!-- Text to be used for positive response button in dialog box -->
+    <string name="yes">OK</string>
+    <!-- Text to be used for negative response button in dialog box -->
+    <string name="no">Cancel</string>
+    <!-- Delete confirmation dialog title -->
+    <string name="confirm_dialog_title">Delete?</string>
+    <!-- Menu title for deleting messages on the SIM card. -->
+    <string name="menu_delete_messages">Delete messages</string>
+    <string name="copy_to_sim_success_toast">Copy to SIM successful</string>
+    <string name="copy_to_sim_failed_toast">Failed to copy to SIM</string>
+    <string name="select_copy_sim_card">Select SIM card</string>
+    <string name="select_sim_card_messages">Show SIM Card Messages</string>
+    <string name="sim_progress_dialog_title">Text messages on SIM card</string>
+    <string name="sim_progress_dialog_message">Loading. Please wait\u2026</string>
 
     <!-- Alert dialog title to accept or decline deleting conversation(s). -->
     <plurals name="delete_conversations_confirmation_dialog_title">
@@ -425,6 +451,8 @@
 
     <!-- Title for the preferences/settings activity -->
     <string name="settings_activity_title">Settings</string>
+    <!-- Title for the SIM Messages activity -->
+    <string name="sim_messages_activity_title">SIM Messages</string>
     <!-- Title for the archived conversations activity -->
     <string name="archived_activity_title">Archived</string>
     <!-- Action title: Close -->
