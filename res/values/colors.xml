@@ -171,4 +171,9 @@
     <color name="fastscroll_preview_text_color">#ffffff</color>
 
     <color name="google_gray">#F1F1F1</color>
+
+    <color name="sim_messages_background_color">@color/primary_color</color>
+    <color name="sim_messages_background_color_dark">#ffffff</color>
+    <color name="text_message_sim_primary">#424242</color>
+    <color name="text_message_sim_secondary">#6d6d6d</color>
 </resources>

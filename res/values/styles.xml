@@ -67,6 +67,11 @@
         <item name="android:textSize">@dimen/settings_list_text_size</item>
     </style>
 
+    <style name="BugleTheme.SIMMessagesListActivity" parent="BugleTheme">
+        <item name="colorPrimary">@color/sim_messages_background_color</item>
+        <item name="colorPrimaryDark">@color/sim_messages_background_color_dark</item>
+    </style>
+
     <style name="Invisible" parent="BugleBaseTheme">
         <item name="android:windowBackground">@null</item>
         <item name="android:windowContentOverlay">@null</item>

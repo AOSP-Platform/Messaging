@@ -26,6 +26,7 @@ import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
@@ -42,6 +43,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Message;
 import android.os.Parcelable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.core.text.BidiFormatter;
@@ -51,6 +53,11 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
+import android.provider.Telephony.Sms;
+import android.provider.Telephony.TextBasedSmsColumns;
+import android.telephony.SmsManager;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 import android.text.TextUtils;
 import android.view.ActionMode;
 import android.view.Display;
@@ -61,7 +68,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.messaging.R;
 import com.android.messaging.datamodel.DataModel;
@@ -80,6 +89,7 @@ import com.android.messaging.datamodel.data.MessageData;
 import com.android.messaging.datamodel.data.MessagePartData;
 import com.android.messaging.datamodel.data.ParticipantData;
 import com.android.messaging.datamodel.data.SubscriptionListData.SubscriptionListEntry;
+import com.android.messaging.sms.MmsUtils;
 import com.android.messaging.ui.AttachmentPreview;
 import com.android.messaging.ui.BugleActionBarActivity;
 import com.android.messaging.ui.ConversationDrawables;
@@ -138,6 +148,10 @@ public class ConversationFragment extends Fragment implements ConversationDataLi
     // We animate the message from draft to message list, if we the message doesn't show up in the
     // list within this time limit, then we just do a fade in animation instead
     public static final int MESSAGE_ANIMATION_MAX_WAIT = 500;
+
+    private static boolean copyMsgToSimResult;
+    public static final int COPY_TO_SIM_SUCCESS = 0;
+    public static final int COPY_TO_SIM_FAILED = 1;
 
     private ComposeMessageView mComposeMessageView;
     private RecyclerView mRecyclerView;
@@ -367,8 +381,133 @@ public class ConversationFragment extends Fragment implements ConversationDataLi
                     UIIntents.get().launchForwardMessageActivity(getActivity(), message);
                     mHost.dismissActionMode();
                     return true;
+                case  R.id.action_copy_sms_to_sim: {
+                    int msgStatus = getMessageStatus(data.getIsIncoming(), data.getIsSeen(),
+                            data.getIsSendComplete());
+                    // timestamp required to create deliver pdu only
+                    long timestamp = data.getReceivedTimeStamp();
+
+                    // Make sure the sim card is ready and get the SubId.
+                    Context context = getActivity();
+                    final List<SubscriptionInfo> activeSubInfos = SubscriptionManager
+                            .from(context).getActiveSubscriptionInfoList();
+                    if (activeSubInfos == null || activeSubInfos.size() == 0) {
+                        if (LogUtil.isLoggable(LogUtil.BUGLE_TAG, LogUtil.VERBOSE)) {
+                            LogUtil.v(LogUtil.BUGLE_TAG, "Empty active sub info, return");
+                        }
+                    } else if (activeSubInfos.size() == 1) {
+                        return copyMessageToSimCard(data.getText(),
+                            mBinding.getData().getOtherParticipant().getNormalizedDestination(),
+                            timestamp, msgStatus, activeSubInfos.get(0).getSubscriptionId());
+                    } else {
+                        ArrayAdapter<SubscriptionInfo> subIdAdapater = 
+                                new ArrayAdapter<SubscriptionInfo>(context,
+                                android.R.layout.select_dialog_item, activeSubInfos) {
+                            public View getView(int position, View convertView, ViewGroup parent) {
+                                if (convertView == null) {
+                                    convertView = super.getView(position, convertView, parent);
+                                }
+                                SubscriptionInfo subInfo = getItem(position);
+                                TextView tv = (TextView)convertView;
+                                tv.setText(subInfo.getDisplayName());   
+                                return convertView;
+                            }
+                        };
+                        AlertDialog.Builder builder= new AlertDialog.Builder(context);
+                        DialogInterface.OnClickListener click = new DialogInterface.OnClickListener() {
+                            @Override
+                            public final void onClick(DialogInterface dialog, int which) {
+                                if (which >= 0 && which < activeSubInfos.size()) {
+                                    copyMessageToSimCard(data.getText(),
+                                            mBinding.getData().getOtherParticipant()
+                                            .getNormalizedDestination(), timestamp, msgStatus,
+                                            activeSubInfos.get(which).getSubscriptionId());
+                                }
+                                dialog.dismiss();
+                                activeSubInfos.clear();
+                            }
+                        };
+                        builder.setTitle(R.string.select_copy_sim_card);
+                        builder.setCancelable(true);
+                        builder.setAdapter(subIdAdapater, click);
+                        builder.setNegativeButton(android.R.string.cancel,
+                                new DialogInterface.OnClickListener() {
+                            @Override
+                            public final void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                activeSubInfos.clear();
+                            }
+                        });
+                        builder.show();
+                    }
+                    mHost.dismissActionMode();
+                    return true;
+                }
             }
             return false;
+        }
+
+        private int getMessageStatus(boolean incoming, boolean seen, boolean sent){
+            int status = SmsManager.STATUS_ON_ICC_FREE;;
+            if (incoming && seen) {
+                status = SmsManager.STATUS_ON_ICC_READ;
+            } else if (incoming && !seen) {
+                status = SmsManager.STATUS_ON_ICC_UNREAD;
+            } else if (sent) {
+                status = SmsManager.STATUS_ON_ICC_SENT;
+            } else if (!sent) {
+                status = SmsManager.STATUS_ON_ICC_UNSENT;
+            }
+            return status;
+        }
+
+        public boolean copyMessageToSimCard(final String body, final String address,
+                final long timestamp,final int status, final int subId) {
+            new Thread(new Runnable() {
+                public void run() {
+                    ContentValues values = new ContentValues();
+                    values.put(TextBasedSmsColumns.SUBSCRIPTION_ID, subId);
+                    values.put(Sms.BODY, body);
+                    values.put(Sms.ADDRESS, address);
+                    values.put(Sms.DATE, timestamp);
+                    values.put(Sms.STATUS, status);
+                    Context context = getActivity();
+                    copyMsgToSimResult =  MmsUtils.copyMessageToSim(context, values);
+                    if (copyMsgToSimResult) {
+                        showToastMessage(COPY_TO_SIM_SUCCESS);
+                    } else {
+                        showToastMessage(COPY_TO_SIM_FAILED);
+                    }
+                }
+            }).start();
+            return true;
+        }
+
+        // Handler to handle toast messages
+        private final Handler mShowToastHandler = new Handler() {
+            public void handleMessage(Message msg) {
+                String result = "";
+                switch(msg.what){
+                    case COPY_TO_SIM_SUCCESS:
+                        result = "Copy to SIM Successful";
+                        break;
+                    case COPY_TO_SIM_FAILED:
+                        result = "Copy to SIM Failed";
+                        break;
+                }
+                Toast.makeText(getActivity(), result, Toast.LENGTH_LONG).show();
+            }
+        };
+
+        private void showToastMessage(int id) {
+            Message message = new Message();
+            if (id == COPY_TO_SIM_SUCCESS) {
+                message.what = COPY_TO_SIM_SUCCESS;
+                mShowToastHandler.sendMessage(message);
+            } else {
+                message.what = COPY_TO_SIM_FAILED;
+                mShowToastHandler.sendMessage(message);
+            }
         }
 
         private void shareMessage(final ConversationMessageData data) {

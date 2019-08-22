@@ -242,6 +242,11 @@ public abstract class UIIntents {
     public abstract void launchApplicationSettingsActivity(Context context, boolean topLevel);
 
     /**
+     * Launch an activity to show SIM messages
+     */
+    public abstract void launchSIMMessagesListActivity(final Context context, final int subId);
+
+    /**
      * Launch an activity to show per-subscription settings
      */
     public abstract void launchPerSubscriptionSettingsActivity(Context context, int subId,

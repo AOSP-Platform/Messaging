@@ -54,6 +54,7 @@ import com.android.messaging.ui.appsettings.ApnSettingsActivity;
 import com.android.messaging.ui.appsettings.ApplicationSettingsActivity;
 import com.android.messaging.ui.appsettings.PerSubscriptionSettingsActivity;
 import com.android.messaging.ui.appsettings.SettingsActivity;
+import com.android.messaging.ui.appsettings.SimMessageListActivity;
 import com.android.messaging.ui.attachmentchooser.AttachmentChooserActivity;
 import com.android.messaging.ui.conversation.ConversationActivity;
 import com.android.messaging.ui.conversation.LaunchConversationActivity;
@@ -218,6 +219,13 @@ public class UIIntentsImpl extends UIIntents {
     @Override
     public void launchSettingsActivity(final Context context) {
         final Intent intent = new Intent(context, SettingsActivity.class);
+        context.startActivity(intent);
+    }
+
+    @Override
+    public void launchSIMMessagesListActivity(final Context context, final int subId) {
+        final Intent intent = new Intent(context, SimMessageListActivity.class);
+        intent.putExtra(UI_INTENT_EXTRA_SUB_ID, subId);
         context.startActivity(intent);
     }
 
