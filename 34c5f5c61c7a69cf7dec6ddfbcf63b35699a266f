@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57ed8d47_857021ab",
+        "filename": "src/com/android/messaging/sms/MmsUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2305,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2019-09-04T06:04:01Z",
+      "side": 1,
+      "message": "What is the purpose?",
+      "range": {
+        "startLine": 2294,
+        "startChar": 0,
+        "endLine": 2305,
+        "endChar": 17
+      },
+      "revId": "34c5f5c61c7a69cf7dec6ddfbcf63b35699a266f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
