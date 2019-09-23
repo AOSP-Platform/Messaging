@@ -46,6 +46,30 @@
       "revId": "34c5f5c61c7a69cf7dec6ddfbcf63b35699a266f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1299a59d_e70876d3",
+        "filename": "src/com/android/messaging/sms/MmsUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2305,
+      "author": {
+        "id": 1126634
+      },
+      "writtenOn": "2019-09-23T07:43:56Z",
+      "side": 1,
+      "message": "The just store the pdu to telephony db for later usage if required.",
+      "parentUuid": "8c9ceacd_b4dd9d71",
+      "range": {
+        "startLine": 2294,
+        "startChar": 0,
+        "endLine": 2305,
+        "endChar": 17
+      },
+      "revId": "34c5f5c61c7a69cf7dec6ddfbcf63b35699a266f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
