@@ -62,5 +62,10 @@
             android:key="@string/sms_apns_key"
             android:title="@string/sms_apns_title" />
 
+        <Preference
+            android:title="@string/storage_capacity_pref_title"
+            android:key="@string/storage_capacity_pref_key"
+            android:summary="@string/storage_capacity_pref_summary"/>
+
     </PreferenceCategory>
 </PreferenceScreen>

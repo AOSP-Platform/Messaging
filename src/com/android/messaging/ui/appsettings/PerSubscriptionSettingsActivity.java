@@ -130,7 +130,16 @@ public class PerSubscriptionSettingsActivity extends BugleActionBarActivity {
                 });
                 updateGroupMmsPrefSummary();
             }
-
+            final Preference mStorageCapacityPref =
+                    findPreference(getString(R.string.storage_capacity_pref_key));
+            mStorageCapacityPref.setOnPreferenceClickListener(
+                    new OnPreferenceClickListener() {
+                        @Override
+                        public boolean onPreferenceClick(Preference pref) {
+                            StorageCapacityDialog.showDialog(getActivity(), mSubId);
+                            return true;
+                        }
+                    });
             if (!MmsConfig.get(mSubId).getSMSDeliveryReportsEnabled()) {
                 final Preference deliveryReportsPref = findPreference(
                         getString(R.string.delivery_reports_pref_key));

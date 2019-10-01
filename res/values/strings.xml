@@ -454,6 +454,14 @@
     <string name="auto_retrieve_mms_when_roaming_pref_summary">Automatically retrieve MMS when roaming</string>
     <string name="group_mms_pref_title">Group messaging</string>
     <string name="group_mms_pref_summary">Use MMS to send a single message when there are multiple recipients</string>
+    <!-- Strings for displaying message capacity dialog-->
+    <string name="storage_capacity_pref_title">Message Storage Capacity</string>
+    <string name="storage_capacity_pref_summary">Display SMS/MMS capacity</string>
+    <string name="progress_dialog_waiting">Loading... Please wait\u2026</string>
+    <string name="sms_storage">SMS : </string>
+    <string name="mms_storage">MMS : </string>
+    <string name="sim_storage">SIM : </string>
+    <string name="capacity_counts">msg</string>
     <!-- Preference title: SMS disabled (Messaging is not default SMS app) -->
     <string name="sms_disabled_pref_title">Default SMS app</string>
     <!-- Preference title: SMS enabled (Messaging is the default SMS app) -->
