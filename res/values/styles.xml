@@ -498,6 +498,16 @@
         <item name="android:background">?android:attr/selectableItemBackground</item>
     </style>
 
+    <style name="StorageCapacityView">
+        <item name="android:textSize">@dimen/storage_capacity_text_size</item>
+        <item name="android:textColor">@color/storage_capacity_text_color</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+    </style>
+
     <style name="DebugMmsConfigItemStyle">
         <item name="android:paddingLeft">16dp</item>
         <item name="android:paddingRight">16dp</item>
