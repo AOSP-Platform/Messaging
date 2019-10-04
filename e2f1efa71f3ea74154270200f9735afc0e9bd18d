@@ -22,6 +22,30 @@
       "revId": "e2f1efa71f3ea74154270200f9735afc0e9bd18d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0c3da7d_0d52cb0b",
+        "filename": "src/com/android/messaging/ui/appsettings/StorageCapacityDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1126634
+      },
+      "writtenOn": "2019-10-04T02:00:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9af84884_355f4a3e",
+      "range": {
+        "startLine": 2,
+        "startChar": 16,
+        "endLine": 2,
+        "endChar": 17
+      },
+      "revId": "e2f1efa71f3ea74154270200f9735afc0e9bd18d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
