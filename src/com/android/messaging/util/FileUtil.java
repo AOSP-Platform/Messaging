@@ -62,9 +62,7 @@ public class FileUtil {
      *   actually creating the file.
      */
     public static File getNewFile(File directory, String contentType) throws IOException {
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        String fileExtension = mimeTypeMap.getExtensionFromMimeType(contentType);
-
+        String fileExtension = ContentType.getExtensionFromMimeType(contentType);
         final Context context = Factory.get().getApplicationContext();
         String fileNameFormat = context.getString(ContentType.isImageType(contentType)
                 ? R.string.new_image_file_name_format : R.string.new_file_name_format);
