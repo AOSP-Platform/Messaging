@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80db39ad_ab0af859",
+        "filename": "Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-02-06T21:18:15Z",
+      "side": 1,
+      "message": "remove?",
+      "revId": "1d4360deecf76346c0ac7d28fa117285176ef43d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c4c838_6f9e55dc",
+        "filename": "Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-02-06T21:18:15Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "1d4360deecf76346c0ac7d28fa117285176ef43d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
