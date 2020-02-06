@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e1e5a38_31fd05cb",
+        "filename": "src/com/android/messaging/ui/conversationlist/ShareIntentActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1338311
+      },
+      "writtenOn": "2020-02-06T18:53:52Z",
+      "side": 1,
+      "message": "reader.close() before the return?",
+      "range": {
+        "startLine": 179,
+        "startChar": 16,
+        "endLine": 179,
+        "endChar": 22
+      },
+      "revId": "9573f0cb2395ce00def45ccd72b7b99858019b58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c02218_7c688e63",
+        "filename": "src/com/android/messaging/ui/conversationlist/ShareIntentActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1338311
+      },
+      "writtenOn": "2020-02-06T18:53:52Z",
+      "side": 1,
+      "message": "reader.close() before the return?",
+      "range": {
+        "startLine": 185,
+        "startChar": 12,
+        "endLine": 185,
+        "endChar": 18
+      },
+      "revId": "9573f0cb2395ce00def45ccd72b7b99858019b58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2421c7c_51db5450",
+        "filename": "src/com/android/messaging/ui/conversationlist/ShareIntentActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1338311
+      },
+      "writtenOn": "2020-02-06T18:53:52Z",
+      "side": 1,
+      "message": "overly nit: ignore -\u003e Ignore? (to be consistent with rest of the other comments)",
+      "range": {
+        "startLine": 196,
+        "startChar": 19,
+        "endLine": 196,
+        "endChar": 25
+      },
+      "revId": "9573f0cb2395ce00def45ccd72b7b99858019b58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
