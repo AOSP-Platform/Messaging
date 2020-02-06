@@ -44,8 +44,6 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     guava \
     libphonenumber
 
-include $(LOCAL_PATH)/version.mk
-
 LOCAL_AAPT_FLAGS += --version-name "$(version_name_package)"
 LOCAL_AAPT_FLAGS += --version-code $(version_code_package)
 LOCAL_AAPT_FLAGS += --legacy
