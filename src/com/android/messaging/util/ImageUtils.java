@@ -671,6 +671,7 @@ public class ImageUtils {
          */
         private byte[] recodeImage(final int attempt) throws FileNotFoundException {
             byte[] encoded = null;
+            InputStream inputStream = null;
             try {
                 final ContentResolver cr = mContext.getContentResolver();
                 final boolean logv = LogUtil.isLoggable(LogUtil.BUGLE_IMAGE_TAG, LogUtil.VERBOSE);
@@ -682,7 +683,7 @@ public class ImageUtils {
                 if (mScaled == null) {
                     if (mDecoded == null) {
                         mOptions.inSampleSize = mSampleSize;
-                        final InputStream inputStream = cr.openInputStream(mUri);
+                        inputStream = cr.openInputStream(mUri);
                         mDecoded = BitmapFactory.decodeStream(inputStream, null, mOptions);
                         if (mDecoded == null) {
                             if (logv) {
@@ -744,6 +745,14 @@ public class ImageUtils {
                         "getResizedImageData - image too big (OutOfMemoryError), will try "
                                 + " with smaller scale factor");
                 // fall through and keep trying with more compression
+            } finally {
+                try {
+                    if (inputStream != null) {
+                        inputStream.close();
+                    }
+                } catch (IOException e) {
+                    // Ignore
+                }
             }
             return encoded;
         }

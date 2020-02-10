@@ -158,23 +158,34 @@ public class ContactRecipientAutoCompleteView extends RecipientEditTextView {
                             // display a chip for the corresponding local contact.
                             final Cursor lookupResult = ContactUtil.lookupDestination(getContext(),
                                     entry.getDestination()).performSynchronousQuery();
-                            if (lookupResult != null && lookupResult.moveToNext()) {
-                                // Found a match, remove the generated entry and replace with
-                                // a better local entry.
-                                publishProgress(new ChipReplacementTuple(recipient,
-                                        ContactUtil.createRecipientEntryForPhoneQuery(
-                                                lookupResult, true)));
-                            } else if (PhoneUtils.isValidSmsMmsDestination(
-                                    entry.getDestination())){
-                                // No match was found, but we have a valid destination so let's at
-                                // least create an entry that shows an avatar.
-                                publishProgress(new ChipReplacementTuple(recipient,
-                                        ContactRecipientEntryUtils.constructNumberWithAvatarEntry(
-                                                entry.getDestination())));
-                            } else {
-                                // Not a valid contact. Remove and show an error.
-                                publishProgress(new ChipReplacementTuple(recipient, null));
-                                invalidChipsRemoved++;
+                            try {
+                                if (lookupResult != null && lookupResult.moveToNext()) {
+                                    // Found a match, remove the generated entry and replace with a
+                                    // better local entry.
+                                    publishProgress(
+                                            new ChipReplacementTuple(
+                                                    recipient,
+                                                    ContactUtil.createRecipientEntryForPhoneQuery(
+                                                            lookupResult, true)));
+                                } else if (PhoneUtils.isValidSmsMmsDestination(
+                                        entry.getDestination())) {
+                                    // No match was found, but we have a valid destination so let's
+                                    // at least create an entry that shows an avatar.
+                                    publishProgress(
+                                            new ChipReplacementTuple(
+                                                    recipient,
+                                                    ContactRecipientEntryUtils
+                                                            .constructNumberWithAvatarEntry(
+                                                                    entry.getDestination())));
+                                } else {
+                                    // Not a valid contact. Remove and show an error.
+                                    publishProgress(new ChipReplacementTuple(recipient, null));
+                                    invalidChipsRemoved++;
+                                }
+                            } finally {
+                                if (lookupResult != null) {
+                                    lookupResult.close();
+                                }
                             }
                         }
                     } else {
