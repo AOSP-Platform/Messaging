@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ca0a15c_a0fa4cb3",
+        "filename": "src/com/android/messaging/datamodel/MessageNotificationState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-02-11T11:48:48Z",
+      "side": 1,
+      "message": "Maybe you can use a try with resources? it\u0027ll handle cursor closure automatically",
+      "revId": "0fdee8725ecd9fe946c21039d373de7c25cf90a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7416af34_5c986f01",
+        "filename": "src/com/android/messaging/ui/contact/ContactRecipientAutoCompleteView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-02-11T11:48:48Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "0fdee8725ecd9fe946c21039d373de7c25cf90a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c4c9e06_19a9bcab",
+        "filename": "src/com/android/messaging/util/ImageUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-02-11T11:48:48Z",
+      "side": 1,
+      "message": "Also here",
+      "parentUuid": "",
+      "revId": "0fdee8725ecd9fe946c21039d373de7c25cf90a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
