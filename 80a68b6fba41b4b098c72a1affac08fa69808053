@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4860232c_d70fe727",
+        "filename": "src/com/android/messaging/ui/conversation/ComposeMessageView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-02-17T21:21:08Z",
+      "side": 1,
+      "message": "I know this is \"safe\" but you are actually leaking data, you should be creating a class that accepts the TextView and pass the list data as the task parameters during the .execute call",
+      "parentUuid": "",
+      "revId": "80a68b6fba41b4b098c72a1affac08fa69808053",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
