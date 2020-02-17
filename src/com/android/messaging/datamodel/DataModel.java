@@ -152,7 +152,5 @@ public abstract class DataModel {
 
     public abstract void onApplicationCreated();
 
-    public abstract ConnectivityUtil getConnectivityUtil();
-
     public abstract SyncManager getSyncManager();
 }
