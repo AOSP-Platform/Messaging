@@ -34,6 +34,24 @@
       "revId": "f896c4f450c239da470b6a2468423f3f79aa8c86",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa65714e_d2529361",
+        "filename": "res/drawable-hdpi/ic_music.png",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-02-18T20:15:17Z",
+      "side": 1,
+      "message": "https://drive.google.com/file/d/1Mr16rzVTvzcUAlRWseAOsmQdr-53Ai-q/view?usp\u003dsharing\nUse these ones, official music note icon from Google assest",
+      "parentUuid": "8e7e8a3e_550c4826",
+      "revId": "f896c4f450c239da470b6a2468423f3f79aa8c86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
