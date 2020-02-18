@@ -16,6 +16,24 @@
       "revId": "f896c4f450c239da470b6a2468423f3f79aa8c86",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e7e8a3e_550c4826",
+        "filename": "res/drawable-hdpi/ic_music.png",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-02-18T12:51:37Z",
+      "side": 1,
+      "message": "It comes from Music app. There is only hdpi resource only.",
+      "parentUuid": "ae646e22_d56e1d3e",
+      "revId": "f896c4f450c239da470b6a2468423f3f79aa8c86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
