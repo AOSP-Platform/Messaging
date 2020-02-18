@@ -17,6 +17,24 @@
       "revId": "80a68b6fba41b4b098c72a1affac08fa69808053",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccfd4f35_a4db8e76",
+        "filename": "src/com/android/messaging/ui/conversation/ComposeMessageView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-02-18T07:24:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4860232c_d70fe727",
+      "revId": "80a68b6fba41b4b098c72a1affac08fa69808053",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
