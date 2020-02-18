@@ -46,6 +46,24 @@
       "revId": "030334b4a9bc82980f6caf5eee47809c241d25bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b77fe80_1b39bcb1",
+        "filename": "src/com/android/messaging/ui/mediapicker/GalleryGridView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-02-18T12:55:36Z",
+      "side": 1,
+      "message": "TIL plural of media, thanks",
+      "parentUuid": "9666a59c_5f0b11c5",
+      "revId": "030334b4a9bc82980f6caf5eee47809c241d25bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
