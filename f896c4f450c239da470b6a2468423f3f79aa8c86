@@ -70,6 +70,24 @@
       "revId": "f896c4f450c239da470b6a2468423f3f79aa8c86",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d7cbff8_c5a3084a",
+        "filename": "res/drawable-hdpi/ic_music.png",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-02-19T09:57:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8ff8bcd7_11caaa0e",
+      "revId": "f896c4f450c239da470b6a2468423f3f79aa8c86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
