@@ -52,6 +52,24 @@
       "revId": "f896c4f450c239da470b6a2468423f3f79aa8c86",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ff8bcd7_11caaa0e",
+        "filename": "res/drawable-hdpi/ic_music.png",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-02-19T09:56:53Z",
+      "side": 1,
+      "message": "Fix as using system icon for audio type instead. Thanks.",
+      "parentUuid": "fa65714e_d2529361",
+      "revId": "f896c4f450c239da470b6a2468423f3f79aa8c86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
