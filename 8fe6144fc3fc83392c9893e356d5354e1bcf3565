@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6aa4b215_ecfb512d",
+        "filename": "src/com/android/messaging/datamodel/data/GalleryGridItemData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1338311
+      },
+      "writtenOn": "2020-02-19T20:59:52Z",
+      "side": 1,
+      "message": "overly nit: for -\u003e For (to be consistent within the file?)",
+      "range": {
+        "startLine": 89,
+        "startChar": 24,
+        "endLine": 89,
+        "endChar": 27
+      },
+      "revId": "8fe6144fc3fc83392c9893e356d5354e1bcf3565",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
