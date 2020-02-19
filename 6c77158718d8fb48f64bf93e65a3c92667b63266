@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc2416da_49055650",
+        "filename": "src/com/android/messaging/ui/mediapicker/GalleryGridView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1338311
+      },
+      "writtenOn": "2020-02-19T20:49:48Z",
+      "side": 1,
+      "message": "media?",
+      "range": {
+        "startLine": 46,
+        "startChar": 26,
+        "endLine": 46,
+        "endChar": 32
+      },
+      "revId": "6c77158718d8fb48f64bf93e65a3c92667b63266",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
