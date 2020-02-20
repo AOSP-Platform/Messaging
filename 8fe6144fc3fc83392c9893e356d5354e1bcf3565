@@ -22,6 +22,30 @@
       "revId": "8fe6144fc3fc83392c9893e356d5354e1bcf3565",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb1092b_a470f7c0",
+        "filename": "src/com/android/messaging/datamodel/data/GalleryGridItemData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-02-20T00:01:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6aa4b215_ecfb512d",
+      "range": {
+        "startLine": 89,
+        "startChar": 24,
+        "endLine": 89,
+        "endChar": 27
+      },
+      "revId": "8fe6144fc3fc83392c9893e356d5354e1bcf3565",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
