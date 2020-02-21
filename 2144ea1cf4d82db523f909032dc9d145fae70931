@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f53d3ecc_8f0d285b",
+        "filename": "src/com/android/messaging/ui/conversationlist/ShareIntentActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-02-21T01:11:31Z",
+      "side": 1,
+      "message": "It looks fine for advanced feature.\nBtw I was also thinking about EXTRA_SUBJECT and EXTRA_TITLE for sharing before. But I didn\u0027t find common use-case for this. And as we know, the subject will convert SMS to MMS. So, we can append the subject into body instead of MMS subject also. Have you see some use-cases for this? Actually \n\nhttps://developer.android.com/reference/android/content/Intent#EXTRA_SUBJECT\nA constant string holding the desired subject line of a message.\nhttps://developer.android.com/reference/android/content/Intent#EXTRA_TITLE\nA CharSequence dialog title to provide to the user when used with a ACTION_CHOOSER.",
+      "range": {
+        "startLine": 85,
+        "startChar": 8,
+        "endLine": 90,
+        "endChar": 9
+      },
+      "revId": "2144ea1cf4d82db523f909032dc9d145fae70931",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
