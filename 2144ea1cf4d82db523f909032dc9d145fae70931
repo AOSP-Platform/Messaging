@@ -22,6 +22,24 @@
       "revId": "2144ea1cf4d82db523f909032dc9d145fae70931",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4055ed1d_36259ef9",
+        "filename": "src/com/android/messaging/ui/conversationlist/ShareIntentActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-02-21T07:23:11Z",
+      "side": 1,
+      "message": "We could definitely improve this section.\nThis simply brings it up a bit more.\nBut I don\u0027t think I\u0027ve seen more use-cases, this covered most of them",
+      "parentUuid": "f53d3ecc_8f0d285b",
+      "revId": "2144ea1cf4d82db523f909032dc9d145fae70931",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
