@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee0a2d71_7c44c798",
+        "filename": "Android.mk",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-02-21T07:29:27Z",
+      "side": 1,
+      "message": "I think you should first merge this internally, then add Merged-in $id in the commit message to make tree hugger happy",
+      "revId": "ad847a7a00502ddc8245de91013270cf088a1cc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
