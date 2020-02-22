@@ -58,6 +58,24 @@
       "revId": "2144ea1cf4d82db523f909032dc9d145fae70931",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe02d51c_3c8e92c5",
+        "filename": "src/com/android/messaging/ui/conversationlist/ShareIntentActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-02-22T09:05:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f395aa5_1a881340",
+      "revId": "2144ea1cf4d82db523f909032dc9d145fae70931",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
