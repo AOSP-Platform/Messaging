@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a433caff_85891869",
+        "filename": "src/com/android/messaging/util/NotificationsUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-02-22T02:38:06Z",
+      "side": 1,
+      "message": "will change later, I\u0027m the sole owner of this file",
+      "revId": "76c573ee4d73ec407f6067def260d9d141523246",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
