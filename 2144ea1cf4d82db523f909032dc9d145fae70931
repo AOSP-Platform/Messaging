@@ -40,6 +40,24 @@
       "revId": "2144ea1cf4d82db523f909032dc9d145fae70931",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0f395aa5_1a881340",
+        "filename": "src/com/android/messaging/ui/conversationlist/ShareIntentActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-02-22T00:13:01Z",
+      "side": 1,
+      "message": "Fine. I think hasExtra() is unnecessary.\nString sharedSubject \u003d intent.getStringExtra(Intent.EXTRA_SUBJECT);\nif (sharedSubject \u003d\u003d null) {\n     sharedSubject \u003d intent.getStringExtra(Intent.EXTRA_TITLE);\n}",
+      "parentUuid": "4055ed1d_36259ef9",
+      "revId": "2144ea1cf4d82db523f909032dc9d145fae70931",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
