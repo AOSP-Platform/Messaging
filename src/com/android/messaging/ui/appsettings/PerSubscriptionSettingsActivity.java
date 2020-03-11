@@ -45,6 +45,7 @@ import com.android.messaging.util.Assert;
 import com.android.messaging.util.BuglePrefs;
 import com.android.messaging.util.LogUtil;
 import com.android.messaging.util.PhoneUtils;
+import com.android.messaging.util.OsUtil;
 
 public class PerSubscriptionSettingsActivity extends BugleActionBarActivity {
     @Override
@@ -172,6 +173,20 @@ public class PerSubscriptionSettingsActivity extends BugleActionBarActivity {
                         getString(R.string.sms_apns_key));
                 apnsScreen.setIntent(UIIntents.get()
                         .getApnSettingsIntent(getPreferenceScreen().getContext(), mSubId));
+            }
+
+            final Preference simCardMessageListPref =
+                    findPreference(getString(R.string.sim_card_message_list_key));
+            if (simCardMessageListPref != null && !OsUtil.isSecondaryUser()) {
+                simCardMessageListPref.setOnPreferenceClickListener(
+                        new Preference.OnPreferenceClickListener() {
+                            @Override
+                            public boolean onPreferenceClick(final Preference preference) {
+                                UIIntents.get()
+                                        .launchSimCardMessageListActivity(getActivity(), mSubId);
+                                return true;
+                            }
+                        });
             }
 
             // We want to disable preferences if we are not the default app, but we do all of the
