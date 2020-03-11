@@ -173,4 +173,8 @@
     <color name="fastscroll_preview_text_color">#ffffff</color>
 
     <color name="google_gray">#F1F1F1</color>
+
+    <color name="sim_card_message_address_text_color">#4d4d4d</color>
+    <color name="sim_card_message_body_text_color">#999999</color>
+    <color name="sim_card_message_selected_background">#99aaaaaa</color>
 </resources>
