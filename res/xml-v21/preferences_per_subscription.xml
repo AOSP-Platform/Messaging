@@ -62,5 +62,9 @@
             android:key="@string/sms_apns_key"
             android:title="@string/sms_apns_title" />
 
+        <Preference
+            android:key="@string/sim_card_message_list_key"
+            android:title="@string/sim_card_message_list_activity_title"/>
+
     </PreferenceCategory>
 </PreferenceScreen>

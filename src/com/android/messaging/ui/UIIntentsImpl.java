@@ -63,6 +63,7 @@ import com.android.messaging.ui.conversationlist.ForwardMessageActivity;
 import com.android.messaging.ui.conversationsettings.PeopleAndOptionsActivity;
 import com.android.messaging.ui.debug.DebugMmsConfigActivity;
 import com.android.messaging.ui.photoviewer.BuglePhotoViewActivity;
+import com.android.messaging.ui.simcard.SimCardMessageListActivity;
 import com.android.messaging.util.Assert;
 import com.android.messaging.util.ContentType;
 import com.android.messaging.util.ConversationIdSet;
@@ -358,6 +359,13 @@ public class UIIntentsImpl extends UIIntents {
     public void launchPerSubscriptionSettingsActivity(final Context context, final int subId,
             final String settingTitle) {
         final Intent intent = getPerSubscriptionSettingsIntent(context, subId, settingTitle);
+        context.startActivity(intent);
+    }
+
+    @Override
+    public void launchSimCardMessageListActivity(final Context context, final int subId) {
+        final Intent intent = new Intent(context, SimCardMessageListActivity.class);
+        intent.putExtra(UI_INTENT_EXTRA_SUB_ID, subId);
         context.startActivity(intent);
     }
 
