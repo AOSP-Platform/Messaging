@@ -981,4 +981,49 @@
     <string name="selected_sim_content_message"><xliff:g id="selected_sim">%s</xliff:g> selected</string>
 
     <string name="work_directory_display_name">Work Profile contacts</string>
+
+    <!-- Title for sim card message list activity. -->
+    <string name="sim_card_message_list_activity_title">SIM Card Messages</string>
+    <!-- String to show in the sim card message list view when there are no messages. -->
+    <string name="sim_card_message_list_empty_text">No messages in SIM Card</string>
+
+    <string name="action_sim_card_message_list_delete_all">Delete All</string>
+    <string name="action_sim_card_message_copy_to_device">Copy to device</string>
+    <string name="action_sim_card_message_delete">Delete</string>
+
+    <!-- Alert dialog title to accept or decline deleting sim card message(s). -->
+    <plurals name="delete_sim_card_messages_confirmation_dialog_title">
+        <item quantity="one">Delete this message?</item>
+        <item quantity="other">Delete these messages?</item>
+    </plurals>
+    <string name="delete_all_sim_card_messages_confirmation_dialog_title">Delete all messages?</string>
+    <string name="delete_sim_card_messages_confirmation_dialog_text">This action cannot be undone.</string>
+
+    <!-- Alert dialog title to accept or decline copying sim card message(s). -->
+    <plurals name="copy_sim_card_messages_confirmation_dialog_title">
+        <item quantity="one">Copy this message to device storage?</item>
+        <item quantity="other">Copy these messages device storage?</item>
+    </plurals>
+
+    <!-- Alert dialog accept deleting sim card messages button. -->
+    <string name="delete_sim_card_messages_confirmation_button">Delete</string>
+    <!-- Alert dialog accept copying sim card messages button. -->
+    <string name="copy_sim_card_messages_confirmation_button">Copy</string>
+
+    <!-- The text of the toast shown when deleting sim card messages is failed -->
+    <plurals name="fail_delete_sim_card_messages">
+        <item quantity="one">Failed to delete one message</item>
+        <item quantity="other">Failed to delete <xliff:g id="count">%d</xliff:g> messages</item>
+    </plurals>
+
+    <!-- The text of the toast shown when copying sim card messages is failed -->
+    <plurals name="fail_copy_sim_card_messages">
+        <item quantity="one">Failed to copy one message</item>
+        <item quantity="other">Failed to copy <xliff:g id="count">%d</xliff:g> messages</item>
+    </plurals>
+
+    <!-- The text of the toast shown when deleting sim card messages is succeeded -->
+    <string name="success_delete_sim_card_messages">Message(s) deleted</string>
+    <!-- The text of the toast shown when copying sim card messages is succeeded -->
+    <string name="success_copy_sim_card_messages">Message(s) copied</string>
 </resources>
