@@ -199,6 +199,15 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ui.simcard.SimCardMessageListActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="user"
+            android:label="@string/sim_card_message_list_activity_title"
+            android:theme="@style/BugleTheme.SimCardMessageListActivity"
+            android:parentActivityName="com.android.messaging.ui.appsettings.PerSubscriptionSettingsActivity">
+        </activity>
+
         <!-- Handles sharing intent -->
         <activity
             android:name=".ui.conversationlist.ShareIntentActivity"
