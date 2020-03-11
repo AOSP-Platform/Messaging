@@ -261,6 +261,9 @@ public abstract class UIIntents {
     public abstract void launchPerSubscriptionSettingsActivity(Context context, int subId,
             String settingTitle);
 
+    /** Launch an activity to show a sim card message list. */
+    public abstract void launchSimCardMessageListActivity(final Context context, final int subId);
+
     /**
      * Get a ACTION_VIEW intent
      * @param url display the data in the url to users
