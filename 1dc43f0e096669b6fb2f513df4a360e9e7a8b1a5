@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbbf77b0_f7227fbd",
+        "filename": "res/drawable/ic_wear_read.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-03-18T02:23:12Z",
+      "side": 0,
+      "message": "No need any license description?",
+      "revId": "1dc43f0e096669b6fb2f513df4a360e9e7a8b1a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
