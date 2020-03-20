@@ -44,8 +44,11 @@ public abstract class UIIntents {
     // Sending draft data (from share intent / message forwarding) to the ConversationActivity.
     public static final String UI_INTENT_EXTRA_DRAFT_DATA = "draft_data";
 
-    // The request code for picking image from the Document picker.
-    public static final int REQUEST_PICK_IMAGE_FROM_DOCUMENT_PICKER = 1400;
+    // The request code for picking a media from the Document picker.
+    public static final int REQUEST_PICK_MEDIA_FROM_DOCUMENT_PICKER = 1400;
+
+    // The request code for picking a contact card from existing Contacts apps.
+    public static final int REQUEST_PICK_CONTACT_CARD = 1500;
 
     // Indicates what type of notification this applies to (See BugleNotifications:
     // UPDATE_NONE, UPDATE_MESSAGES, UPDATE_ERRORS, UPDATE_ALL)
@@ -65,6 +68,9 @@ public abstract class UIIntents {
 
     public static final String ACTION_RESET_NOTIFICATIONS =
             "com.android.messaging.reset_notifications";
+
+    public static final String ACTION_MARK_AS_READ =
+            "com.android.messaging.mark_as_read";
 
     // Sending VCard uri to VCard detail activity
     public static final String UI_INTENT_EXTRA_VCARD_URI = "vcard_uri";
@@ -166,10 +172,18 @@ public abstract class UIIntents {
     public abstract void launchAddContactActivity(final Context context, final String destination);
 
     /**
-     * Launch an activity to show the document picker to pick an image.
+     * Launch an activity to show the document picker to pick an image/video/audio.
+     *
      * @param fragment the requesting fragment
      */
     public abstract void launchDocumentImagePicker(final Fragment fragment);
+
+    /**
+     * Launch an activity to show the contacts list to pick one.
+     *
+     * @param fragment the requesting fragment
+     */
+    public abstract void launchContactCardPicker(final Fragment fragment);
 
     /**
      * Launch an activity to show people & options for a given conversation.
@@ -321,6 +335,14 @@ public abstract class UIIntents {
     public abstract PendingIntent getPendingIntentForClearingNotifications(final Context context,
             final int updateTargets, final ConversationIdSet conversationIdSet,
             final int requestCode);
+
+    /**
+     * Get a PendingIntent for marking a conversation as read.
+     *
+     * <p>This is intended to be used by notifications.
+     */
+    public abstract PendingIntent getPendingIntentForMarkingAsRead(final Context context,
+            final ConversationIdSet conversationIdSet, final int requestCode);
 
     /**
      * Get a PendingIntent for showing low storage notifications.

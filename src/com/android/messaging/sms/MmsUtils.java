@@ -27,8 +27,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.media.MediaMetadataRetriever;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -333,20 +331,26 @@ public class MmsUtils {
             String srcName;
             if (part.isAttachment()) {
                 String contentType = part.getContentType();
+                final String extension = ContentType.getExtensionFromMimeType(contentType);
                 if (ContentType.isImageType(contentType)) {
-                    // There's a good chance that if we selected the image from our media picker the
-                    // content type is image/*. Fix the content type here for gifs so that we only
-                    // need to open the input stream once. All other gif vs static image checks will
-                    // only have to do a string comparison which is much cheaper.
-                    final boolean isGif = ImageUtils.isGif(contentType, part.getContentUri());
-                    contentType = isGif ? ContentType.IMAGE_GIF : contentType;
-                    srcName = String.format(isGif ? "image%06d.gif" : "image%06d.jpg", index);
+                    if (extension != null) {
+                        srcName = String.format("image%06d.%s", index, extension);
+                    } else {
+                        // There's a good chance that if we selected the image from our media picker
+                        // the content type is image/*. Fix the content type here for gifs so that
+                        // we only need to open the input stream once. All other gif vs static image
+                        // checks will only have to do a string comparison which is much cheaper.
+                        final boolean isGif = ImageUtils.isGif(contentType, part.getContentUri());
+                        contentType = isGif ? ContentType.IMAGE_GIF : contentType;
+                        srcName = String.format(isGif ? "image%06d.gif" : "image%06d.jpg", index);
+                    }
                     smilBody.append(String.format(sSmilImagePart, srcName));
                     totalLength += addPicturePart(context, pb, index, part,
                             widthLimit, heightLimit, bytesPerImage, srcName, contentType);
                     hasVisualAttachment = true;
                 } else if (ContentType.isVideoType(contentType)) {
-                    srcName = String.format("video%06d.mp4", index);
+                    srcName = String.format("video%06d.%s", index,
+                            extension != null ? extension : "mp4");
                     final int length = addVideoPart(context, pb, part, srcName);
                     totalLength += length;
                     smilBody.append(String.format(sSmilVideoPart, srcName,
@@ -358,7 +362,8 @@ public class MmsUtils {
                     smilBody.append(String.format(sSmilPart, srcName));
                     hasNonVisualAttachment = true;
                 } else if (ContentType.isAudioType(contentType)) {
-                    srcName = String.format("recording%06d.amr", index);
+                    srcName = String.format("recording%06d.%s",
+                            index, extension != null ? extension : "amr");
                     totalLength += addOtherPart(context, pb, part, srcName);
                     final int duration = getMediaDurationMs(context, part, -1);
                     Assert.isTrue(duration != -1);
@@ -2652,26 +2657,6 @@ public class MmsUtils {
                 break;
         }
         return stringResId;
-    }
-
-    /**
-     * The absence of a connection type.
-     */
-    public static final int TYPE_NONE = -1;
-
-    public static int getConnectivityEventNetworkType(final Context context, final Intent intent) {
-        final ConnectivityManager connMgr = (ConnectivityManager)
-                context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (OsUtil.isAtLeastJB_MR1()) {
-            return intent.getIntExtra(ConnectivityManager.EXTRA_NETWORK_TYPE, TYPE_NONE);
-        } else {
-            final NetworkInfo info = (NetworkInfo) intent.getParcelableExtra(
-                    ConnectivityManager.EXTRA_NETWORK_INFO);
-            if (info != null) {
-                return info.getType();
-            }
-        }
-        return TYPE_NONE;
     }
 
     /**
