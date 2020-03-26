@@ -270,4 +270,7 @@
         <item name="android:layout_gravity">start</item>
     </style>
 
+    <style name="CopySmsToSimSelectorItemLinearLayoutStyle">
+        <item name="android:paddingRight">12dp</item>
+    </style>
 </resources>

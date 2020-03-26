@@ -667,4 +667,20 @@
         <item name="android:textColor">@color/sim_card_message_body_text_color</item>
         <item name="android:background">@null</item>
     </style>
+
+    <style name="CopySmsToSimSelectorItem">
+        <item name="android:textSize">@dimen/copy_sms_to_sim_selector_text_size</item>
+        <item name="android:textColor">@color/copy_sms_to_sim_selector_text_primary</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="CopySmsToSimSelectorItemDetail">
+        <item name="android:textSize">@dimen/copy_sms_to_sim_selector_detail_text_size</item>
+        <item name="android:textColor">@color/copy_sms_to_sim_selector_text_secondary</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="CopySmsToSimSelectorItemLinearLayoutStyle">
+        <item name="android:paddingLeft">12dp</item>
+    </style>
 </resources>
