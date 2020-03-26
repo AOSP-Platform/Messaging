@@ -295,6 +295,16 @@ public class ConversationFragment extends Fragment implements ConversationDataLi
             // instead of the part level
             menu.findItem(R.id.copy_text).setVisible(data.getCanCopyMessageToClipboard());
 
+            // Only for the primary user, completed SMS and non-group conversation.
+            final boolean isGroupConversation =
+                    mBinding.getData().getNumberOfParticipantsExcludingSelf() > 1;
+            menu.findItem(R.id.action_copy_sms_to_sim)
+                    .setVisible(
+                            !OsUtil.isSecondaryUser()
+                            && !isGroupConversation
+                            && data.getIsSms()
+                            && data.getCanForwardMessage());
+
             return true;
         }
 
@@ -366,6 +376,20 @@ public class ConversationFragment extends Fragment implements ConversationDataLi
                     // use message-based cursor in conversation.
                     final MessageData message = mBinding.getData().createForwardedMessage(data);
                     UIIntents.get().launchForwardMessageActivity(getActivity(), message);
+                    mHost.dismissActionMode();
+                    return true;
+                case R.id.action_copy_sms_to_sim:
+                    if (isReadyForAction()) {
+                        CopySmsToSimSelectorDialog.showDialog(
+                                getActivity(),
+                                mBinding.getData()
+                                    .getSubscriptionListData()
+                                        .getActiveSubscriptionEntriesExcludingDefault(),
+                                data.getSmsMessageUri());
+                    } else {
+                        warnOfMissingActionConditions(false /*sending*/,
+                                null /*commandToRunAfterActionConditionResolved*/);
+                    }
                     mHost.dismissActionMode();
                     return true;
             }
