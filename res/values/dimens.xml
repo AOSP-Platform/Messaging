@@ -200,4 +200,8 @@
 
     <dimen name="sim_card_message_address_text_size">16sp</dimen>
     <dimen name="sim_card_message_body_text_size">14sp</dimen>
+
+    <dimen name="copy_sms_to_sim_selector_text_size">14sp</dimen>
+    <dimen name="copy_sms_to_sim_selector_detail_text_size">14sp</dimen>
+    <dimen name="copy_sms_to_sim_selector_icon_size">42dp</dimen>
 </resources>
