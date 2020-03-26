@@ -271,6 +271,8 @@
     <string name="action_send">Send</string>
     <!-- Action menu title for deleting failed message selected in conversation -->
     <string name="action_delete_message">Delete</string>
+    <!-- Action menu title for copying selected sms to sim -->
+    <string name="action_copy_sms_to_sim">Copy SMS to SIM</string>
 
     <string name="delete_message_confirmation_dialog_title">Delete this message?</string>
     <string name="delete_message_confirmation_dialog_text">This action cannot be undone.</string>
@@ -1026,4 +1028,13 @@
     <string name="success_delete_sim_card_messages">Message(s) deleted</string>
     <!-- The text of the toast shown when copying sim card messages is succeeded -->
     <string name="success_copy_sim_card_messages">Message(s) copied</string>
+
+    <!-- Alert dialog title for copying sim card selector. -->
+    <string name="copy_sim_card_selector_dialog_title">Select SIM to copy this SMS</string>
+    <!-- String to show in the dialog for copying sim card selector when no sim. -->
+    <string name="copy_sim_card_selector_no_sim_message">No active SIM card on your device.</string>
+    <!-- The text of the toast shown when copying message to a sim card is failed -->
+    <string name="fail_copy_sms_to_sim_message">Failed to copy</string>
+    <!-- The text of the toast shown when copying message to a sim card is succeeded -->
+    <string name="success_copy_sms_to_sim_message">Message copied</string>
 </resources>

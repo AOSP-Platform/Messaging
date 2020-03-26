@@ -177,4 +177,7 @@
     <color name="sim_card_message_address_text_color">#4d4d4d</color>
     <color name="sim_card_message_body_text_color">#999999</color>
     <color name="sim_card_message_selected_background">#99aaaaaa</color>
+
+    <color name="copy_sms_to_sim_selector_text_primary">#4d4d4d</color>
+    <color name="copy_sms_to_sim_selector_text_secondary">#999999</color>
 </resources>
