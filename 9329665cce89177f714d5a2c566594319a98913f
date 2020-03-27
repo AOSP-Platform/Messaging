@@ -1,0 +1,48 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000002153114",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1269610?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "c779078f_9243223c",
+          "description": "Change to \"src/com/android/messaging/ui/conversation/CopySmsToSimSelectorDialog.java\"",
+          "replacements": [
+            {
+              "path": "src/com/android/messaging/ui/conversation/CopySmsToSimSelectorDialog.java",
+              "range": {
+                "startLine": 52,
+                "startChar": 81,
+                "endLine": 52,
+                "endChar": 88
+              },
+              "replacement": "a user"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "00a9c73a_34446b69",
+        "filename": "src/com/android/messaging/ui/conversation/CopySmsToSimSelectorDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-03-27T11:21:19Z",
+      "side": 1,
+      "message": "Common typo found: \"an user\" -- should it be \"a user\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line.",
+      "range": {
+        "startLine": 52,
+        "startChar": 81,
+        "endLine": 52,
+        "endChar": 88
+      },
+      "revId": "9329665cce89177f714d5a2c566594319a98913f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
