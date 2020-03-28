@@ -93,7 +93,8 @@ public abstract class MessageNotificationState extends NotificationState {
     private static final int MAX_CHARACTERS_IN_GROUP_NAME = 30;
 
     private static final int REPLY_INTENT_REQUEST_CODE_OFFSET = 0;
-    private static final int NUM_EXTRA_REQUEST_CODES_NEEDED = 1;
+    private static final int READ_INTENT_REQUEST_CODE_OFFSET = 1;
+    private static final int NUM_EXTRA_REQUEST_CODES_NEEDED = 2;
     protected String mTickerSender = null;
     protected CharSequence mTickerText = null;
     protected String mTitle = null;
@@ -341,6 +342,10 @@ public abstract class MessageNotificationState extends NotificationState {
         return getBaseExtraRequestCode() + REPLY_INTENT_REQUEST_CODE_OFFSET;
     }
 
+    public int getReadIntentRequestCode() {
+        return getBaseExtraRequestCode() + READ_INTENT_REQUEST_CODE_OFFSET;
+    }
+
     @Override
     public PendingIntent getClearIntent() {
         return UIIntents.get().getPendingIntentForClearingNotifications(
@@ -348,14 +353,6 @@ public abstract class MessageNotificationState extends NotificationState {
                     BugleNotifications.UPDATE_MESSAGES,
                     mConversationIds,
                     getClearIntentRequestCode());
-    }
-
-    @Override
-    public PendingIntent getReadIntent() {
-        return UIIntents.get().getPendingIntentForMarkingAsRead(
-                    Factory.get().getApplicationContext(),
-                    mConversationIds,
-                    getReadIntentRequestCode());
     }
 
     /**
