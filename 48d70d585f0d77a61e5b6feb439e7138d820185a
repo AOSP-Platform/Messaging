@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac52ae3f_ae557955",
+        "filename": "src/com/android/messaging/datamodel/MessageNotificationState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-03-30T06:53:56Z",
+      "side": 1,
+      "message": "Still use same requestCode.",
+      "range": {
+        "startLine": 346,
+        "startChar": 15,
+        "endLine": 346,
+        "endChar": 75
+      },
+      "revId": "48d70d585f0d77a61e5b6feb439e7138d820185a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
