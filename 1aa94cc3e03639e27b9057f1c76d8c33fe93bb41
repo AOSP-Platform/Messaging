@@ -1,0 +1,92 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000002207776",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1274502?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "33a223c0_af257972",
+          "description": "Change to \"src/com/android/messaging/datamodel/data/DraftMessageData.java\"",
+          "replacements": [
+            {
+              "path": "src/com/android/messaging/datamodel/data/DraftMessageData.java",
+              "range": {
+                "startLine": 345,
+                "startChar": 19,
+                "endLine": 345,
+                "endChar": 26
+              },
+              "replacement": "Destroy"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "75100f90_e8bbab46",
+        "filename": "src/com/android/messaging/datamodel/data/DraftMessageData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-03-31T09:33:26Z",
+      "side": 1,
+      "message": "Common typo found: \"Destory\" -- should it be \"Destroy\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line.",
+      "range": {
+        "startLine": 345,
+        "startChar": 19,
+        "endLine": 345,
+        "endChar": 26
+      },
+      "revId": "1aa94cc3e03639e27b9057f1c76d8c33fe93bb41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000002207776",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1274502?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "2a954ba3_2b9dd0c8",
+          "description": "Change to \"src/com/android/messaging/datamodel/data/DraftMessageData.java\"",
+          "replacements": [
+            {
+              "path": "src/com/android/messaging/datamodel/data/DraftMessageData.java",
+              "range": {
+                "startLine": 345,
+                "startChar": 90,
+                "endLine": 345,
+                "endChar": 100
+              },
+              "replacement": "destroying"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "fa0b7893_33454eba",
+        "filename": "src/com/android/messaging/datamodel/data/DraftMessageData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-03-31T09:33:26Z",
+      "side": 1,
+      "message": "Common typo found: \"destorying\" -- should it be \"destroying\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line.",
+      "range": {
+        "startLine": 345,
+        "startChar": 90,
+        "endLine": 345,
+        "endChar": 100
+      },
+      "revId": "1aa94cc3e03639e27b9057f1c76d8c33fe93bb41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
