@@ -400,4 +400,7 @@ public abstract class UIIntents {
     public abstract PendingIntent getWidgetPendingIntentForConfigurationActivity(
             final Context context, final int appWidgetId);
 
+    /** Get a PendingIntent for starting sim card message list from notifications. */
+    public abstract PendingIntent getPendingIntentForSimCardMessageListActivity(
+            final Context context, final int subId);
 }

@@ -1037,4 +1037,11 @@
     <string name="fail_copy_sms_to_sim_message">Failed to copy</string>
     <!-- The text of the toast shown when copying message to a sim card is succeeded -->
     <string name="success_copy_sms_to_sim_message">Message copied</string>
+
+    <!-- Title for sim card full notification. -->
+    <string name="sim_card_full_title">No more SMS space in SIM<xliff:g id="subscriptionId">%s</xliff:g></string>
+    <!-- Text for sim card full notification. -->
+    <string name="sim_card_full_text">You may need to delete some messages.</string>
+    <!-- Ticker for sim card full notification -->
+    <string name="sim_card_full_notification_ticker">SIM is full. You may need to delete some messages.</string>
 </resources>

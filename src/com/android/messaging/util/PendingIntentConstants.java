@@ -23,6 +23,7 @@ public class PendingIntentConstants {
     public static final int SMS_SECONDARY_USER_NOTIFICATION_ID = 1;
     public static final int MSG_SEND_ERROR = 2;
     public static final int SMS_STORAGE_LOW_NOTIFICATION_ID = 3;
+    public static final int SIM_CARD_FULL_NOTIFICATION_ID = 4;
 
     // Request codes
     public static final int UPDATE_NOTIFICATIONS_ALARM_ACTION_ID = 100;
