@@ -22,6 +22,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ComponentName;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -47,6 +48,7 @@ import com.android.messaging.datamodel.MessagingContentProvider;
 import com.android.messaging.datamodel.data.MessageData;
 import com.android.messaging.datamodel.data.MessagePartData;
 import com.android.messaging.datamodel.data.ParticipantData;
+import com.android.messaging.datamodel.data.SimCardMessageListItemData;
 import com.android.messaging.receiver.NotificationReceiver;
 import com.android.messaging.sms.MmsSmsUtils;
 import com.android.messaging.ui.appsettings.ApnEditorActivity;
@@ -608,5 +610,20 @@ public class UIIntentsImpl extends UIIntents {
         configureIntent.setData(Uri.parse(configureIntent.toUri(Intent.URI_INTENT_SCHEME)));
         configureIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
         return getPendingIntentWithParentStack(context, configureIntent, 0);
+    }
+
+    @Override
+    public PendingIntent getPendingIntentForSimCardMessageListActivity(
+            final Context context, final int subId) {
+        final Intent intent = new Intent(context, SimCardMessageListActivity.class);
+        intent.putExtra(UIIntents.UI_INTENT_EXTRA_SUB_ID, subId);
+        Uri uri = subId == ParticipantData.DEFAULT_SELF_SUB_ID
+                        ? SimCardMessageListItemData.ICC_URI
+                        : ContentUris.withAppendedId(
+                                SimCardMessageListItemData.ICC_SUBID_URI, subId);
+        // Ensure that the platform doesn't reuse PendingIntents across SIM cards.
+        intent.setData(uri);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        return getPendingIntentWithParentStack(context, intent, 0);
     }
 }

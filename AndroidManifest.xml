@@ -424,6 +424,12 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".receiver.SimFullReceiver">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SIM_FULL" />
+            </intent-filter>
+        </receiver>
+
         <service android:name=".datamodel.NoConfirmationSmsSendService"
                  android:permission="android.permission.SEND_RESPOND_VIA_MESSAGE"
                  android:exported="true" >
