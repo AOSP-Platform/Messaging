@@ -189,6 +189,20 @@ public class PerSubscriptionSettingsActivity extends BugleActionBarActivity {
                         });
             }
 
+            // SMSC preference is shown if we are the default app and it only allows the primary
+            // user to update it.
+            SmscAddressPreference smscAddressPreference =
+                    (SmscAddressPreference)
+                            findPreference(getString(R.string.smsc_address_pref_key));
+            if (!PhoneUtils.getDefault().isDefaultSmsApp()) {
+                advancedCategory.removePreference(smscAddressPreference);
+            } else {
+                if (OsUtil.isSecondaryUser()) {
+                    smscAddressPreference.setEnabled(false);
+                }
+                smscAddressPreference.initSmsAddressPreference(mSubId);
+            }
+
             // We want to disable preferences if we are not the default app, but we do all of the
             // above first so that the user sees the correct information on the screen
             if (!PhoneUtils.getDefault().isDefaultSmsApp()) {
