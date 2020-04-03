@@ -66,5 +66,9 @@
             android:key="@string/sim_card_message_list_key"
             android:title="@string/sim_card_message_list_activity_title"/>
 
+        <com.android.messaging.ui.appsettings.SmscAddressPreference
+            android:key="@string/smsc_address_pref_key"
+            android:title="@string/smsc_address_pref_title" />
+
     </PreferenceCategory>
 </PreferenceScreen>

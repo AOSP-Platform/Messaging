@@ -1044,4 +1044,11 @@
     <string name="sim_card_full_text">You may need to delete some messages.</string>
     <!-- Ticker for sim card full notification -->
     <string name="sim_card_full_notification_ticker">SIM is full. You may need to delete some messages.</string>
+
+    <!-- Title for the preference for smsc address -->
+    <string name="smsc_address_pref_title">SMSC address</string>
+    <!-- The text of the toast shown when getting smsc address from a sim card is failed -->
+    <string name="fail_get_smsc_address_message">Failed to read SMSC address</string>
+    <!-- The text of the toast shown when setting smsc address into a sim card is failed -->
+    <string name="fail_set_smsc_address_message">Failed to update SMSC address</string>
 </resources>
