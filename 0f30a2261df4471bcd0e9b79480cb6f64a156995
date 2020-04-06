@@ -1,0 +1,48 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000002301118",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1277354?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "736e033b_96506b24",
+          "description": "Change to \"src/com/android/messaging/ui/appsettings/SmscAddressPreference.java\"",
+          "replacements": [
+            {
+              "path": "src/com/android/messaging/ui/appsettings/SmscAddressPreference.java",
+              "range": {
+                "startLine": 56,
+                "startChar": 89,
+                "endLine": 56,
+                "endChar": 96
+              },
+              "replacement": "a user"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "5dbb7b81_007df9e9",
+        "filename": "src/com/android/messaging/ui/appsettings/SmscAddressPreference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-04-06T08:22:19Z",
+      "side": 1,
+      "message": "Common typo found: \"an user\" -- should it be \"a user\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line.",
+      "range": {
+        "startLine": 56,
+        "startChar": 89,
+        "endLine": 56,
+        "endChar": 96
+      },
+      "revId": "0f30a2261df4471bcd0e9b79480cb6f64a156995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
