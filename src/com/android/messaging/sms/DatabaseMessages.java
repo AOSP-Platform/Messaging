@@ -37,6 +37,7 @@ import com.android.messaging.Factory;
 import com.android.messaging.datamodel.data.MessageData;
 import com.android.messaging.datamodel.media.VideoThumbnailRequest;
 import com.android.messaging.mmslib.pdu.CharacterSets;
+import com.android.messaging.mmslib.pdu.PduHeaders;
 import com.android.messaging.util.Assert;
 import com.android.messaging.util.ContentType;
 import com.android.messaging.util.LogUtil;
@@ -279,6 +280,8 @@ public class DatabaseMessages {
         public static final int INDEX_EXPIRY = sIota++;
         public static final int INDEX_RESPONSE_STATUS = sIota++;
         public static final int INDEX_RETRIEVE_STATUS = sIota++;
+        public static final int INDEX_MESSAGE_ID = sIota++;
+        public static final int INDEX_DELIVERY_REPORT = sIota++;
         public static final int INDEX_SUB_ID = sIota++;
 
         private static String[] sProjection;
@@ -304,6 +307,8 @@ public class DatabaseMessages {
                     Mms.EXPIRY,
                     Mms.RESPONSE_STATUS,
                     Mms.RETRIEVE_STATUS,
+                    Mms.MESSAGE_ID,
+                    Mms.DELIVERY_REPORT,
                     Mms.SUBSCRIPTION_ID,
                 };
 
@@ -341,6 +346,8 @@ public class DatabaseMessages {
         public String mSender;
         public int mResponseStatus;
         public int mRetrieveStatus;
+        private String mMessageId;
+        private boolean mDeliveryReportRequest;
 
         public List<MmsPart> mParts = Lists.newArrayList();
         private boolean mPartsProcessed = false;
@@ -381,6 +388,8 @@ public class DatabaseMessages {
             mExpiryInMillis = cursor.getLong(INDEX_EXPIRY) * 1000;
             mResponseStatus = cursor.getInt(INDEX_RESPONSE_STATUS);
             mRetrieveStatus = cursor.getInt(INDEX_RETRIEVE_STATUS);
+            mMessageId = cursor.getString(INDEX_MESSAGE_ID);
+            mDeliveryReportRequest = cursor.getInt(INDEX_DELIVERY_REPORT) == PduHeaders.VALUE_YES;
             // Clear all parts in case we reuse this object
             mParts.clear();
             mPartsProcessed = false;
@@ -418,6 +427,14 @@ public class DatabaseMessages {
                 processParts();
             }
             return mSize;
+        }
+
+        public String getMessageId() {
+            return mMessageId;
+        }
+
+        public boolean isDeliveryReportRequested() {
+            return mDeliveryReportRequest;
         }
 
         /**
@@ -499,6 +516,8 @@ public class DatabaseMessages {
             mMmsMessageType = in.readInt();
             mResponseStatus = in.readInt();
             mRetrieveStatus = in.readInt();
+            mMessageId = in.readString();
+            mDeliveryReportRequest = in.readInt() == PduHeaders.VALUE_YES;
 
             final int nParts = in.readInt();
             mParts = new ArrayList<MmsPart>();
@@ -547,6 +566,8 @@ public class DatabaseMessages {
             out.writeInt(mMmsMessageType);
             out.writeInt(mResponseStatus);
             out.writeInt(mRetrieveStatus);
+            out.writeString(mMessageId);
+            out.writeInt(mDeliveryReportRequest ? PduHeaders.VALUE_YES : PduHeaders.VALUE_NO);
 
             out.writeInt(mParts.size());
             for (final MmsPart part : mParts) {
