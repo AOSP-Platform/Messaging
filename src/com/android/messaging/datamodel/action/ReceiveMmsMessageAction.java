@@ -20,6 +20,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Pair;
 
 import com.android.messaging.Factory;
 import com.android.messaging.datamodel.BugleDatabaseOperations;
@@ -74,9 +75,11 @@ public class ReceiveMmsMessageAction extends Action implements Parcelable {
         syncManager.onNewMessageInserted(received);
 
         // TODO: Should use local time to set received time in MMS message
-        final DatabaseMessages.MmsMessage mms = MmsUtils.processReceivedPdu(
-                context, pushData, self.getSubId(), self.getNormalizedDestination());
+        final Pair<Boolean /* handled */, DatabaseMessages.MmsMessage> result =
+                MmsUtils.processReceivedPdu(
+                        context, pushData, self.getSubId(), self.getNormalizedDestination());
 
+        final DatabaseMessages.MmsMessage mms = result.first ? null : result.second;
         if (mms != null) {
             final List<String> recipients = MmsUtils.getRecipientsByThread(mms.mThreadId);
             String from = MmsUtils.getMmsSender(recipients, mms.getUri());
@@ -149,7 +152,9 @@ public class ReceiveMmsMessageAction extends Action implements Parcelable {
                     + " in conversation " + message.getConversationId()
                     + ", uri = " + message.getSmsMessageUri());
         } else {
-            LogUtil.e(TAG, "ReceiveMmsMessageAction: Skipping processing of incoming PDU");
+            if (!result.first) {
+                LogUtil.e(TAG, "ReceiveMmsMessageAction: Skipping processing of incoming PDU");
+            }
         }
 
         ProcessPendingMessagesAction.scheduleProcessPendingMessagesAction(false, this);

@@ -23,9 +23,11 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
+import android.provider.Telephony.Mms;
 import android.telephony.SmsMessage;
 import android.text.TextUtils;
 import android.widget.ArrayAdapter;
@@ -34,10 +36,20 @@ import com.android.messaging.Factory;
 import com.android.messaging.R;
 import com.android.messaging.datamodel.SyncManager;
 import com.android.messaging.datamodel.action.DumpDatabaseAction;
+import com.android.messaging.datamodel.action.ReceiveMmsMessageAction;
 import com.android.messaging.datamodel.action.LogTelephonyDatabaseAction;
+import com.android.messaging.mmslib.InvalidHeaderValueException;
+import com.android.messaging.mmslib.pdu.DeliveryInd;
+import com.android.messaging.mmslib.pdu.EncodedStringValue;
+import com.android.messaging.mmslib.pdu.PduComposer;
+import com.android.messaging.mmslib.pdu.PduHeaders;
 import com.android.messaging.sms.MmsUtils;
 import com.android.messaging.ui.UIIntents;
 import com.android.messaging.ui.debug.DebugSmsMmsFromDumpFileDialogFragment;
+import com.android.messaging.util.OsUtil;
+import com.android.messaging.util.PhoneUtils;
+import com.android.messaging.util.SafeAsyncTask;
+import com.android.messaging.util.UiUtils;
 import com.google.common.io.ByteStreams;
 
 import java.io.BufferedInputStream;
@@ -50,6 +62,8 @@ import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.StreamCorruptedException;
+import java.util.List;
+import java.util.Locale;
 
 public class DebugUtils {
     private static final String TAG = "bugle.util.DebugUtils";
@@ -186,6 +200,14 @@ public class DebugUtils {
             @Override
             public void run() {
                 shareFileUri();
+            }
+        });
+
+        arrayAdapter.add(new DebugAction("Fake MMS delivery report") {
+            @Override
+            public void run() {
+                new AsyncCreateMMSDeliveryReportTask(Factory.get().getApplicationContext())
+                        .executeOnThreadPool(null, null, null);
             }
         });
 
@@ -448,5 +470,86 @@ public class DebugUtils {
         intent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + fileName));
         intent.setType("image/*");
         Factory.get().getApplicationContext().startActivity(intent);
+    }
+
+    /**
+     * Creates fake M-Delivery.ind and injects it if any M-Send.req requested the MMS delivery
+     * report exists in telephony db.
+     */
+    private static class AsyncCreateMMSDeliveryReportTask
+            extends SafeAsyncTask<Void, Void, Boolean> {
+        private static final String SENT_MMS_REQUESTED_DELIVERY_REPORT =
+                String.format(
+                        Locale.US,
+                        "(%s=%d) AND (%s=%d) AND (%s IS NOT NULL)",
+                        Mms.MESSAGE_TYPE,
+                        PduHeaders.MESSAGE_TYPE_SEND_REQ,
+                        Mms.DELIVERY_REPORT,
+                        PduHeaders.VALUE_YES,
+                        Mms.MESSAGE_ID);
+
+        private static final int INDEX_MESSAGE_ID = 0;
+        private static final int INDEX_THREAD_ID = 1;
+        private static final int INDEX_SUB_ID = 2;
+
+        private final Context mContext;
+
+        public AsyncCreateMMSDeliveryReportTask(final Context context) {
+            mContext = context;
+        }
+
+        @Override
+        protected Boolean doInBackgroundTimed(final Void... params) {
+            final int subId;
+            final String messageId;
+            final List<String> recipients;
+            final String[] projection =
+                    OsUtil.isAtLeastL_MR1()
+                            ? new String[] {Mms.MESSAGE_ID, Mms.THREAD_ID, Mms.SUBSCRIPTION_ID}
+                            : new String[] {Mms.MESSAGE_ID, Mms.THREAD_ID};
+
+            try (Cursor cursor =
+                    mContext.getContentResolver()
+                            .query(
+                                    Mms.Sent.CONTENT_URI,
+                                    projection,
+                                    SENT_MMS_REQUESTED_DELIVERY_REPORT,
+                                    null,
+                                    null)) {
+                if (cursor != null && cursor.moveToNext()) {
+                    messageId = cursor.getString(INDEX_MESSAGE_ID);
+                    recipients = MmsUtils.getRecipientsByThread(cursor.getLong(INDEX_THREAD_ID));
+                    subId = PhoneUtils.getDefault().getSubIdFromTelephony(cursor, INDEX_SUB_ID);
+                    LogUtil.d(LogUtil.BUGLE_TAG, "Found sent MMS to create a delivery report("
+                            + "Message-Id=" + messageId + ") for subId " + subId);
+
+                    final DeliveryInd dInd = new DeliveryInd();
+                    dInd.setMmsVersion(PduHeaders.CURRENT_MMS_VERSION);
+                    dInd.setMessageId(messageId.getBytes());
+                    dInd.setTo(EncodedStringValue.encodeStrings(recipients.toArray(new String[0])));
+                    dInd.setDate(System.currentTimeMillis() / 1000);
+                    dInd.setStatus(PduHeaders.STATUS_RETRIEVED);
+                    byte[] pduBytes = new PduComposer(mContext, dInd).make();
+                    if (pduBytes != null && pduBytes.length > 0) {
+                        final ReceiveMmsMessageAction action =
+                                new ReceiveMmsMessageAction(subId, pduBytes);
+                        action.start();
+                        return true;
+                    } else {
+                        LogUtil.e(LogUtil.BUGLE_TAG, "Failed to create a delivery report");
+                    }
+                } else {
+                    LogUtil.e(LogUtil.BUGLE_TAG, "No sent MMS awaiting a delivery report in db");
+                }
+            } catch (final InvalidHeaderValueException e) {
+                // Nothing to do
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            UiUtils.showToastAtBottom(success ? "Delivered fake MMS delivery report" : "Failed");
+        }
     }
 }

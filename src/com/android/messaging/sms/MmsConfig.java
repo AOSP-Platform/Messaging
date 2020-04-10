@@ -248,6 +248,11 @@ public class MmsConfig {
                 CarrierConfigValuesLoader.CONFIG_ENABLE_SMS_DELIVERY_REPORTS_DEFAULT);
     }
 
+    public boolean getMMSDeliveryReportsEnabled() {
+        return mValues.getBoolean(CarrierConfigValuesLoader.CONFIG_ENABLE_MMS_DELIVERY_REPORTS,
+                CarrierConfigValuesLoader.CONFIG_ENABLE_MMS_DELIVERY_REPORTS_DEFAULT);
+    }
+
     public boolean getNotifyWapMMSC() {
         return mValues.getBoolean(CarrierConfigValuesLoader.CONFIG_ENABLED_NOTIFY_WAP_MMSC,
                 CarrierConfigValuesLoader.CONFIG_ENABLED_NOTIFY_WAP_MMSC_DEFAULT);

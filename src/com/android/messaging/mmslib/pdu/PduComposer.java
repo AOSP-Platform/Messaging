@@ -181,6 +181,11 @@ public class PduComposer {
                     return null;
                 }
                 break;
+            case PduHeaders.MESSAGE_TYPE_DELIVERY_IND:
+                if (makeDeliveryInd() != PDU_COMPOSE_SUCCESS) {
+                    return null;
+                }
+                break;
             default:
                 return null;
         }
@@ -813,6 +818,52 @@ public class PduComposer {
         if (appendHeader(PduHeaders.CONTENT_LOCATION) != PDU_COMPOSE_SUCCESS) {
             return PDU_COMPOSE_CONTENT_ERROR;
         }
+
+        return PDU_COMPOSE_SUCCESS;
+    }
+
+    /**
+     * Make Delivery.Ind. (Debug mode only)
+     */
+    private int makeDeliveryInd() {
+        if (mMessage == null) {
+            mMessage = new ByteArrayOutputStream();
+            mPosition = 0;
+        }
+
+        // X-Mms-Message-Type
+        appendOctet(PduHeaders.MESSAGE_TYPE);
+        appendOctet(PduHeaders.MESSAGE_TYPE_DELIVERY_IND);
+
+        // X-Mms-MMS-Version
+        if (appendHeader(PduHeaders.MMS_VERSION) != PDU_COMPOSE_SUCCESS) {
+            return PDU_COMPOSE_CONTENT_ERROR;
+        }
+
+        // Message-ID
+        if (appendHeader(PduHeaders.MESSAGE_ID) != PDU_COMPOSE_SUCCESS) {
+            return PDU_COMPOSE_CONTENT_ERROR;
+        }
+
+        // TO
+        if (appendHeader(PduHeaders.TO) != PDU_COMPOSE_SUCCESS) {
+            return PDU_COMPOSE_CONTENT_ERROR;
+        }
+
+        // Date
+        if (appendHeader(PduHeaders.DATE) != PDU_COMPOSE_SUCCESS) {
+            return PDU_COMPOSE_CONTENT_ERROR;
+        }
+
+        // X-Mms-Status
+        if (appendHeader(PduHeaders.STATUS) != PDU_COMPOSE_SUCCESS) {
+            return PDU_COMPOSE_CONTENT_ERROR;
+        }
+
+        // X-Mms-Status-Text Optional(not support)
+        // X-Mms-Applic-ID Optional(not support)
+        // X-Mms-Reply-Applic-ID Optional(not support)
+        // X-Mms-Aux-Applic-Info Optional(not support)
 
         return PDU_COMPOSE_SUCCESS;
     }
