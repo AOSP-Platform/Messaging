@@ -39,10 +39,16 @@ import android.telephony.SmsMessage;
 import android.text.TextUtils;
 import android.text.util.Rfc822Token;
 import android.text.util.Rfc822Tokenizer;
+import android.util.Pair;
 
 import com.android.messaging.Factory;
 import com.android.messaging.R;
+import com.android.messaging.datamodel.BugleDatabaseOperations;
+import com.android.messaging.datamodel.DataModel;
+import com.android.messaging.datamodel.DatabaseHelper.MessageColumns;
+import com.android.messaging.datamodel.DatabaseWrapper;
 import com.android.messaging.datamodel.MediaScratchFileProvider;
+import com.android.messaging.datamodel.MessagingContentProvider;
 import com.android.messaging.datamodel.action.DownloadMmsAction;
 import com.android.messaging.datamodel.action.SendMessageAction;
 import com.android.messaging.datamodel.data.MessageData;
@@ -52,6 +58,7 @@ import com.android.messaging.mmslib.InvalidHeaderValueException;
 import com.android.messaging.mmslib.MmsException;
 import com.android.messaging.mmslib.SqliteWrapper;
 import com.android.messaging.mmslib.pdu.CharacterSets;
+import com.android.messaging.mmslib.pdu.DeliveryInd;
 import com.android.messaging.mmslib.pdu.EncodedStringValue;
 import com.android.messaging.mmslib.pdu.GenericPdu;
 import com.android.messaging.mmslib.pdu.NotificationInd;
@@ -1728,14 +1735,20 @@ public class MmsUtils {
         return null;
     }
 
-    public static int bugleStatusForMms(final boolean isOutgoing, final boolean isNotification,
-            final int messageBox) {
+    public static int bugleStatusForMms(final boolean isOutgoing, final int deliveryStatus,
+            final boolean isNotification, final int messageBox) {
         int bugleStatus = MessageData.BUGLE_STATUS_UNKNOWN;
         // For a message we sync either
         if (isOutgoing) {
             if (messageBox == Mms.MESSAGE_BOX_OUTBOX || messageBox == Mms.MESSAGE_BOX_FAILED) {
                 // Not sent counts as failed and available for manual resend
                 bugleStatus = MessageData.BUGLE_STATUS_OUTGOING_FAILED;
+            } else if (deliveryStatus == PduHeaders.STATUS_RETRIEVED
+                    || deliveryStatus == PduHeaders.STATUS_FORWARDED) {
+                // Reached the recipient MMS Client
+                // STATUS_RETRIEVED: successfully retrieved by the recipient.
+                // STATUS_FORWARDED: the recipient forwarded it without retrieving it first.
+                bugleStatus = MessageData.BUGLE_STATUS_OUTGOING_DELIVERED;
             } else {
                 // Otherwise outgoing message is complete
                 bugleStatus = MessageData.BUGLE_STATUS_OUTGOING_COMPLETE;
@@ -2248,8 +2261,29 @@ public class MmsUtils {
         return address;
     }
 
-    public static DatabaseMessages.MmsMessage processReceivedPdu(final Context context,
-            final byte[] pushData, final int subId, final String subPhoneNumber) {
+    private static final String[] SENT_MMS_PROJECTION = new String[] {Mms._ID, Mms.THREAD_ID};
+    private static final int INDEX_ID = 0;
+    private static final int INDEX_THREAD_ID = 1;
+
+    private static final String SENT_MMS_BY_MESSAGE_ID_SELECTION =
+            OsUtil.isAtLeastL_MR1()
+                    ? String.format(
+                            Locale.US,
+                            "(%s=%d) AND (%s=?) AND (%s=?)",
+                            Mms.MESSAGE_TYPE,
+                            PduHeaders.MESSAGE_TYPE_SEND_REQ,
+                            Mms.MESSAGE_ID,
+                            Mms.SUBSCRIPTION_ID)
+                    : String.format(
+                            Locale.US,
+                            "(%s=%d) AND (%s=?)",
+                            Mms.MESSAGE_TYPE,
+                            PduHeaders.MESSAGE_TYPE_SEND_REQ,
+                            Mms.MESSAGE_ID);
+
+    public static Pair<Boolean, DatabaseMessages.MmsMessage> processReceivedPdu(
+            final Context context, final byte[] pushData, final int subId,
+            final String subPhoneNumber) {
         // Parse data
 
         // Insert placeholder row to telephony and local db
@@ -2260,15 +2294,112 @@ public class MmsUtils {
 
         if (null == pdu) {
             LogUtil.e(TAG, "Invalid PUSH data");
-            return null;
+            return new Pair(false, null);
         }
 
         final PduPersister p = PduPersister.getPduPersister(context);
         final int type = pdu.getMessageType();
 
         Uri messageUri = null;
+        boolean handled = false;
         switch (type) {
-            case PduHeaders.MESSAGE_TYPE_DELIVERY_IND:
+            case PduHeaders.MESSAGE_TYPE_DELIVERY_IND: {
+                handled = true; // M-Delivery.ind is handled here.
+                final DeliveryInd dInd = (DeliveryInd) pdu;
+                final int status = dInd.getStatus();
+
+                // TODO: Need to show a notification?
+                // Need to show X-Mms-Status and To fields info on MessageDetailsDialog?
+                final String to = EncodedStringValue.concat(dInd.getTo());
+                LogUtil.d(TAG, "Received M-Delivery.ind: recipient " + to + ", status " + status);
+
+                final byte[] messageId = dInd.getMessageId();
+                if (messageId == null || messageId.length < 1) {
+                    LogUtil.e(TAG, "Invalid Message-ID");
+                    break;
+                }
+
+                // Find the associated sent MMS by Message-ID.
+                final ContentResolver cr = context.getContentResolver();
+                long id = -1L;
+                long threadId = -1L;
+                try (final Cursor cursor =
+                        cr.query(
+                                Mms.Sent.CONTENT_URI,
+                                SENT_MMS_PROJECTION,
+                                SENT_MMS_BY_MESSAGE_ID_SELECTION,
+                                OsUtil.isAtLeastL_MR1()
+                                            ? new String[] {
+                                                PduPersister.toIsoString(messageId),
+                                                String.valueOf(subId)
+                                            }
+                                            : new String[] {PduPersister.toIsoString(messageId)},
+                                null)) {
+                    if (cursor != null && cursor.moveToNext()) {
+                        id = cursor.getLong(INDEX_ID);
+                        threadId = cursor.getLong(INDEX_THREAD_ID);
+                    }
+                }
+
+                if (id == -1L || threadId == -1L) {
+                    LogUtil.e(TAG, "Cannot find sent MMS for M-Delivery.ind in telephony db");
+                    break;
+                }
+
+                // Insert M-Delivery.ind into telephony db.
+                try {
+                    final Uri inboxUri =
+                            p.persist(pdu, Mms.Inbox.CONTENT_URI, subId, subPhoneNumber, null);
+                    // Set thread Id for this M-Delivery.ind as the M-Send.req's one corresponding
+                    // to it so that both messages could be in same thread even group MMS case.
+                    final ContentValues values = new ContentValues(1);
+                    values.put(Mms.THREAD_ID, threadId);
+                    cr.update(inboxUri, values, null, null);
+                } catch (final MmsException e) {
+                    LogUtil.e(TAG, "Failed to insert M-Delivery.ind into telephony.db", e);
+                }
+
+                final DatabaseWrapper db = DataModel.get().getDatabase();
+                final MessageData sentMms =
+                        BugleDatabaseOperations.readMessageData(
+                                db, ContentUris.withAppendedId(Mms.CONTENT_URI, id));
+                if (sentMms == null) {
+                    LogUtil.e(TAG, "Cannot find sent MMS for M-Delivery.ind in bugle's db");
+                    break;
+                }
+                final String rowId = sentMms.getMessageId();
+                final String conversationId = sentMms.getConversationId();
+
+                final int bugleStatus =
+                        bugleStatusForMms(
+                                true /* isOutgoing */,
+                                status,
+                                false /* isNotification */,
+                                Mms.MESSAGE_BOX_SENT);
+                if (bugleStatus == MessageData.BUGLE_STATUS_OUTGOING_DELIVERED) {
+                    final ContentValues values = new ContentValues(1);
+                    values.put(MessageColumns.STATUS, MessageData.BUGLE_STATUS_OUTGOING_DELIVERED);
+
+                    // Update local message
+                    db.beginTransaction();
+                    try {
+                        if (BugleDatabaseOperations.updateMessageRowIfExists(db, rowId, values)) {
+                            MessagingContentProvider.notifyMessagesChanged(conversationId);
+                            LogUtil.d(TAG, "Updated MMS message " + rowId + " in conversation "
+                                        + conversationId + " as delivered");
+                        }
+                        db.setTransactionSuccessful();
+                    } finally {
+                        db.endTransaction();
+                    }
+                }
+
+                if (LogUtil.isLoggable(TAG, LogUtil.VERBOSE)) {
+                    LogUtil.d(TAG, "M-Delivery.ind with status " + status + " for MMS message "
+                                + rowId + " in conversation " + conversationId + " is processed");
+                }
+                break;
+            }
             case PduHeaders.MESSAGE_TYPE_READ_ORIG_IND: {
                 // TODO: Should this be commented out?
 //                threadId = findThreadId(context, pdu, type);
@@ -2349,7 +2480,19 @@ public class MmsUtils {
         if (messageUri != null) {
             mms = MmsUtils.loadMms(messageUri);
         }
-        return mms;
+        return new Pair(handled, mms);
+    }
+
+    private static boolean isMmsDeliveryReportRequired(final int subId) {
+        if (!MmsConfig.get(subId).getMMSDeliveryReportsEnabled()) {
+            return false;
+        }
+        final Context context = Factory.get().getApplicationContext();
+        final Resources res = context.getResources();
+        final BuglePrefs prefs = BuglePrefs.getSubscriptionPrefs(subId);
+        final String deliveryReportKey = res.getString(R.string.mms_delivery_reports_pref_key);
+        final boolean defaultValue = res.getBoolean(R.bool.mms_delivery_reports_pref_default);
+        return prefs.getBoolean(deliveryReportKey, defaultValue);
     }
 
     public static Uri insertSendingMmsMessage(final Context context, final List<String> recipients,
@@ -2357,7 +2500,7 @@ public class MmsUtils {
             final long timestamp) {
         final SendReq sendReq = createMmsSendReq(
                 context, subId, recipients.toArray(new String[recipients.size()]), content,
-                DEFAULT_DELIVERY_REPORT_MODE,
+                isMmsDeliveryReportRequired(subId),
                 DEFAULT_READ_REPORT_MODE,
                 DEFAULT_EXPIRY_TIME_IN_SECONDS,
                 DEFAULT_PRIORITY,

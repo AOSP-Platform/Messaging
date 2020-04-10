@@ -16,6 +16,7 @@
 
 package com.android.messaging.datamodel.action;
 
+import android.content.ContentResolver;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.provider.Telephony;
@@ -23,6 +24,7 @@ import android.provider.Telephony.Mms;
 import android.provider.Telephony.Sms;
 import android.text.TextUtils;
 
+import com.android.messaging.Factory;
 import com.android.messaging.datamodel.BugleDatabaseOperations;
 import com.android.messaging.datamodel.DataModel;
 import com.android.messaging.datamodel.DatabaseHelper;
@@ -39,6 +41,7 @@ import com.android.messaging.sms.DatabaseMessages.SmsMessage;
 import com.android.messaging.sms.MmsUtils;
 import com.android.messaging.util.Assert;
 import com.android.messaging.util.LogUtil;
+import com.android.messaging.util.OsUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -222,6 +225,22 @@ class SyncMessageBatch {
         return bugleStatus;
     }
 
+    private static final String MMS_DELIVERY_REPORT_SELECTION =
+            OsUtil.isAtLeastL_MR1()
+                    ? String.format(
+                            Locale.US,
+                            "(%s=%d) AND (%s=?) AND (%s=?)",
+                            Mms.MESSAGE_TYPE,
+                            PduHeaders.MESSAGE_TYPE_DELIVERY_IND,
+                            Mms.MESSAGE_ID,
+                            Mms.SUBSCRIPTION_ID)
+                    : String.format(
+                            Locale.US,
+                            "(%s=%d) AND (%s=?)",
+                            Mms.MESSAGE_TYPE,
+                            PduHeaders.MESSAGE_TYPE_DELIVERY_IND,
+                            Mms.MESSAGE_ID);
+
     /**
      * Store the MMS message into local database
      *
@@ -249,15 +268,35 @@ class SyncMessageBatch {
                     + mms.mThreadId);
             return;
         }
-        final ParticipantData self = ParticipantData.getSelfParticipant(mms.getSubId());
+        final ParticipantData self = ParticipantData.getSelfParticipant(mms.mSubId);
         final String selfId =
                 BugleDatabaseOperations.getOrCreateParticipantInTransaction(db, self);
         final ParticipantData sender = isOutgoing ?
-                self : ParticipantData.getFromRawPhoneBySimLocale(senderId, mms.getSubId());
+                self : ParticipantData.getFromRawPhoneBySimLocale(senderId, mms.mSubId);
         final String participantId = (isOutgoing ? selfId :
                 BugleDatabaseOperations.getOrCreateParticipantInTransaction(db, sender));
 
-        final int bugleStatus = MmsUtils.bugleStatusForMms(isOutgoing, isNotification, mms.mType);
+        int deliveryStatus = 0; // '0' means none
+        final String messageId = mms.getMessageId();
+        if (isOutgoing && mms.isDeliveryReportRequested() && !TextUtils.isEmpty(messageId)) {
+            // Find the associated M-Delivery.ind if a sent MMS has requested a delivery report.
+            final ContentResolver cr = Factory.get().getApplicationContext().getContentResolver();
+            try (Cursor cursor =
+                    cr.query(
+                            Mms.Inbox.CONTENT_URI,
+                            new String[] {Mms.STATUS},
+                            MMS_DELIVERY_REPORT_SELECTION,
+                            OsUtil.isAtLeastL_MR1()
+                                    ? new String[] {messageId, String.valueOf(mms.mSubId)}
+                                    : new String[] {messageId},
+                            null)) {
+                if (cursor != null && cursor.moveToNext()) {
+                    deliveryStatus = cursor.getInt(0 /* index of Mms.STATUS */);
+                }
+            }
+        }
+        final int bugleStatus =
+                MmsUtils.bugleStatusForMms(isOutgoing, deliveryStatus, isNotification, mms.mType);
 
         // Import message and all of the parts.
         // TODO : For now we are importing these in the order we found them in the MMS
