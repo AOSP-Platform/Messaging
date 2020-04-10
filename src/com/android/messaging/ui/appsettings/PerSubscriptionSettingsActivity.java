@@ -136,6 +136,11 @@ public class PerSubscriptionSettingsActivity extends BugleActionBarActivity {
                         getString(R.string.delivery_reports_pref_key));
                 advancedCategory.removePreference(deliveryReportsPref);
             }
+            if (!MmsConfig.get(mSubId).getMMSDeliveryReportsEnabled()) {
+                final Preference mmsDeliveryReportsPref =
+                        findPreference(getString(R.string.mms_delivery_reports_pref_key));
+                advancedCategory.removePreference(mmsDeliveryReportsPref);
+            }
             final Preference wirelessAlertPref = findPreference(getString(
                     R.string.wireless_alerts_key));
             if (!isCellBroadcastAppLinkEnabled()) {
@@ -185,6 +190,11 @@ public class PerSubscriptionSettingsActivity extends BugleActionBarActivity {
                         findPreference(getString(R.string.delivery_reports_pref_key));
                 if (deliveryReportsPreference != null) {
                     deliveryReportsPreference.setEnabled(false);
+                }
+                final Preference mmsDeliveryReportsPreference =
+                        findPreference(getString(R.string.mms_delivery_reports_pref_key));
+                if (mmsDeliveryReportsPreference != null) {
+                    mmsDeliveryReportsPreference.setEnabled(false);
                 }
             }
         }
