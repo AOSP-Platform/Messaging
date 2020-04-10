@@ -1407,7 +1407,8 @@ public class PduPersister {
         // this scope.
         if ((msgType == PduHeaders.MESSAGE_TYPE_NOTIFICATION_IND)
                 || (msgType == PduHeaders.MESSAGE_TYPE_RETRIEVE_CONF)
-                || (msgType == PduHeaders.MESSAGE_TYPE_SEND_REQ)) {
+                || (msgType == PduHeaders.MESSAGE_TYPE_SEND_REQ)
+                || (msgType == PduHeaders.MESSAGE_TYPE_DELIVERY_IND)) {
             switch (msgType) {
                 case PduHeaders.MESSAGE_TYPE_NOTIFICATION_IND:
                 case PduHeaders.MESSAGE_TYPE_RETRIEVE_CONF:
@@ -1423,6 +1424,7 @@ public class PduPersister {
                     checkAndLoadToCcRecipients(recipients, addressMap, subPhoneNumber);
                     break;
                 case PduHeaders.MESSAGE_TYPE_SEND_REQ:
+                case PduHeaders.MESSAGE_TYPE_DELIVERY_IND:
                     loadRecipients(PduHeaders.TO, recipients, addressMap);
                     break;
             }

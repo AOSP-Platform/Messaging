@@ -61,9 +61,6 @@ public class SendMessageAction extends Action implements Parcelable {
         return action.queueAction(messageId, processingAction);
     }
 
-    public static final boolean DEFAULT_DELIVERY_REPORT_MODE  = false;
-    public static final int MAX_SMS_RETRY = 3;
-
     // Core parameters needed for all types of message
     private static final String KEY_MESSAGE_ID = "message_id";
     private static final String KEY_MESSAGE = "message";
