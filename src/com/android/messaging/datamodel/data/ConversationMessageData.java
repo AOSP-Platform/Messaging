@@ -67,6 +67,7 @@ public class ConversationMessageData {
     private String mMmsSubject;
     private long mMmsExpiry;
     private int mRawTelephonyStatus;
+    private String mMmsReportsInfo;
     private String mSenderFullName;
     private String mSenderFirstName;
     private String mSenderDisplayDestination;
@@ -111,6 +112,7 @@ public class ConversationMessageData {
         mMmsSubject = cursor.getString(INDEX_MMS_SUBJECT);
         mMmsExpiry = cursor.getLong(INDEX_MMS_EXPIRY);
         mRawTelephonyStatus = cursor.getInt(INDEX_RAW_TELEPHONY_STATUS);
+        mMmsReportsInfo = cursor.getString(INDEX_MMS_REPORTS_INFO);
         mSenderFullName = cursor.getString(INDEX_SENDER_FULL_NAME);
         mSenderFirstName = cursor.getString(INDEX_SENDER_FIRST_NAME);
         mSenderDisplayDestination = cursor.getString(INDEX_SENDER_DISPLAY_DESTINATION);
@@ -509,6 +511,10 @@ public class ConversationMessageData {
         return mRawTelephonyStatus;
     }
 
+    public final String getMmsReportsInfo() {
+        return mMmsReportsInfo;
+    }
+
     public final String getSelfParticipantId() {
         return mSelfParticipantId;
     }
@@ -749,6 +755,8 @@ public class ConversationMessageData {
             + " as " + ConversationMessageViewColumns.MMS_EXPIRY + ", "
             + DatabaseHelper.MESSAGES_TABLE + '.' + MessageColumns.RAW_TELEPHONY_STATUS
             + " as " + ConversationMessageViewColumns.RAW_TELEPHONY_STATUS + ", "
+            + DatabaseHelper.MESSAGES_TABLE + '.' + MessageColumns.MMS_REPORTS_INFO
+            + " as " + ConversationMessageViewColumns.MMS_REPORTS_INFO + ", "
             + DatabaseHelper.MESSAGES_TABLE + '.' + MessageColumns.SELF_PARTICIPANT_ID
             + " as " + ConversationMessageViewColumns.SELF_PARTICIPANT_ID + ", "
             + DatabaseHelper.PARTICIPANTS_TABLE + '.' + ParticipantColumns.FULL_NAME
@@ -822,6 +830,7 @@ public class ConversationMessageData {
         static final String MMS_SUBJECT = MessageColumns.MMS_SUBJECT;
         static final String MMS_EXPIRY = MessageColumns.MMS_EXPIRY;
         static final String RAW_TELEPHONY_STATUS = MessageColumns.RAW_TELEPHONY_STATUS;
+        static final String MMS_REPORTS_INFO = MessageColumns.MMS_REPORTS_INFO;
         static final String SELF_PARTICIPANT_ID = MessageColumns.SELF_PARTICIPANT_ID;
         static final String SENDER_FULL_NAME = ParticipantColumns.FULL_NAME;
         static final String SENDER_FIRST_NAME = ParticipantColumns.FIRST_NAME;
@@ -866,6 +875,7 @@ public class ConversationMessageData {
     private static final int INDEX_MMS_SUBJECT                   = sIndexIncrementer++;
     private static final int INDEX_MMS_EXPIRY                    = sIndexIncrementer++;
     private static final int INDEX_RAW_TELEPHONY_STATUS          = sIndexIncrementer++;
+    private static final int INDEX_MMS_REPORTS_INFO              = sIndexIncrementer++;
     private static final int INDEX_SELF_PARTICIPIANT_ID          = sIndexIncrementer++;
     private static final int INDEX_SENDER_FULL_NAME              = sIndexIncrementer++;
     private static final int INDEX_SENDER_FIRST_NAME             = sIndexIncrementer++;
@@ -901,6 +911,7 @@ public class ConversationMessageData {
         ConversationMessageViewColumns.MMS_SUBJECT,
         ConversationMessageViewColumns.MMS_EXPIRY,
         ConversationMessageViewColumns.RAW_TELEPHONY_STATUS,
+        ConversationMessageViewColumns.MMS_REPORTS_INFO,
         ConversationMessageViewColumns.SELF_PARTICIPANT_ID,
         ConversationMessageViewColumns.SENDER_FULL_NAME,
         ConversationMessageViewColumns.SENDER_FIRST_NAME,

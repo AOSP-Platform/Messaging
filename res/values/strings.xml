@@ -520,7 +520,17 @@
     <!-- Label in "Message details" dialog -->
     <string name="priority_label">Priority:\u0020</string>
     <!-- Label in "Message details" dialog -->
+    <string name="mms_report_label">Reports:</string>
+    <!-- Label in "Message details" dialog -->
     <string name="sim_label">SIM:\u0020</string>
+    <!-- MMS Report status for "Reports" in "Message details" dialog -->
+    <string name="mms_report_delivered">Delivered</string>
+    <!-- MMS Report status for "Report" in "Message details" dialog -->
+    <string name="mms_report_expired">Expired</string>
+    <!-- MMS Report status for "Reports" in "Message details" dialog -->
+    <string name="mms_report_rejected">Rejected</string>
+    <!-- MMS Report status for "Reports" in "Message details" dialog -->
+    <string name="mms_report_pending">Pending</string>
     <!-- "Priority" value in "Message details" dialog -->
     <string name="priority_high">High</string>
     <!-- "Priority" value in "Message details" dialog -->
