@@ -225,6 +225,12 @@ class SyncMessageBatch {
         return bugleStatus;
     }
 
+    private static final String[] MMS_DELIVERY_REPORT_PROJECTION =
+            new String[] {Mms.STATUS, Mms.DATE, Mms.THREAD_ID};
+    private static final int INDEX_STATUS = 0;
+    private static final int INDEX_DATE = 1;
+    private static final int INDEX_THREAD_ID = 2;
+
     private static final String MMS_DELIVERY_REPORT_SELECTION =
             OsUtil.isAtLeastL_MR1()
                     ? String.format(
@@ -277,6 +283,7 @@ class SyncMessageBatch {
                 BugleDatabaseOperations.getOrCreateParticipantInTransaction(db, sender));
 
         int bugleStatus = MmsUtils.bugleStatusForMms(isOutgoing, isNotification, mms.mType);
+        String reportSet = null;
         if (bugleStatus == MessageData.BUGLE_STATUS_OUTGOING_COMPLETE
                 && mms.isDeliveryReportRequested()) {
             final String messageId = mms.getMessageId();
@@ -288,7 +295,7 @@ class SyncMessageBatch {
                 try (Cursor cursor =
                         cr.query(
                                 Mms.Inbox.CONTENT_URI,
-                                new String[] {Mms.STATUS},
+                                MMS_DELIVERY_REPORT_PROJECTION,
                                 MMS_DELIVERY_REPORT_SELECTION,
                                 OsUtil.isAtLeastL_MR1()
                                         ? new String[] {messageId, String.valueOf(mms.mSubId)}
@@ -296,14 +303,38 @@ class SyncMessageBatch {
                                 null)) {
                     if (cursor != null) {
                         while (cursor.moveToNext()) {
-                            int status = cursor.getInt(0 /* index of Mms.STATUS */);
-                            if (status == PduHeaders.STATUS_RETRIEVED
-                                    || status == PduHeaders.STATUS_FORWARDED) {
+                            final int status = cursor.getInt(INDEX_STATUS);
+                            final long date = cursor.getLong(INDEX_DATE);
+                            final List<String> recipients =
+                                    MmsUtils.getRecipientsByThread(cursor.getLong(INDEX_THREAD_ID));
+
+                            String to = null;
+                            if (recipients != null && recipients.size() > 0) {
+                                // It creates the To string same as EncodedStringValue.concat()
+                                // using in MmsUtils.processReceivedPdu() for PduHeaders.MESSAGE_
+                                // TYPE_DELIVERY_IND.
+                                StringBuilder sb = new StringBuilder();
+                                int maxIndex = recipients.size() - 1;
+                                for (int i = 0; i <= maxIndex; i++) {
+                                    sb.append(recipients.get(i));
+                                    if (i < maxIndex) {
+                                        sb.append(";");
+                                    }
+                                }
+                                to = sb.toString();
+                            }
+
+                            reportSet = MmsUtils.joinMmsDeliveryReportSet(
+                                            MmsUtils.createMmsDeliveryReportInfo(status, date, to),
+                                            reportSet);
+
+                            if (bugleStatus != MessageData.BUGLE_STATUS_OUTGOING_DELIVERED
+                                    && (status == PduHeaders.STATUS_RETRIEVED
+                                            || status == PduHeaders.STATUS_FORWARDED)) {
                                 // Update bugleStatus as BUGLE_STATUS_OUTGOING_DELIVERED to add a
                                 // delivered badge on this MMS if any report with RETRIEVED or
                                 // FORWARDED exists.
                                 bugleStatus = MessageData.BUGLE_STATUS_OUTGOING_DELIVERED;
-                                break;
                             }
                         }
                     }
@@ -319,6 +350,10 @@ class SyncMessageBatch {
         // TODO: Need to set correct status on message
         final MessageData message = MmsUtils.createMmsMessage(mms, conversationId, participantId,
                 selfId, bugleStatus);
+
+        if (reportSet != null) {
+            message.setMmsReportsInfo(reportSet);
+        }
 
         // Inserting mms content into messages table
         try {

@@ -15,8 +15,10 @@
     limitations under the License.
 -->
 <resources>
-    <!-- DB version -->
-    <string name="database_version" translatable="false">2</string>
+    <!-- DB version
+         version 3: new mms_reports_info column is added in messages table.
+    -->
+    <string name="database_version" translatable="false">3</string>
 
     <!-- Version for shared preferences. This is used for handling prefs migration when old pref
          keys are moved or renamed. You don't need to bump up the version number if you are just

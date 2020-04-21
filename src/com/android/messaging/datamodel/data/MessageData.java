@@ -60,6 +60,7 @@ public class MessageData implements Parcelable {
         MessageColumns.MMS_EXPIRY,
         MessageColumns.RAW_TELEPHONY_STATUS,
         MessageColumns.RETRY_START_TIMESTAMP,
+        MessageColumns.MMS_REPORTS_INFO
     };
 
     private static final int INDEX_ID = 0;
@@ -81,13 +82,14 @@ public class MessageData implements Parcelable {
     private static final int INDEX_MMS_EXPIRY = 16;
     private static final int INDEX_RAW_TELEPHONY_STATUS = 17;
     private static final int INDEX_RETRY_START_TIMESTAMP = 18;
+    private static final int INDEX_MMS_REPORTS_INFO = 19;
 
     // SQL statement to insert a "complete" message row (columns based on the projection above).
     private static final String INSERT_MESSAGE_SQL =
             "INSERT INTO " + DatabaseHelper.MESSAGES_TABLE + " ( "
                     + TextUtils.join(", ", Arrays.copyOfRange(sProjection, 1,
-                            INDEX_RETRY_START_TIMESTAMP + 1))
-                    + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                            INDEX_MMS_REPORTS_INFO + 1))
+                    + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private String mMessageId;
     private String mConversationId;
@@ -109,6 +111,7 @@ public class MessageData implements Parcelable {
     private int mStatus;
     private final ArrayList<MessagePartData> mParts;
     private long mRetryStartTimestamp;
+    private String mMmsReportsInfo;
 
     // PROTOCOL Values
     public static final int PROTOCOL_UNKNOWN = -1;              // Unknown type
@@ -400,6 +403,7 @@ public class MessageData implements Parcelable {
         mMmsTransactionId = cursor.getString(INDEX_MMS_TRANSACTION_ID);
         mMmsContentLocation = cursor.getString(INDEX_MMS_CONTENT_LOCATION);
         mRetryStartTimestamp = cursor.getLong(INDEX_RETRY_START_TIMESTAMP);
+        mMmsReportsInfo = cursor.getString(INDEX_MMS_REPORTS_INFO);
     }
 
     /**
@@ -435,6 +439,7 @@ public class MessageData implements Parcelable {
         values.put(MessageColumns.MMS_CONTENT_LOCATION, mMmsContentLocation);
         values.put(MessageColumns.RAW_TELEPHONY_STATUS, mRawStatus);
         values.put(MessageColumns.RETRY_START_TIMESTAMP, mRetryStartTimestamp);
+        values.put(MessageColumns.MMS_REPORTS_INFO, mMmsReportsInfo);
     }
 
     /**
@@ -471,6 +476,9 @@ public class MessageData implements Parcelable {
         }
         insert.bindLong(INDEX_RAW_TELEPHONY_STATUS, mRawStatus);
         insert.bindLong(INDEX_RETRY_START_TIMESTAMP, mRetryStartTimestamp);
+        if (mMmsReportsInfo != null) {
+            insert.bindString(INDEX_MMS_REPORTS_INFO, mMmsReportsInfo);
+        }
         return insert;
     }
 
@@ -674,6 +682,14 @@ public class MessageData implements Parcelable {
         return mRetryStartTimestamp;
     }
 
+    public String getMmsReportsInfo() {
+        return mMmsReportsInfo;
+    }
+
+    public void setMmsReportsInfo(String reportSet) {
+        mMmsReportsInfo = reportSet;
+    }
+
     public final String getMessageText() {
         final String separator = System.getProperty("line.separator");
         final StringBuilder text = new StringBuilder();
@@ -851,6 +867,7 @@ public class MessageData implements Parcelable {
         mMmsContentLocation = in.readString();
         mRawStatus = in.readInt();
         mRetryStartTimestamp = in.readLong();
+        mMmsReportsInfo = in.readString();
 
         // Read parts
         mParts = new ArrayList<MessagePartData>();
@@ -887,6 +904,7 @@ public class MessageData implements Parcelable {
         dest.writeString(mMmsContentLocation);
         dest.writeInt(mRawStatus);
         dest.writeLong(mRetryStartTimestamp);
+        dest.writeString(mMmsReportsInfo);
 
         // Write parts
         dest.writeInt(mParts.size());
