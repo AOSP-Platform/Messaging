@@ -204,6 +204,39 @@ public class MessageDetailsDialog {
             details.append(Formatter.formatFileSize(context, data.getSmsMessageSize()));
         }
 
+        // Reports:
+        // [Delivered Tue 3:05PM 425xxxxxxx]
+        // [Rejected Tue 3:05PM 424xxxxxxx]
+        // TODO: Should show it as "pending" before receiving any report if report is requested?
+        if (!TextUtils.isEmpty(data.getMmsReportsInfo())) {
+            details.append('\n');
+            details.append(res.getString(R.string.mms_report_label));
+            final String[] reportsInfo =
+                    MmsUtils.splitMmsDeliveryReportSet(data.getMmsReportsInfo());
+            for (String reportInfo : reportsInfo) {
+                String[] reportInfoItems = MmsUtils.parseMmsDeliveryReportInfo(reportInfo);
+                if (reportInfoItems != null) {
+                    details.append('\n');
+                    details.append('[');
+                    details.append(
+                            getDeliveryStatusDescription(
+                                    res,
+                                    Integer.parseInt(
+                                            reportInfoItems[MmsUtils.MMS_REPORT_INDEX_STATUS])));
+                    details.append(' ');
+                    // MMS db times are in seconds
+                    details.append(
+                            Dates.getMessageDetailsTimeString(
+                                    Long.parseLong(
+                                            reportInfoItems[MmsUtils.MMS_REPORT_INDEX_DATE]) * 1000)
+                            .toString());
+                    details.append(' ');
+                    details.append(reportInfoItems[MmsUtils.MMS_REPORT_INDEX_TO]);
+                    details.append(']');
+                }
+            }
+        }
+
         appendSimInfo(res, self, details);
 
         if (DebugUtils.isDebugEnabled()) {
@@ -211,6 +244,26 @@ public class MessageDetailsDialog {
         }
 
         return details.toString();
+    }
+
+    private static String getDeliveryStatusDescription(Resources res, int status) {
+        final int resId;
+        switch (status) {
+            case PduHeaders.STATUS_RETRIEVED:
+            case PduHeaders.STATUS_FORWARDED:
+                resId = R.string.mms_report_delivered;
+                break;
+            case PduHeaders.STATUS_EXPIRED:
+                resId = R.string.mms_report_expired;
+                break;
+            case PduHeaders.STATUS_REJECTED:
+                resId = R.string.mms_report_rejected;
+                break;
+            default:
+                resId = R.string.mms_report_pending;
+                break;
+        }
+        return res.getString(resId);
     }
 
     private static void appendSentOrReceivedTimestamp(Resources res, StringBuilder details,

@@ -264,6 +264,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         /* The detailed status (RESPONSE_STATUS or RETRIEVE_STATUS) for MMS message */
         public static final String RAW_TELEPHONY_STATUS = "raw_status";
+
+        /*
+         * The detailed MMS reports information containing To, Date and X-Mms-Status from each
+         * report for only sent MMS.
+         */
+        public static final String MMS_REPORTS_INFO = "mms_reports_info";
     }
 
     // Messages table SQL
@@ -288,6 +294,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     + MessageColumns.RAW_TELEPHONY_STATUS + " INT DEFAULT(0), "
                     + MessageColumns.SELF_PARTICIPANT_ID + " INT, "
                     + MessageColumns.RETRY_START_TIMESTAMP + " INT DEFAULT(0), "
+                    + MessageColumns.MMS_REPORTS_INFO + " TEXT, "
                     + "FOREIGN KEY (" + MessageColumns.CONVERSATION_ID + ") REFERENCES "
                     + CONVERSATIONS_TABLE + "(" + ConversationColumns._ID + ") ON DELETE CASCADE "
                     + "FOREIGN KEY (" + MessageColumns.SENDER_PARTICIPANT_ID + ") REFERENCES "

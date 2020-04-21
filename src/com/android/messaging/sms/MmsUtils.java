@@ -2295,12 +2295,11 @@ public class MmsUtils {
         boolean handled = false;
         switch (type) {
             case PduHeaders.MESSAGE_TYPE_DELIVERY_IND: {
+                // TODO: Need to show a notification?
                 handled = true; // M-Delivery.ind is handled here.
                 final DeliveryInd dInd = (DeliveryInd) pdu;
                 final int status = dInd.getStatus();
-
-                // TODO: Need to show a notification?
-                // Need to show X-Mms-Status and To fields info on MessageDetailsDialog?
+                final long date = dInd.getDate();
                 final String to = EncodedStringValue.concat(dInd.getTo());
                 LogUtil.d(TAG, "Received M-Delivery.ind: recipient " + to + ", status " + status);
 
@@ -2355,27 +2354,32 @@ public class MmsUtils {
                 }
                 final String rowId = sentMms.getMessageId();
                 final String conversationId = sentMms.getConversationId();
+                final String reportsInfo = joinMmsDeliveryReportSet(
+                                                    sentMms.getMmsReportsInfo(),
+                                                    createMmsDeliveryReportInfo(status, date, to));
+
+                final ContentValues values = new ContentValues();
+                values.put(MessageColumns.MMS_REPORTS_INFO, reportsInfo);
 
                 if (status == PduHeaders.STATUS_RETRIEVED
                         || status == PduHeaders.STATUS_FORWARDED) {
                     // Reached the recipient MMS Client
                     // STATUS_RETRIEVED: successfully retrieved by the recipient.
                     // STATUS_FORWARDED: the recipient forwarded it without retrieving it first.
-                    final ContentValues values = new ContentValues(1);
                     values.put(MessageColumns.STATUS, MessageData.BUGLE_STATUS_OUTGOING_DELIVERED);
+                }
 
-                    // Update local message
-                    db.beginTransaction();
-                    try {
-                        if (BugleDatabaseOperations.updateMessageRowIfExists(db, rowId, values)) {
-                            MessagingContentProvider.notifyMessagesChanged(conversationId);
-                            LogUtil.d(TAG, "Updated MMS message " + rowId + " in conversation "
-                                        + conversationId + " as DELIVERED");
-                        }
-                        db.setTransactionSuccessful();
-                    } finally {
-                        db.endTransaction();
+                // Update local message
+                db.beginTransaction();
+                try {
+                    if (BugleDatabaseOperations.updateMessageRowIfExists(db, rowId, values)) {
+                        MessagingContentProvider.notifyMessagesChanged(conversationId);
+                        LogUtil.d(TAG, "Updated the status for MMS message " + rowId
+                                    + " in conversation " + conversationId + " by M-Delivery.ind");
                     }
+                    db.setTransactionSuccessful();
+                } finally {
+                    db.endTransaction();
                 }
 
                 if (LogUtil.isLoggable(TAG, LogUtil.VERBOSE)) {
@@ -2465,6 +2469,50 @@ public class MmsUtils {
             mms = MmsUtils.loadMms(messageUri);
         }
         return new Pair(handled, mms);
+    }
+
+    public static final int MMS_REPORT_INDEX_STATUS = 0;
+    public static final int MMS_REPORT_INDEX_DATE = 1;
+    public static final int MMS_REPORT_INDEX_TO = 2;
+
+    private static final String MMS_REPORT_JOIN_DELIMITER = ":";
+    private static final String MMS_REPORT_SPLIT_DELIMITER = "\\:";
+    private static final String MMS_REPORT_SET_JOIN_DELIMITER = "|";
+    private static final String MMS_REPORT_SET_SPLIT_DELIMITER = "\\|";
+
+    public static String createMmsDeliveryReportInfo(
+            final int status, final long date, final String to) {
+        return String.valueOf(status)
+                + MMS_REPORT_JOIN_DELIMITER
+                + String.valueOf(date)
+                + MMS_REPORT_JOIN_DELIMITER
+                + to;
+    }
+
+    public static String[] parseMmsDeliveryReportInfo(final String reportInfo) {
+        String[] reportInfoItems = reportInfo.split(MMS_REPORT_SPLIT_DELIMITER);
+        if (reportInfoItems.length == MMS_REPORT_INDEX_TO + 1) {
+            return reportInfoItems;
+        }
+        LogUtil.e(TAG, "Wrong MMS delivery report info:" + reportInfo);
+        return null;
+    }
+
+    public static String joinMmsDeliveryReportSet(final String info1, final String info2) {
+        String joined = null;
+        if (info1 == null) {
+            joined = info2;
+        } else if (info2 == null) {
+            joined = info1;
+        } else {
+            joined = info1 + MMS_REPORT_SET_JOIN_DELIMITER + info2;
+        }
+        return joined;
+    }
+
+    public static String[] splitMmsDeliveryReportSet(final String reportSet) {
+        String[] reportsInfo = reportSet.split(MMS_REPORT_SET_SPLIT_DELIMITER);
+        return reportsInfo;
     }
 
     private static boolean isMmsDeliveryReportRequired(final int subId) {

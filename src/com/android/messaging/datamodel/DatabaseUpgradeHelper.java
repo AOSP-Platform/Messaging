@@ -48,6 +48,11 @@ public class DatabaseUpgradeHelper {
         if (currentVersion < 2) {
             currentVersion = upgradeToVersion2(db);
         }
+
+        if (currentVersion < 3) {
+            currentVersion = upgradeToVersion3(db);
+        }
+
         // Rebuild all the views
         final Context context = Factory.get().getApplicationContext();
         DatabaseHelper.dropAllViews(db);
@@ -61,6 +66,13 @@ public class DatabaseUpgradeHelper {
                 DatabaseHelper.ConversationColumns.IS_ENTERPRISE + " INT DEFAULT(0)");
         LogUtil.i(TAG, "Ugraded database to version 2");
         return 2;
+    }
+
+    private int upgradeToVersion3(final SQLiteDatabase db) {
+        db.execSQL("ALTER TABLE " + DatabaseHelper.MESSAGES_TABLE + " ADD COLUMN " +
+                DatabaseHelper.MessageColumns.MMS_REPORTS_INFO + " TEXT");
+        LogUtil.i(TAG, "Ugraded database to version 3");
+        return 3;
     }
 
     /**
