@@ -188,18 +188,20 @@ public final class SmsReceiver extends BroadcastReceiver {
 
         final int errorCode =
                 intent.getIntExtra(EXTRA_ERROR_CODE, SendStatusReceiver.NO_ERROR_CODE);
+        final String format = intent.getStringExtra("format");
+        final boolean supportReplaceSms = android.telephony.SmsMessage.FORMAT_3GPP.equals(format);
         // Always convert negative subIds into -1
         int subId = PhoneUtils.getDefault().getEffectiveIncomingSubIdFromSystem(
                 intent, EXTRA_SUB_ID);
-        deliverSmsMessages(context, subId, errorCode, messages);
+        deliverSmsMessages(context, subId, errorCode, messages, supportReplaceSms);
         if (MmsUtils.isDumpSmsEnabled()) {
-            final String format = intent.getStringExtra("format");
             DebugUtils.dumpSms(messages[0].getTimestampMillis(), messages, format);
         }
     }
 
     public static void deliverSmsMessages(final Context context, final int subId,
-            final int errorCode, final android.telephony.SmsMessage[] messages) {
+            final int errorCode, final android.telephony.SmsMessage[] messages,
+            final boolean supportReplaceSms) {
         final ContentValues messageValues =
                 MmsUtils.parseReceivedSmsMessage(context, messages, errorCode);
 
@@ -207,6 +209,7 @@ public final class SmsReceiver extends BroadcastReceiver {
 
         final long nowInMillis =  System.currentTimeMillis();
         final long receivedTimestampMs = MmsUtils.getMessageDate(messages[0], nowInMillis);
+        final boolean isReplaceSms = supportReplaceSms ? messages[0].isReplace() : false;
 
         messageValues.put(Sms.Inbox.DATE, receivedTimestampMs);
         // Default to unread and unseen for us but ReceiveSmsMessageAction will override
@@ -221,7 +224,8 @@ public final class SmsReceiver extends BroadcastReceiver {
                 DebugUtils.debugClassZeroSmsEnabled()) {
             Factory.get().getUIIntents().launchClassZeroActivity(context, messageValues);
         } else {
-            final ReceiveSmsMessageAction action = new ReceiveSmsMessageAction(messageValues);
+            final ReceiveSmsMessageAction action =
+                    new ReceiveSmsMessageAction(messageValues, isReplaceSms);
             action.start();
         }
     }

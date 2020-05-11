@@ -16,8 +16,11 @@
 
 package com.android.messaging.datamodel.action;
 
+import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -28,10 +31,12 @@ import com.android.messaging.Factory;
 import com.android.messaging.datamodel.BugleDatabaseOperations;
 import com.android.messaging.datamodel.BugleNotifications;
 import com.android.messaging.datamodel.DataModel;
+import com.android.messaging.datamodel.DatabaseHelper;
 import com.android.messaging.datamodel.DatabaseWrapper;
 import com.android.messaging.datamodel.MessagingContentProvider;
 import com.android.messaging.datamodel.SyncManager;
 import com.android.messaging.datamodel.data.MessageData;
+import com.android.messaging.datamodel.data.MessagePartData;
 import com.android.messaging.datamodel.data.ParticipantData;
 import com.android.messaging.sms.MmsSmsUtils;
 import com.android.messaging.util.LogUtil;
@@ -45,18 +50,21 @@ public class ReceiveSmsMessageAction extends Action implements Parcelable {
 
     private static final String KEY_MESSAGE_VALUES = "message_values";
     private static final String KEY_SUB_ID = "sub_id";
+    private static final String KEY_IS_REPLACE_SMS = "is_replace_sms";
 
     /**
      * Create a message received from a particular number in a particular conversation
      */
-    public ReceiveSmsMessageAction(final ContentValues messageValues) {
+    public ReceiveSmsMessageAction(final ContentValues messageValues, final boolean isReplaceSms) {
         actionParameters.putParcelable(KEY_MESSAGE_VALUES, messageValues);
+        actionParameters.putBoolean(KEY_IS_REPLACE_SMS, isReplaceSms);
     }
 
     @Override
     protected Object executeAction() {
         final Context context = Factory.get().getApplicationContext();
         final ContentValues messageValues = actionParameters.getParcelable(KEY_MESSAGE_VALUES);
+        final boolean isReplaceSms = actionParameters.getBoolean(KEY_IS_REPLACE_SMS);
         final DatabaseWrapper db = DataModel.get().getDatabase();
 
         // Get the SIM subscription ID
@@ -109,16 +117,53 @@ public class ReceiveSmsMessageAction extends Action implements Parcelable {
             // incoming messages are marked as seen in the telephony db
             messageValues.put(Sms.Inbox.SEEN, 1);
 
-            // Insert into telephony
-            final Uri messageUri = context.getContentResolver().insert(Sms.Inbox.CONTENT_URI,
-                    messageValues);
+            Uri messageUri = null;
+            final ContentResolver cr = context.getContentResolver();
+            boolean hasReplaced = false;
+            if (isReplaceSms) {
+                LogUtil.d(TAG, "ReceiveSmsMessageAction: Received new Replace Short Message");
+                final String protocol = messageValues.getAsString(Sms.PROTOCOL);
+                String selection = Sms.ADDRESS + "=? AND " + Sms.PROTOCOL + "=?";
+                String[] selectionArgs = null;
+                if (OsUtil.isAtLeastL_MR1()) {
+                    selection += " AND " + Sms.SUBSCRIPTION_ID + "=?";
+                    selectionArgs = new String[] {address, protocol, String.valueOf(subId)};
+                } else {
+                    selectionArgs = new String[] {address, protocol};
+                }
+                // Replace with new message in telephony db
+                if (cr.update(Sms.Inbox.CONTENT_URI, messageValues, selection, selectionArgs) > 0) {
+                    try (Cursor c =
+                            cr.query(
+                                    Sms.Inbox.CONTENT_URI,
+                                    new String[] {Sms._ID},
+                                    selection,
+                                    selectionArgs,
+                                    null)) {
+                        if (c != null && c.moveToFirst()) {
+                            // Use Sms.CONTENT_URI instead since SmsProvider returns an uri based on
+                            // Sms.CONTENT_URI for insert operation always now.
+                            messageUri = ContentUris.withAppendedId(Sms.CONTENT_URI, c.getLong(0));
+                            if (LogUtil.isLoggable(TAG, LogUtil.DEBUG)) {
+                                LogUtil.d(TAG, "ReceiveSmsMessageAction: Updated SMS message uri="
+                                        + messageUri + " in telephony");
+                            }
+                            hasReplaced = true;
+                        }
+                    }
+                }
+            }
 
-            if (messageUri != null) {
+            if (messageUri == null) {
+                // Insert new incoming message into telephony
+                messageUri = cr.insert(Sms.Inbox.CONTENT_URI, messageValues);
                 if (LogUtil.isLoggable(TAG, LogUtil.DEBUG)) {
                     LogUtil.d(TAG, "ReceiveSmsMessageAction: Inserted SMS message into telephony, "
                             + "uri = " + messageUri);
                 }
-            } else {
+            }
+
+            if (messageUri == null) {
                 LogUtil.e(TAG, "ReceiveSmsMessageAction: Failed to insert SMS into telephony!");
             }
 
@@ -137,13 +182,33 @@ public class ReceiveSmsMessageAction extends Action implements Parcelable {
             try {
                 final String participantId =
                         BugleDatabaseOperations.getOrCreateParticipantInTransaction(db, rawSender);
-                final String selfId =
-                        BugleDatabaseOperations.getOrCreateParticipantInTransaction(db, self);
+                if (hasReplaced) {
+                    message = BugleDatabaseOperations.readMessage(db, messageUri);
+                    if (message != null) {
+                        final ContentValues values = new ContentValues();
+                        values.put(DatabaseHelper.MessageColumns.MMS_SUBJECT, subject);
+                        values.put(DatabaseHelper.MessageColumns.SENT_TIMESTAMP, sent);
+                        values.put(DatabaseHelper.MessageColumns.RECEIVED_TIMESTAMP, received);
+                        values.put(DatabaseHelper.MessageColumns.SEEN, seen);
+                        values.put(DatabaseHelper.MessageColumns.READ, read);
+                        BugleDatabaseOperations.updateMessageRowIfExists(
+                                db, message.getMessageId(), values);
+                        values.clear();
+                        for (final MessagePartData part : message.getParts()) {
+                            values.put(DatabaseHelper.PartColumns.TEXT, text);
+                            BugleDatabaseOperations.updatePartRowIfExists(
+                                    db, part.getPartId(), values);
+                        }
+                    }
+                } else {
+                    final String selfId =
+                            BugleDatabaseOperations.getOrCreateParticipantInTransaction(db, self);
 
-                message = MessageData.createReceivedSmsMessage(messageUri, conversationId,
-                        participantId, selfId, text, subject, sent, received, seen, read);
+                    message = MessageData.createReceivedSmsMessage(messageUri, conversationId,
+                            participantId, selfId, text, subject, sent, received, seen, read);
 
-                BugleDatabaseOperations.insertNewMessageInTransaction(db, message);
+                    BugleDatabaseOperations.insertNewMessageInTransaction(db, message);
+                }
 
                 BugleDatabaseOperations.updateConversationMetadataInTransaction(db, conversationId,
                         message.getMessageId(), message.getReceivedTimeStamp(), blocked,

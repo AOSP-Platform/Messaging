@@ -132,7 +132,7 @@ public class DebugSmsMmsFromDumpFileDialogFragment extends DialogFragment {
             final SmsMessage[] messages = DebugUtils.retreiveSmsFromDumpFile(dumpFileName);
             if (messages != null) {
                 SmsReceiver.deliverSmsMessages(getActivity(), ParticipantData.DEFAULT_SELF_SUB_ID,
-                        0, messages);
+                        0, messages, false /* supportReplaceSms */);
             } else {
                 LogUtil.e(LogUtil.BUGLE_TAG,
                         "receiveFromDumpFile: invalid sms dump file " + dumpFileName);

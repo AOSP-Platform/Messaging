@@ -1016,6 +1016,17 @@ public class BugleDatabaseOperations {
         return message;
     }
 
+    @DoesNotRunOnMainThread
+    public static MessageData readMessage(
+            final DatabaseWrapper dbWrapper, final Uri smsMessageUri) {
+        Assert.isNotMainThread();
+        final MessageData message = readMessageData(dbWrapper, smsMessageUri);
+        if (message != null) {
+            readMessagePartsData(dbWrapper, message, false);
+        }
+        return message;
+    }
+
     @VisibleForTesting
     static MessagePartData readMessagePartData(final DatabaseWrapper dbWrapper,
             final String partId) {

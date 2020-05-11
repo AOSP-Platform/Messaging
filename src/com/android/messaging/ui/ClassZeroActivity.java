@@ -104,7 +104,8 @@ public class ClassZeroActivity extends Activity {
 
     private void saveMessage() {
         mMessageValues.put(Sms.Inbox.READ, mRead ? Integer.valueOf(1) : Integer.valueOf(0));
-        final ReceiveSmsMessageAction action = new ReceiveSmsMessageAction(mMessageValues);
+        final ReceiveSmsMessageAction action =
+                new ReceiveSmsMessageAction(mMessageValues, false /* isReplaceSms */);
         action.start();
     }
 
