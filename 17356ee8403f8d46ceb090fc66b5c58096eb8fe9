@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee67c8b9_54436b0c",
+        "filename": "src/com/android/messaging/datamodel/BugleNotifications.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1338311
+      },
+      "writtenOn": "2020-05-12T19:35:17Z",
+      "side": 1,
+      "message": "nit: Don\u0027t see id being used? Am I missing something?",
+      "range": {
+        "startLine": 768,
+        "startChar": 0,
+        "endLine": 768,
+        "endChar": 24
+      },
+      "revId": "17356ee8403f8d46ceb090fc66b5c58096eb8fe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
