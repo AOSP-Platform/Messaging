@@ -22,6 +22,23 @@
       "revId": "17356ee8403f8d46ceb090fc66b5c58096eb8fe9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeae7f49_99ed4034",
+        "filename": "src/com/android/messaging/datamodel/BugleNotifications.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-05-12T19:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "revId": "17356ee8403f8d46ceb090fc66b5c58096eb8fe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
