@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3bcc1541_6f347edf",
+        "filename": "src/com/android/messaging/datamodel/BugleNotifications.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-05-13T10:35:10Z",
+      "side": 1,
+      "message": "Hmm yeah I should add these 2 channels",
+      "parentUuid": "2a956934_bb3cec1d",
+      "range": {
+        "startLine": 940,
+        "startChar": 0,
+        "endLine": 949,
+        "endChar": 59
+      },
+      "revId": "d35cf4888065f338511f0357e6927f034e9f5347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0ee1158_3b2f90c3",
         "filename": "src/com/android/messaging/ui/conversationsettings/PeopleAndOptionsFragment.java",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2020-05-13T02:38:45Z",
       "side": 1,
       "message": "Can we update the name(title) when a user adds new contact or change the name in the contacts?",
+      "range": {
+        "startLine": 136,
+        "startChar": 24,
+        "endLine": 136,
+        "endChar": 60
+      },
+      "revId": "d35cf4888065f338511f0357e6927f034e9f5347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9318d1b_f7aaf6ce",
+        "filename": "src/com/android/messaging/ui/conversationsettings/PeopleAndOptionsFragment.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-05-13T10:35:10Z",
+      "side": 1,
+      "message": "We\u0027d have to implement a contect observer on the contact provide, I think it\u0027s out of this patch scope",
+      "parentUuid": "c0ee1158_3b2f90c3",
       "range": {
         "startLine": 136,
         "startChar": 24,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e959f842_ad6a94ea",
+        "filename": "src/com/android/messaging/ui/conversationsettings/PeopleAndOptionsFragment.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-05-13T10:35:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "708ae220_4a985f40",
+      "range": {
+        "startLine": 139,
+        "startChar": 16,
+        "endLine": 141,
+        "endChar": 38
+      },
+      "revId": "d35cf4888065f338511f0357e6927f034e9f5347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0446662f_0f553b39",
         "filename": "src/com/android/messaging/util/NotificationsUtil.java",
         "patchSetId": 11
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9125fe71_0cfac400",
+        "filename": "src/com/android/messaging/util/NotificationsUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-05-13T10:35:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0446662f_0f553b39",
+      "range": {
+        "startLine": 40,
+        "startChar": 12,
+        "endLine": 40,
+        "endChar": 57
+      },
+      "revId": "d35cf4888065f338511f0357e6927f034e9f5347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bccf4db2_5b6fec20",
         "filename": "src/com/android/messaging/util/NotificationsUtil.java",
         "patchSetId": 11
@@ -114,6 +210,30 @@
       "revId": "d35cf4888065f338511f0357e6927f034e9f5347",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c002abd_4d96d5db",
+        "filename": "src/com/android/messaging/util/NotificationsUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-05-13T10:35:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bccf4db2_5b6fec20",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 38
+      },
+      "revId": "d35cf4888065f338511f0357e6927f034e9f5347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
