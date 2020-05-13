@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a956934_bb3cec1d",
+        "filename": "src/com/android/messaging/datamodel/BugleNotifications.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-05-13T02:38:45Z",
+      "side": 1,
+      "message": "https://developer.android.com/training/notify-user/channels\n\nIt says that \"Creating an existing notification channel with its original values performs no operation, so it\u0027s safe to call this code when starting an app.\"\n\nWill SMS_SECONDARY_USER_NOTIFICATION_ID and SMS_STORAGE_LOW_NOTIFICATION_ID work normally before this?",
+      "range": {
+        "startLine": 940,
+        "startChar": 0,
+        "endLine": 949,
+        "endChar": 59
+      },
+      "revId": "d35cf4888065f338511f0357e6927f034e9f5347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0ee1158_3b2f90c3",
+        "filename": "src/com/android/messaging/ui/conversationsettings/PeopleAndOptionsFragment.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-05-13T02:38:45Z",
+      "side": 1,
+      "message": "Can we update the name(title) when a user adds new contact or change the name in the contacts?",
+      "range": {
+        "startLine": 136,
+        "startChar": 24,
+        "endLine": 136,
+        "endChar": 60
+      },
+      "revId": "d35cf4888065f338511f0357e6927f034e9f5347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "708ae220_4a985f40",
+        "filename": "src/com/android/messaging/ui/conversationsettings/PeopleAndOptionsFragment.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-05-13T02:38:45Z",
+      "side": 1,
+      "message": "ACTION_CHANNEL_NOTIFICATION_SETTINGS will redirect to a notification channel instead.",
+      "range": {
+        "startLine": 139,
+        "startChar": 16,
+        "endLine": 141,
+        "endChar": 38
+      },
+      "revId": "d35cf4888065f338511f0357e6927f034e9f5347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0446662f_0f553b39",
+        "filename": "src/com/android/messaging/util/NotificationsUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-05-13T02:38:45Z",
+      "side": 1,
+      "message": "Could you add new API in OsUtil for this?",
+      "range": {
+        "startLine": 40,
+        "startChar": 12,
+        "endLine": 40,
+        "endChar": 57
+      },
+      "revId": "d35cf4888065f338511f0357e6927f034e9f5347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bccf4db2_5b6fec20",
+        "filename": "src/com/android/messaging/util/NotificationsUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-05-13T02:38:45Z",
+      "side": 1,
+      "message": "No need to call\n- enableVibration()\n- setShowBadge()\n- setSound() and etc according to the noti types such as new message or some error cases...",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 38
+      },
+      "revId": "d35cf4888065f338511f0357e6927f034e9f5347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
