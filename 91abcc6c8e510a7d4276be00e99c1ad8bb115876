@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06382d27_ce9fb57c",
+        "filename": "src/com/android/messaging/datamodel/action/ProcessPendingMessagesAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-05-14T05:56:05Z",
+      "side": 1,
+      "message": "Won\u0027t work expected. Need parentheses.",
+      "range": {
+        "startLine": 480,
+        "startChar": 20,
+        "endLine": 482,
+        "endChar": 52
+      },
+      "revId": "91abcc6c8e510a7d4276be00e99c1ad8bb115876",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
