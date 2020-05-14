@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea4320fe_36368cbd",
+        "filename": "src/com/android/messaging/util/NotificationsUtil.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-05-14T01:48:38Z",
+      "side": 1,
+      "message": "What happens for 25 or lower? We can see notifications?",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 9
+      },
+      "revId": "44ed8140de44614e057ff10f9bcc055ad5fc989b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

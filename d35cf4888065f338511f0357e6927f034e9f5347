@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4f141767_4ec89530",
+        "filename": "src/com/android/messaging/datamodel/BugleNotifications.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-05-14T01:48:38Z",
+      "side": 1,
+      "message": "I meant the default channels for each type should be created when starting the app. No need to call createNotificationChannel() always.",
+      "parentUuid": "3bcc1541_6f347edf",
+      "range": {
+        "startLine": 940,
+        "startChar": 0,
+        "endLine": 949,
+        "endChar": 59
+      },
+      "revId": "d35cf4888065f338511f0357e6927f034e9f5347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0ee1158_3b2f90c3",
         "filename": "src/com/android/messaging/ui/conversationsettings/PeopleAndOptionsFragment.java",
         "patchSetId": 11
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "We\u0027d have to implement a contect observer on the contact provide, I think it\u0027s out of this patch scope",
       "parentUuid": "c0ee1158_3b2f90c3",
+      "range": {
+        "startLine": 136,
+        "startChar": 24,
+        "endLine": 136,
+        "endChar": 60
+      },
+      "revId": "d35cf4888065f338511f0357e6927f034e9f5347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "605787c4_d7418eb2",
+        "filename": "src/com/android/messaging/ui/conversationsettings/PeopleAndOptionsFragment.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-05-14T01:48:38Z",
+      "side": 1,
+      "message": "I think it should be also in this patch scope because the title for a channel is the conversation\u0027s name. We can update the title only here when re-entering or can register a listener for contact changes since this app already works like this.",
+      "parentUuid": "e9318d1b_f7aaf6ce",
       "range": {
         "startLine": 136,
         "startChar": 24,
@@ -225,6 +273,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "bccf4db2_5b6fec20",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 38
+      },
+      "revId": "d35cf4888065f338511f0357e6927f034e9f5347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c0fb8e4_b9638fda",
+        "filename": "src/com/android/messaging/util/NotificationsUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-05-14T01:48:38Z",
+      "side": 1,
+      "message": "Where can I ??",
+      "parentUuid": "7c002abd_4d96d5db",
       "range": {
         "startLine": 51,
         "startChar": 8,
