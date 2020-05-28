@@ -1,0 +1,48 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000003158843",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1318777?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "36dbd22c_68ea1f1e",
+          "description": "Change to \"src/com/android/messaging/util/UriUtil.java\"",
+          "replacements": [
+            {
+              "path": "src/com/android/messaging/util/UriUtil.java",
+              "range": {
+                "startLine": 327,
+                "startChar": 62,
+                "endLine": 327,
+                "endChar": 74
+              },
+              "replacement": "destination"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "06a1e9ce_fcb3eb8e",
+        "filename": "src/com/android/messaging/util/UriUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-05-28T07:41:59Z",
+      "side": 1,
+      "message": "Common typo found: \"destionation\" -- should it be \"destination\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line.",
+      "range": {
+        "startLine": 327,
+        "startChar": 62,
+        "endLine": 327,
+        "endChar": 74
+      },
+      "revId": "12441da3fea1d243b257e637715a37ce4dfeac25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
