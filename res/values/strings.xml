@@ -236,8 +236,6 @@
         <item quantity="one">New message</item>
         <item quantity="other"><xliff:g id="messages">%d</xliff:g> new messages</item>
     </plurals>
-    <!-- Mark message as read -->
-    <string name="notification_mark_as_read">Mark as read</string>
 
     <!-- Text for starting a new conversation button in the compose UI -->
     <string name="start_conversation">Start</string>
@@ -981,4 +979,7 @@
     <string name="selected_sim_content_message"><xliff:g id="selected_sim">%s</xliff:g> selected</string>
 
     <string name="work_directory_display_name">Work Profile contacts</string>
+
+    <!-- When making a call to emergency numbers, show this toast -->
+    <string name="disallow_emergency_call">Can\'t make a voice call to emergency services here.</string>
 </resources>
