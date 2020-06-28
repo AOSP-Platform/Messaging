@@ -90,9 +90,9 @@
     <string name="delete_all_media_confirmation" msgid="4601960420953525559">"Alle Nachrichten mit Medien löschen?"</string>
     <string name="delete_oldest_messages_confirmation" msgid="6172297718425265784">"Nachrichten löschen, die älter als <xliff:g id="DURATION">%s</xliff:g> sind?"</string>
     <string name="auto_delete_oldest_messages_confirmation" msgid="9071499976729145269">"Nachrichten löschen, die älter als <xliff:g id="DURATION">%s</xliff:g> sind, und automatisches Löschen aktivieren?"</string>
-    <string name="incoming_text_sender_content_description" msgid="2481078288502342745">"<xliff:g id="SENDER">%s</xliff:g> hat Folgendes gesagt:"</string>
+    <string name="incoming_text_sender_content_description" msgid="2481078288502342745">"<xliff:g id="SENDER">%1$s</xliff:g> hat Folgendes gesagt:"</string>
     <string name="outgoing_text_sender_content_description" msgid="3492116976256510272">"Sie haben Folgendes gesagt:"</string>
-    <string name="incoming_sender_content_description" msgid="7512757244515303701">"Nachricht von <xliff:g id="SENDER">%s</xliff:g>"</string>
+    <string name="incoming_sender_content_description" msgid="7512757244515303701">"Nachricht von <xliff:g id="SENDER">%1$s</xliff:g>"</string>
     <string name="outgoing_sender_content_description" msgid="5983163141994434778">"Sie haben eine Nachricht gesendet."</string>
     <string name="message_status_sending" msgid="3306260780518886107">"Nachricht wird gesendet…"</string>
     <string name="message_status_send_failed" msgid="5443627648028194631">"Nachricht wurde nicht gesendet. Zum erneuten Senden tippen."</string>
@@ -202,19 +202,19 @@
     <string name="audio_attachment_content_description" msgid="499334244765270108">"Audioanhang"</string>
     <string name="audio_play_content_description" msgid="4932509227281251607">"Audioanhang wiedergeben"</string>
     <string name="audio_pause_content_description" msgid="7578169887065513701">"Pausieren"</string>
-    <string name="incoming_message_announcement" msgid="6369259405539452011">"Nachricht von <xliff:g id="SENDER">%s</xliff:g>: <xliff:g id="MESSAGE">%s</xliff:g>."</string>
-    <string name="one_on_one_incoming_failed_message_prefix" msgid="6985644411445605747">"Fehler bei Nachricht von <xliff:g id="SENDER">%s</xliff:g>: <xliff:g id="MESSAGE">%s</xliff:g>. Uhrzeit: <xliff:g id="TIME">%s</xliff:g>."</string>
-    <string name="one_on_one_incoming_successful_message_prefix" msgid="6190814597935995703">"Nachricht von <xliff:g id="SENDER">%s</xliff:g>: <xliff:g id="MESSAGE">%s</xliff:g>. Uhrzeit: <xliff:g id="TIME">%s</xliff:g>."</string>
-    <string name="one_on_one_outgoing_draft_message_prefix" msgid="8721053088385740646">"Nicht gesendete Nachricht an <xliff:g id="CONTACT">%s</xliff:g>: <xliff:g id="MESSAGE">%s</xliff:g>. Uhrzeit: <xliff:g id="TIME">%s</xliff:g>."</string>
-    <string name="one_on_one_outgoing_sending_message_prefix" msgid="3929653530203574220">"Nachricht wird gesendet an <xliff:g id="CONTACT">%s</xliff:g>: <xliff:g id="MESSAGE">%s</xliff:g>. Uhrzeit: <xliff:g id="TIME">%s</xliff:g>."</string>
-    <string name="one_on_one_outgoing_failed_message_prefix" msgid="7194065651879454314">"Fehler bei Nachricht an <xliff:g id="CONTACT">%s</xliff:g>: <xliff:g id="MESSAGE">%s</xliff:g>. Uhrzeit: <xliff:g id="TIME">%s</xliff:g>."</string>
-    <string name="one_on_one_outgoing_successful_message_prefix" msgid="7128492863867327814">"Nachricht an <xliff:g id="CONTACT">%s</xliff:g>: <xliff:g id="MESSAGE">%s</xliff:g>. Uhrzeit: <xliff:g id="TIME">%s</xliff:g>."</string>
-    <string name="group_incoming_failed_message_prefix" msgid="7085805237707481779">"Fehler bei Nachricht von <xliff:g id="SENDER">%s</xliff:g>: <xliff:g id="MESSAGE">%s</xliff:g>. Uhrzeit: <xliff:g id="TIME">%s</xliff:g>. <xliff:g id="GROUPINFO">%s</xliff:g>."</string>
-    <string name="group_incoming_successful_message_prefix" msgid="7248506967059447054">"Nachricht von <xliff:g id="SENDER">%s</xliff:g>: <xliff:g id="MESSAGE">%s</xliff:g>. Uhrzeit: <xliff:g id="TIME">%s</xliff:g>. <xliff:g id="GROUPINFO">%s</xliff:g>."</string>
-    <string name="group_outgoing_draft_message_prefix" msgid="1655013812805454648">"Nicht gesendete Nachricht an <xliff:g id="GROUP">%s</xliff:g>: <xliff:g id="MESSAGE">%s</xliff:g>. Uhrzeit: <xliff:g id="TIME">%s</xliff:g>."</string>
-    <string name="group_outgoing_sending_message_prefix" msgid="7636874745414695556">"Nachricht wird gesendet an <xliff:g id="GROUP">%s</xliff:g>: <xliff:g id="MESSAGE">%s</xliff:g>. Uhrzeit: <xliff:g id="TIME">%s</xliff:g>."</string>
-    <string name="group_outgoing_failed_message_prefix" msgid="5059983340377901592">"Fehler bei Nachricht an <xliff:g id="GROUP">%s</xliff:g>: <xliff:g id="MESSAGE">%s</xliff:g>. Uhrzeit: <xliff:g id="TIME">%s</xliff:g>."</string>
-    <string name="group_outgoing_successful_message_prefix" msgid="1593702642852987920">"Nachricht an <xliff:g id="GROUP">%s</xliff:g>: <xliff:g id="MESSAGE">%s</xliff:g>. Uhrzeit: <xliff:g id="TIME">%s</xliff:g>."</string>
+    <string name="incoming_message_announcement" msgid="6369259405539452011">"Nachricht von <xliff:g id="SENDER">%1$s</xliff:g>: <xliff:g id="MESSAGE">%2$s</xliff:g>."</string>
+    <string name="one_on_one_incoming_failed_message_prefix" msgid="6985644411445605747">"Fehler bei Nachricht von <xliff:g id="SENDER">%1$s</xliff:g>: <xliff:g id="MESSAGE">%2$s</xliff:g>. Uhrzeit: <xliff:g id="TIME">%3$s</xliff:g>."</string>
+    <string name="one_on_one_incoming_successful_message_prefix" msgid="6190814597935995703">"Nachricht von <xliff:g id="SENDER">%1$s</xliff:g>: <xliff:g id="MESSAGE">%2$s</xliff:g>. Uhrzeit: <xliff:g id="TIME">%3$s</xliff:g>."</string>
+    <string name="one_on_one_outgoing_draft_message_prefix" msgid="8721053088385740646">"Nicht gesendete Nachricht an <xliff:g id="CONTACT">%1$s</xliff:g>: <xliff:g id="MESSAGE">%2$s</xliff:g>. Uhrzeit: <xliff:g id="TIME">%3$s</xliff:g>."</string>
+    <string name="one_on_one_outgoing_sending_message_prefix" msgid="3929653530203574220">"Nachricht wird gesendet an <xliff:g id="CONTACT">%1$s</xliff:g>: <xliff:g id="MESSAGE">%2$s</xliff:g>. Uhrzeit: <xliff:g id="TIME">%3$s</xliff:g>."</string>
+    <string name="one_on_one_outgoing_failed_message_prefix" msgid="7194065651879454314">"Fehler bei Nachricht an <xliff:g id="CONTACT">%1$s</xliff:g>: <xliff:g id="MESSAGE">%2$s</xliff:g>. Uhrzeit: <xliff:g id="TIME">%3$s</xliff:g>."</string>
+    <string name="one_on_one_outgoing_successful_message_prefix" msgid="7128492863867327814">"Nachricht an <xliff:g id="CONTACT">%1$s</xliff:g>: <xliff:g id="MESSAGE">%2$s</xliff:g>. Uhrzeit: <xliff:g id="TIME">%3$s</xliff:g>."</string>
+    <string name="group_incoming_failed_message_prefix" msgid="7085805237707481779">"Fehler bei Nachricht von <xliff:g id="SENDER">%1$s</xliff:g>: <xliff:g id="MESSAGE">%2$s</xliff:g>. Uhrzeit: <xliff:g id="TIME">%3$s</xliff:g>. <xliff:g id="GROUPINFO">%4$s</xliff:g>."</string>
+    <string name="group_incoming_successful_message_prefix" msgid="7248506967059447054">"Nachricht von <xliff:g id="SENDER">%1$s</xliff:g>: <xliff:g id="MESSAGE">%2$s</xliff:g>. Uhrzeit: <xliff:g id="TIME">%3$s</xliff:g>. <xliff:g id="GROUPINFO">%4$s</xliff:g>."</string>
+    <string name="group_outgoing_draft_message_prefix" msgid="1655013812805454648">"Nicht gesendete Nachricht an <xliff:g id="GROUP">%1$s</xliff:g>: <xliff:g id="MESSAGE">%2$s</xliff:g>. Uhrzeit: <xliff:g id="TIME">%3$s</xliff:g>."</string>
+    <string name="group_outgoing_sending_message_prefix" msgid="7636874745414695556">"Nachricht wird gesendet an <xliff:g id="GROUP">%1$s</xliff:g>: <xliff:g id="MESSAGE">%2$s</xliff:g>. Uhrzeit: <xliff:g id="TIME">%3$s</xliff:g>."</string>
+    <string name="group_outgoing_failed_message_prefix" msgid="5059983340377901592">"Fehler bei Nachricht an <xliff:g id="GROUP">%1$s</xliff:g>: <xliff:g id="MESSAGE">%2$s</xliff:g>. Uhrzeit: <xliff:g id="TIME">%3$s</xliff:g>."</string>
+    <string name="group_outgoing_successful_message_prefix" msgid="1593702642852987920">"Nachricht an <xliff:g id="GROUP">%1$s</xliff:g>: <xliff:g id="MESSAGE">%2$s</xliff:g>. Uhrzeit: <xliff:g id="TIME">%3$s</xliff:g>."</string>
     <string name="failed_message_content_description" msgid="7047161648867054936">"Fehler bei Nachricht. Zum Wiederholen tippen."</string>
     <string name="group_conversation_description" msgid="2339270924401184182">"Unterhaltung mit <xliff:g id="PARTICIPANTS">%s</xliff:g>"</string>
     <string name="delete_subject_content_description" msgid="8910749398836396698">"Betreff löschen"</string>
@@ -359,7 +359,7 @@
     <string name="add_contact_confirmation" msgid="1479380805406328264">"Kontakt hinzufügen"</string>
     <string name="compose_message_view_subject_hint_text" msgid="6076616675845705660">"Betreff"</string>
     <string name="conversation_message_view_subject_text" msgid="5634274498769555505">"Betreff: "</string>
-    <string name="notification_subject" msgid="5229975483160300625">"<xliff:g id="SUBJECT_LABEL">%s</xliff:g><xliff:g id="MESSAGETEXT">%s</xliff:g>"</string>
+    <string name="notification_subject" msgid="5229975483160300625">"<xliff:g id="SUBJECT_LABEL">%1$s</xliff:g><xliff:g id="MESSAGETEXT">%2$s</xliff:g>"</string>
     <string name="loading_vcard" msgid="3961520941271265083">"Kontaktkarte wird geladen."</string>
     <string name="failed_loading_vcard" msgid="7711070643740368402">"Kontaktkarte kann nicht geladen werden."</string>
     <string name="vcard_tap_hint" msgid="4940284329175200952">"Kontaktkarte ansehen"</string>
