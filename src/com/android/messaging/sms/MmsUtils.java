@@ -1111,51 +1111,6 @@ public class MmsUtils {
         return subject;
     }
 
-    // return a semicolon separated list of phone numbers from a smsto: uri.
-    public static String getSmsRecipients(final Uri uri) {
-        String recipients = uri.getSchemeSpecificPart();
-        final int pos = recipients.indexOf('?');
-        if (pos != -1) {
-            recipients = recipients.substring(0, pos);
-        }
-        recipients = replaceUnicodeDigits(recipients).replace(',', ';');
-        return recipients;
-    }
-
-    // This function was lifted from Telephony.PhoneNumberUtils because it was @hide
-    /**
-     * Replace arabic/unicode digits with decimal digits.
-     * @param number
-     *            the number to be normalized.
-     * @return the replaced number.
-     */
-    private static String replaceUnicodeDigits(final String number) {
-        final StringBuilder normalizedDigits = new StringBuilder(number.length());
-        for (final char c : number.toCharArray()) {
-            final int digit = Character.digit(c, 10);
-            if (digit != -1) {
-                normalizedDigits.append(digit);
-            } else {
-                normalizedDigits.append(c);
-            }
-        }
-        return normalizedDigits.toString();
-    }
-
-    /**
-     * @return Whether the data roaming is enabled
-     */
-    private static boolean isDataRoamingEnabled() {
-        boolean dataRoamingEnabled = false;
-        final ContentResolver cr = Factory.get().getApplicationContext().getContentResolver();
-        if (OsUtil.isAtLeastJB_MR1()) {
-            dataRoamingEnabled = (Settings.Global.getInt(cr, Settings.Global.DATA_ROAMING, 0) != 0);
-        } else {
-            dataRoamingEnabled = (Settings.System.getInt(cr, Settings.System.DATA_ROAMING, 0) != 0);
-        }
-        return dataRoamingEnabled;
-    }
-
     /**
      * @return Whether to auto retrieve MMS
      */
@@ -1201,7 +1156,9 @@ public class MmsUtils {
     public static SmsMessage getSmsMessageFromDeliveryReport(final Intent intent) {
         final byte[] pdu = intent.getByteArrayExtra("pdu");
         final String format = intent.getStringExtra("format");
-        return SmsMessage.createFromPdu(pdu, format);
+        return OsUtil.isAtLeastM()
+                ? SmsMessage.createFromPdu(pdu, format)
+                : SmsMessage.createFromPdu(pdu);
     }
 
     /**
@@ -1542,7 +1499,7 @@ public class MmsUtils {
                 cursor = SqliteWrapper.query(
                         context,
                         resolver,
-                        Telephony.Carriers.SIM_APN_URI,
+                        Telephony.Carriers.CONTENT_URI,
                         TEST_CARRIERS_PROJECTION,
                         null/*selection*/,
                         null/*selectionArgs*/,
@@ -2080,16 +2037,6 @@ public class MmsUtils {
         }
         final PhoneUtils phoneUtils = PhoneUtils.get(subId);
         return !phoneUtils.isAirplaneModeOn();
-    }
-
-    public static boolean isMobileDataEnabled(final int subId) {
-        final PhoneUtils phoneUtils = PhoneUtils.get(subId);
-        return phoneUtils.isMobileDataEnabled();
-    }
-
-    public static boolean isAirplaneModeOn(final int subId) {
-        final PhoneUtils phoneUtils = PhoneUtils.get(subId);
-        return phoneUtils.isAirplaneModeOn();
     }
 
     public static StatusPlusUri sendMmsMessage(final Context context, final int subId,
