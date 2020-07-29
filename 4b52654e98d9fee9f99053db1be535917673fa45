@@ -1,0 +1,31 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004103088",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1378899?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ba931383_ff7a3f7d",
+        "filename": "src/com/android/messaging/datamodel/DatabaseHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-29T23:44:43Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027primary/secondary\u0027 or \u0027manager/worker\u0027; see https://source.android.com/setup/contribute/respectful-code for more details.",
+      "range": {
+        "startLine": 56,
+        "startChar": 56,
+        "endLine": 56,
+        "endChar": 62
+      },
+      "revId": "4b52654e98d9fee9f99053db1be535917673fa45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
