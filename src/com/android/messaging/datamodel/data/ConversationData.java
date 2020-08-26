@@ -700,7 +700,7 @@ public class ConversationData extends BindableData {
         final ParticipantData participant = this.getOtherParticipant();
         if (participant != null) {
             final String phoneNumber = participant.getSendDestination();
-            if (!TextUtils.isEmpty(phoneNumber) && MmsSmsUtils.isDialable(phoneNumber)) {
+            if (!TextUtils.isEmpty(phoneNumber) && MmsSmsUtils.isPhoneNumber(phoneNumber)) {
                 return phoneNumber;
             }
         }
@@ -780,8 +780,8 @@ public class ConversationData extends BindableData {
     }
 
     /**
-     * A dummy implementation of {@link ConversationDataListener} so that subclasses may opt to
-     * implement some, but not all, of the interface methods.
+     * A placeholder implementation of {@link ConversationDataListener} so that subclasses may opt
+     * to implement some, but not all, of the interface methods.
      */
     public static class SimpleConversationDataListener implements ConversationDataListener {
 

@@ -1112,20 +1112,6 @@ public class MmsUtils {
     }
 
     /**
-     * @return Whether the data roaming is enabled
-     */
-    private static boolean isDataRoamingEnabled() {
-        boolean dataRoamingEnabled = false;
-        final ContentResolver cr = Factory.get().getApplicationContext().getContentResolver();
-        if (OsUtil.isAtLeastJB_MR1()) {
-            dataRoamingEnabled = (Settings.Global.getInt(cr, Settings.Global.DATA_ROAMING, 0) != 0);
-        } else {
-            dataRoamingEnabled = (Settings.System.getInt(cr, Settings.System.DATA_ROAMING, 0) != 0);
-        }
-        return dataRoamingEnabled;
-    }
-
-    /**
      * @return Whether to auto retrieve MMS
      */
     public static boolean allowMmsAutoRetrieve(final int subId) {
@@ -1170,7 +1156,9 @@ public class MmsUtils {
     public static SmsMessage getSmsMessageFromDeliveryReport(final Intent intent) {
         final byte[] pdu = intent.getByteArrayExtra("pdu");
         final String format = intent.getStringExtra("format");
-        return SmsMessage.createFromPdu(pdu, format);
+        return OsUtil.isAtLeastM()
+                ? SmsMessage.createFromPdu(pdu, format)
+                : SmsMessage.createFromPdu(pdu);
     }
 
     /**
@@ -1511,7 +1499,7 @@ public class MmsUtils {
                 cursor = SqliteWrapper.query(
                         context,
                         resolver,
-                        Telephony.Carriers.SIM_APN_URI,
+                        Telephony.Carriers.CONTENT_URI,
                         TEST_CARRIERS_PROJECTION,
                         null/*selection*/,
                         null/*selectionArgs*/,
@@ -2049,16 +2037,6 @@ public class MmsUtils {
         }
         final PhoneUtils phoneUtils = PhoneUtils.get(subId);
         return !phoneUtils.isAirplaneModeOn();
-    }
-
-    public static boolean isMobileDataEnabled(final int subId) {
-        final PhoneUtils phoneUtils = PhoneUtils.get(subId);
-        return phoneUtils.isMobileDataEnabled();
-    }
-
-    public static boolean isAirplaneModeOn(final int subId) {
-        final PhoneUtils phoneUtils = PhoneUtils.get(subId);
-        return phoneUtils.isAirplaneModeOn();
     }
 
     public static StatusPlusUri sendMmsMessage(final Context context, final int subId,
