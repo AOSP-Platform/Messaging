@@ -92,7 +92,7 @@
     <string name="auto_delete_oldest_messages_confirmation" msgid="9071499976729145269">"Eyða skilaboðum sem eru eldri en <xliff:g id="DURATION">%s</xliff:g> og kveikja á sjálfvirkri eyðingu?"</string>
     <string name="incoming_text_sender_content_description" msgid="2481078288502342745">"<xliff:g id="SENDER">%s</xliff:g> sagði"</string>
     <string name="outgoing_text_sender_content_description" msgid="3492116976256510272">"Þú sagðir"</string>
-    <string name="incoming_sender_content_description" msgid="7512757244515303701">"Skilaboð sem <xliff:g id="SENDER">%s</xliff:g> sendi"</string>
+    <string name="incoming_sender_content_description" msgid="7512757244515303701">"Skilaboð sem <xliff:g id="SENDER">%1$s</xliff:g> sendi"</string>
     <string name="outgoing_sender_content_description" msgid="5983163141994434778">"Þú sendir skilaboð"</string>
     <string name="message_status_sending" msgid="3306260780518886107">"Sendir…"</string>
     <string name="message_status_send_failed" msgid="5443627648028194631">"Ekki sent. Snertu til að reyna aftur."</string>
@@ -209,8 +209,8 @@
     <string name="one_on_one_outgoing_sending_message_prefix" msgid="3929653530203574220">"Sendir skilaboð til <xliff:g id="CONTACT">%1$s</xliff:g>: <xliff:g id="MESSAGE">%2$s</xliff:g>. Tími: <xliff:g id="TIME">%3$s</xliff:g>."</string>
     <string name="one_on_one_outgoing_failed_message_prefix" msgid="7194065651879454314">"Misheppnuð skilaboð til <xliff:g id="CONTACT">%1$s</xliff:g>: <xliff:g id="MESSAGE">%2$s</xliff:g>. Tími: <xliff:g id="TIME">%3$s</xliff:g>."</string>
     <string name="one_on_one_outgoing_successful_message_prefix" msgid="7128492863867327814">"Skilaboð til <xliff:g id="CONTACT">%1$s</xliff:g>: <xliff:g id="MESSAGE">%2$s</xliff:g>. Tími: <xliff:g id="TIME">%3$s</xliff:g>."</string>
-    <string name="group_incoming_failed_message_prefix" msgid="7085805237707481779">"Misheppnuð skilaboð sem <xliff:g id="SENDER">%1$s</xliff:g> sendi: <xliff:g id="MESSAGE">%2$s</xliff:g>. Tími: <xliff:g id="TIME">%3$s</xliff:g>. <xliff:g id="GROUPINFO">%3$s</xliff:g>."</string>
-    <string name="group_incoming_successful_message_prefix" msgid="7248506967059447054">"Skilaboð sem <xliff:g id="SENDER">%1$s</xliff:g> sendi: <xliff:g id="MESSAGE">%2$s</xliff:g>. Tími: <xliff:g id="TIME">%3$s</xliff:g>. <xliff:g id="GROUPINFO">%3$s</xliff:g>."</string>
+    <string name="group_incoming_failed_message_prefix" msgid="7085805237707481779">"Misheppnuð skilaboð sem <xliff:g id="SENDER">%1$s</xliff:g> sendi: <xliff:g id="MESSAGE">%2$s</xliff:g>. Tími: <xliff:g id="TIME">%3$s</xliff:g>. <xliff:g id="GROUPINFO">%4$s</xliff:g>."</string>
+    <string name="group_incoming_successful_message_prefix" msgid="7248506967059447054">"Skilaboð sem <xliff:g id="SENDER">%1$s</xliff:g> sendi: <xliff:g id="MESSAGE">%2$s</xliff:g>. Tími: <xliff:g id="TIME">%3$s</xliff:g>. <xliff:g id="GROUPINFO">%4$s</xliff:g>."</string>
     <string name="group_outgoing_draft_message_prefix" msgid="1655013812805454648">"Ósend skilaboð til <xliff:g id="GROUP">%1$s</xliff:g>: <xliff:g id="MESSAGE">%2$s</xliff:g>. Tími: <xliff:g id="TIME">%3$s</xliff:g>."</string>
     <string name="group_outgoing_sending_message_prefix" msgid="7636874745414695556">"Sendir skilaboð til <xliff:g id="GROUP">%1$s</xliff:g>: <xliff:g id="MESSAGE">%2$s</xliff:g>. Tími: <xliff:g id="TIME">%3$s</xliff:g>."</string>
     <string name="group_outgoing_failed_message_prefix" msgid="5059983340377901592">"Misheppnuð skilaboð til <xliff:g id="GROUP">%1$s</xliff:g>: <xliff:g id="MESSAGE">%2$s</xliff:g>. Tími: <xliff:g id="TIME">%3$s</xliff:g>."</string>
