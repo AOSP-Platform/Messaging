@@ -1,0 +1,9 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Raman Tenneti <rtenneti@google.com>
+Submitted-by: Raman Tenneti <rtenneti@google.com>
+Submitted-at: Wed, 07 Oct 2020 17:32:17 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/packages/apps/Messaging/+/1449316
+Project: platform/packages/apps/Messaging
+Branch: refs/heads/master
