@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30adce03_21259145",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1075502
+      },
+      "writtenOn": "2021-01-03T14:43:08Z",
+      "side": 1,
+      "message": "To resolve issues on devices built with Go configurations,\nthus using \"go_handheld_core_hardware.xml\" where widgets features are disabled.",
+      "revId": "409c682befc7ce209457e10804a8d2ace036e132",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
