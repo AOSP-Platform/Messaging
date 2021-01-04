@@ -33,6 +33,24 @@
       "message": "Current minSdkVersion is 19(KK).",
       "revId": "409c682befc7ce209457e10804a8d2ace036e132",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "926db1e2_07648998",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1075502
+      },
+      "writtenOn": "2021-01-04T06:54:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ce131bb4_dda5651a",
+      "revId": "409c682befc7ce209457e10804a8d2ace036e132",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
