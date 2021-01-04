@@ -16,6 +16,23 @@
       "message": "To resolve issues on devices built with Go configurations,\nthus using \"go_handheld_core_hardware.xml\" where widgets features are disabled.",
       "revId": "409c682befc7ce209457e10804a8d2ace036e132",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce131bb4_dda5651a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2021-01-04T00:50:03Z",
+      "side": 1,
+      "message": "Current minSdkVersion is 19(KK).",
+      "revId": "409c682befc7ce209457e10804a8d2ace036e132",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
