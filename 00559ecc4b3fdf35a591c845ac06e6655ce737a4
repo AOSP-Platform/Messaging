@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e82da989_bec87cf5",
+        "filename": "src/com/android/messaging/widget/BaseWidgetProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2021-01-06T00:37:23Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 105,
+        "startChar": 30,
+        "endLine": 105,
+        "endChar": 45
+      },
+      "revId": "00559ecc4b3fdf35a591c845ac06e6655ce737a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed0f6f4d_30ee2447",
+        "filename": "src/com/android/messaging/widget/WidgetConversationProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2021-01-06T00:37:23Z",
+      "side": 1,
+      "message": "Is it called even if the devices do not support the app widget feature(FEATURE_APP_WIDGETS)?",
+      "range": {
+        "startLine": 56,
+        "startChar": 19,
+        "endLine": 56,
+        "endChar": 31
+      },
+      "revId": "00559ecc4b3fdf35a591c845ac06e6655ce737a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
