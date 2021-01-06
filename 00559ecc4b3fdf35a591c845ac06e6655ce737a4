@@ -72,6 +72,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "84066ce1_689e2715",
+        "filename": "src/com/android/messaging/widget/BaseWidgetProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1075502
+      },
+      "writtenOn": "2021-01-06T21:11:31Z",
+      "side": 1,
+      "message": "Yes exactly, covered by PS4 (and PS5).",
+      "parentUuid": "2b72f00a_1a7028ca",
+      "range": {
+        "startLine": 105,
+        "startChar": 30,
+        "endLine": 105,
+        "endChar": 45
+      },
+      "revId": "00559ecc4b3fdf35a591c845ac06e6655ce737a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ed0f6f4d_30ee2447",
@@ -133,6 +157,30 @@
       "side": 1,
       "message": "If it is only to avoid NPE by calling AppWidgetManager#getInstance, I think we should consider BugleWidgetProvider also.",
       "parentUuid": "9477e655_5490438a",
+      "range": {
+        "startLine": 56,
+        "startChar": 19,
+        "endLine": 56,
+        "endChar": 31
+      },
+      "revId": "00559ecc4b3fdf35a591c845ac06e6655ce737a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa410703_9a9ac138",
+        "filename": "src/com/android/messaging/widget/WidgetConversationProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1075502
+      },
+      "writtenOn": "2021-01-06T21:11:31Z",
+      "side": 1,
+      "message": "Agreed, BugleWidgetProvider added in PS5",
+      "parentUuid": "af84f8b6_e8a33063",
       "range": {
         "startLine": 56,
         "startChar": 19,
