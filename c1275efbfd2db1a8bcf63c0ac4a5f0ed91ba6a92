@@ -16,6 +16,24 @@
       "message": "https://android.googlesource.com/platform/packages/apps/CarrierConfig/+/refs/heads/master/assets/carrier_config_carrierid_2109_Rakuten-Mobile.xml\n\nI think carrier_config_carrierid_2109_Rakuten-Mobile.xml also should be updated maybe.",
       "revId": "c1275efbfd2db1a8bcf63c0ac4a5f0ed91ba6a92",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9937b110_b5727a33",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2021-03-05T07:11:33Z",
+      "side": 1,
+      "message": "Sorry. Maybe\nhttps://android.googlesource.com/platform/packages/apps/CarrierConfig/+/refs/heads/master/assets/carrier_config_carrierid_2429_Rakuten-Mobile-MNO.xml",
+      "parentUuid": "00adb3f0_79ddf3a1",
+      "revId": "c1275efbfd2db1a8bcf63c0ac4a5f0ed91ba6a92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
