@@ -34,6 +34,41 @@
       "parentUuid": "00adb3f0_79ddf3a1",
       "revId": "c1275efbfd2db1a8bcf63c0ac4a5f0ed91ba6a92",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "683fd235_5361bf47",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1862008
+      },
+      "writtenOn": "2021-03-08T04:35:44Z",
+      "side": 1,
+      "message": "Thank you for your comment.\nWe thought it would be fine to just update \"xml-mcc440-mnc11/mms_config.xml\" because our goal is to reflect this config in GMS Messaging app",
+      "revId": "c1275efbfd2db1a8bcf63c0ac4a5f0ed91ba6a92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc172c38_9d0ec45e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1862008
+      },
+      "writtenOn": "2021-03-08T04:35:44Z",
+      "side": 1,
+      "message": "Thank you for your comment.\nWe thought it would be fine to just update \"xml-mcc440-mnc11/mms_config.xml\" because our goal is to reflect this config in GMS Messaging app",
+      "parentUuid": "9937b110_b5727a33",
+      "revId": "c1275efbfd2db1a8bcf63c0ac4a5f0ed91ba6a92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
