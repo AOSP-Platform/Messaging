@@ -54,6 +54,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "abe42321_9f1f4a13",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1815899
+      },
+      "writtenOn": "2021-07-07T19:11:17Z",
+      "side": 1,
+      "message": "That, and also the case where there is e.g. verification code message in other language than English. In this case the smart actions don\u0027t add the \"Copy code\"-action in notification but this patch allows copying that code/number manually.",
+      "parentUuid": "658066fa_3cacd079",
+      "revId": "2ddbaae34e48a8efc3f18bff4cbdbf022fd4a3cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cf4390b6_45c48e28",
