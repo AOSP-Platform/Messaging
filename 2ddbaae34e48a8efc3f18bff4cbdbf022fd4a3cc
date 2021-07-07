@@ -16,6 +16,24 @@
       "message": "@Timi Rautamäki,\nAs we know, the \"Copy Text\" action for whole message body is provided instead.(I think the message text view is unselectable intentionally.)\nIf the partial selection is required, I think you should take care touch events also since the events are handled by IgnoreLinkLongClickHelper only.",
       "revId": "2ddbaae34e48a8efc3f18bff4cbdbf022fd4a3cc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4228a8e8_db9eca17",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1815899
+      },
+      "writtenOn": "2021-07-07T06:17:01Z",
+      "side": 1,
+      "message": "Use case for this would be where the notification smart actions don\u0027t suggest copying a code in the message body (for example when in wrong language). Maybe instead of this there could a long press listener to select the code/phone number and that would open the normal menu with smart action to call, copy, etc.",
+      "parentUuid": "efbd1ad4_cae2cc14",
+      "revId": "2ddbaae34e48a8efc3f18bff4cbdbf022fd4a3cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
