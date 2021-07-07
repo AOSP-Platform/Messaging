@@ -34,6 +34,47 @@
       "parentUuid": "efbd1ad4_cae2cc14",
       "revId": "2ddbaae34e48a8efc3f18bff4cbdbf022fd4a3cc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "658066fa_3cacd079",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2021-07-07T07:59:58Z",
+      "side": 1,
+      "message": "IIUC, you want to make an action to call for the phone number string in a message body even if current system locale is not matched with the phone number format. Right?\n\nI think the owners will review it for new user scenario.",
+      "parentUuid": "4228a8e8_db9eca17",
+      "revId": "2ddbaae34e48a8efc3f18bff4cbdbf022fd4a3cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf4390b6_45c48e28",
+        "filename": "src/com/android/messaging/ui/conversation/ConversationMessageView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2021-07-07T07:59:58Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 1204,
+        "startChar": 16,
+        "endLine": 1204,
+        "endChar": 28
+      },
+      "revId": "2ddbaae34e48a8efc3f18bff4cbdbf022fd4a3cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
