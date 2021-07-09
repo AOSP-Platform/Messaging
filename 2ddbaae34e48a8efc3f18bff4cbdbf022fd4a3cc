@@ -117,6 +117,30 @@
       },
       "revId": "2ddbaae34e48a8efc3f18bff4cbdbf022fd4a3cc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e08ba3e9_f7b35e84",
+        "filename": "src/com/android/messaging/ui/conversation/ConversationMessageView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2021-07-09T01:33:00Z",
+      "side": 1,
+      "message": "No smart link will not generated if return true here when you do long-click to select any text first time on a selected message.",
+      "parentUuid": "9edfbf1c_5a5f4fad",
+      "range": {
+        "startLine": 1204,
+        "startChar": 16,
+        "endLine": 1204,
+        "endChar": 28
+      },
+      "revId": "2ddbaae34e48a8efc3f18bff4cbdbf022fd4a3cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
