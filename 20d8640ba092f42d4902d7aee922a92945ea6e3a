@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cce9aa6e_e330caa4",
+        "filename": "src/com/android/messaging/ui/conversation/ConversationMessageView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1198,
+      "author": {
+        "id": 1338311
+      },
+      "writtenOn": "2021-09-02T16:56:08Z",
+      "side": 0,
+      "message": "nit: Why not return false?",
+      "revId": "20d8640ba092f42d4902d7aee922a92945ea6e3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
