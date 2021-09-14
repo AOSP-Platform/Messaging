@@ -87,6 +87,23 @@
       "parentUuid": "683fd235_5361bf47",
       "revId": "c1275efbfd2db1a8bcf63c0ac4a5f0ed91ba6a92",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11b11dce_51fdcf69",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1896290
+      },
+      "writtenOn": "2021-09-14T16:55:54Z",
+      "side": 1,
+      "message": "1615180: Signed-off-by: Yusuke \u003cyusuke.furuya@rakuten.com\u003e Add: MMS config file for Rakuten Mobile MNO | https://android-review.googlesource.com/c/platform/packages/apps/Messaging/+/1615180",
+      "revId": "c1275efbfd2db1a8bcf63c0ac4a5f0ed91ba6a92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
