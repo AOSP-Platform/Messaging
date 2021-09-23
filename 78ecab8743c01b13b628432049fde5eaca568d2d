@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b35f04ee_005f4e9f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1338311
+      },
+      "writtenOn": "2021-09-23T21:20:27Z",
+      "side": 1,
+      "message": "Hi taesu82.lee@\n  Would appreciate if you could take a look at the latest change and see if your comments are addressed or not. Thanks",
+      "revId": "78ecab8743c01b13b628432049fde5eaca568d2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
