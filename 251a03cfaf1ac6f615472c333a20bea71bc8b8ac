@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8ab8889_f9c3b929",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2022-03-09T22:27:32Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure this can always just use `jni_libs`, no need to differentiate between bundled and unbundled builds.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 14
+      },
+      "revId": "251a03cfaf1ac6f615472c333a20bea71bc8b8ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
