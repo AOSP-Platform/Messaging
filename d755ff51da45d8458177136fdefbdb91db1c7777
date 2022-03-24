@@ -16,6 +16,24 @@
       "message": "Hello this is my first ticket. Did I miss something here? Seems like it did not get completed but everything looks to be right.",
       "revId": "d755ff51da45d8458177136fdefbdb91db1c7777",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2e40038_e273f92b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1338311
+      },
+      "writtenOn": "2022-03-24T17:12:31Z",
+      "side": 1,
+      "message": "We need to do \"presubmit verify\" to make sure that it builds and all presubmit tests are passing. Clicked on Presubmit verify and auto submit.",
+      "parentUuid": "a63c5eee_9c9cf9ed",
+      "revId": "d755ff51da45d8458177136fdefbdb91db1c7777",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
