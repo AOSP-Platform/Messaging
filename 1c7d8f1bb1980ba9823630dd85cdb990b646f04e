@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bea8b1d_7c3ca340",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1338311
+      },
+      "writtenOn": "2022-08-22T20:36:15Z",
+      "side": 1,
+      "message": "CC\u0027ing Amith and Xin about the warning- should we be rethrowing the exception (or logging it as we were doing before)?",
+      "revId": "1c7d8f1bb1980ba9823630dd85cdb990b646f04e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
