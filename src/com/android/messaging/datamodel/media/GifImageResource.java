@@ -23,7 +23,6 @@ import android.support.rastermill.FrameSequence;
 import android.support.rastermill.FrameSequenceDrawable;
 
 import com.android.messaging.util.Assert;
-import com.android.messaging.util.LogUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,14 +55,7 @@ public class GifImageResource extends ImageResource {
 
     @Override
     public Drawable getDrawable(Resources resources) {
-        try {
-            return new FrameSequenceDrawable(mFrameSequence);
-        } catch (final Exception e) {
-            // Malicious gif images can make platform throw different kind of exceptions. Catch
-            // them all.
-            LogUtil.e(LogUtil.BUGLE_TAG, "Error getting drawable for GIF", e);
-            return null;
-        }
+        return new FrameSequenceDrawable(mFrameSequence);
     }
 
     @Override
