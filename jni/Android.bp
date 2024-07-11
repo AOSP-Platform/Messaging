@@ -33,7 +33,6 @@ cc_library_shared {
         "-Wno-unused-parameter",
         "-Wno-switch",
     ],
-    sdk_version: "19",
     // LLVM libc++
     stl: "c++_static",
     product_specific: true,
