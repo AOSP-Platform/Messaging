@@ -13,6 +13,7 @@
 //  limitations under the License.
 
 package {
+    default_team: "trendy_team_messages",
     // See: http://go/android-license-faq
     default_applicable_licenses: [
         "Android-Apache-2.0",
@@ -29,7 +30,10 @@ android_test {
     sdk_version: "current",
     test_suites: ["general-tests"],
     certificate: "platform",
-    static_libs: ["mockito-target"],
+    static_libs: [
+        "mockito-target",
+        "androidx.test.rules",
+    ],
     libs: [
         "android.test.mock.stubs",
         "android.test.runner.stubs",
