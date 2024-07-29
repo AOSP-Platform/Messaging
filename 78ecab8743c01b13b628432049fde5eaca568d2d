@@ -16,6 +16,23 @@
       "message": "Hi taesu82.lee@\n  Would appreciate if you could take a look at the latest change and see if your comments are addressed or not. Thanks",
       "revId": "78ecab8743c01b13b628432049fde5eaca568d2d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "617097f9_641d538c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1927071
+      },
+      "writtenOn": "2024-07-29T03:58:49Z",
+      "side": 1,
+      "message": "1754232",
+      "revId": "78ecab8743c01b13b628432049fde5eaca568d2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
