@@ -88,7 +88,6 @@ android_app {
     ],
     required: [
         "libframesequence",
-        "libgiftranscode",
     ],
     optimize: {
         obfuscate: true,
