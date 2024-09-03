@@ -27,13 +27,11 @@ cc_library_shared {
     ],
     // for including the jni.h file
     header_libs: ["jni_headers"],
-    include_dirs: ["external/giflib"],
     srcs: ["GifTranscoder.cpp"],
     cflags: [
         "-Wno-unused-parameter",
         "-Wno-switch",
     ],
-    sdk_version: "19",
     // LLVM libc++
     stl: "c++_static",
     product_specific: true,
