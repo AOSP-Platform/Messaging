@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80f91cef_a22c149c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1086523
+      },
+      "writtenOn": "2024-09-05T00:12:34Z",
+      "side": 1,
+      "message": "Overriding as this is a pure revert.",
+      "revId": "8a3204f485b73ca77ccb52fa00aa395a131193ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
